@@ -24,8 +24,9 @@ html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-we
 <body>
 <div id="splash"><div id="sl">DAREZ</div><div id="ss">CHARGEMENT...</div><div id="sbw"><div id="sb"></div></div></div>
 <div id="root"></div>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+
 <script>
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
 window.__DAREZ={};
