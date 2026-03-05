@@ -96,7 +96,7 @@
 <body>
 <div id="splash">
   <div id="sl">DAREZ</div>
-  <div id="ss">THE GLOBAL FLASH CHALLENGE</div>
+  <div id="ss">CHARGEMENT...</div>
   <div id="sbw"><div id="sb"></div></div>
 </div>
 <div id="root"></div>
@@ -168,8 +168,7 @@ const _isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 // ── Splash ────────────────────────────────────────────────────────
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
-document.fonts.ready.then(()=>setTimeout(window.hideSplash,700));
-setTimeout(window.hideSplash,2500);
+// Splash caché uniquement quand React est monté (voir mountApp)
 
 
 // ── iOS Install Detection ─────────────────────────────────────────
@@ -555,8 +554,8 @@ const LANGS = {
     chs:["Faça sua cara mais assustadora AGORA","Pose como um super-herói pousando","Encontre algo vermelho em 20 segundos","Faça beatbox por 15 segundos","Mostre seu movimento de dança","Explique física quântica em 10 segundos","Chore como se tivesse perdido a Copa do Mundo"],
     cats:["DUELO","CORPO","CAÇA","VOCAL","DANÇA","CÉREBRO","ATUAÇÃO"],
     go:"VAMOS LÁ!",
-    rules:[
-      {i:“⚡”,t:“3 Flashes por dia”,d:“8:30·17:30·21:00. Falhar 3=−10% XP.”},{i:“🗳️”,t:“Poder de voto”,d:“Rank maior=mais peso. GOD=×5.”},{i:“💰”,t:“Prêmios semanais”,d:“Top 3 ganham moedas.”},{i:“💥”,t:“Ataques”,d:“Gaste moedas para atacar rivais.”},{i:“🔥”,t:“Sequências”,d:“7 dias=+50% XP. 30=badge.”},{i:“👑”,t:“Promoção”,d:“Top 3 sobem.”},{i:“📉”,t:“Rebaixamento”,d:“Os 2 últimos descem.”}],
+    rules:[{i:"⚡",t:"3 Flashes por dia",d:"8:30·17:30·21:00. Falhar 3=−10% XP."},{i:"🗳️",t:"Poder de voto",d:"Rank maior=mais peso. GOD=×5."},{i:"💰",t:"Prê
+      mios semanais”,d:“Top 3 ganham moedas.”},{i:“💥”,t:“Ataques”,d:“Gaste moedas para atacar rivais.”},{i:“🔥”,t:“Sequências”,d:“7 dias=+50% XP. 30=badge.”},{i:“👑”,t:“Promoção”,d:“Top 3 sobem.”},{i:“📉”,t:“Rebaixamento”,d:“Os 2 últimos descem.”}],
 },
 it:{flag:“🇮🇹”,label:“Italiano”,
 nav:{feed:“Home”,stats:“Stats”,leagues:“Leghe”,flash:“Flash”,global:“Globale”,shop:“Negozio”},
@@ -1106,24 +1105,21 @@ return (
 ```
     {/* Link preview */}
     <div style={{background:"var(--bg)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:14,cursor:"pointer"}} onClick={copy}>
-      <div style={{flex:1,fontSize:12,fontWeight:800,color:"var(--mu)",overflo
-```
-  w:“hidden”,textOverflow:“ellipsis”,whiteSpace:“nowrap”}}>{link}</div>
-<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:12,color:“var(–pk)”,flexShrink:0}}>{copied?“✓”:“COPY”}</div>
-</div>
+      <div style={{flex:1,fontSize:12,fontWeight:800,color:"var(--mu)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{link}</div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--pk)",flexShrink:0}}>{copied?"✓":"COPY"}</div>
+    </div>
 
+    {/* Share bu
 ```
-    {/* Share button */}
-    <button onClick={share} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#fff",cursor:"pointer",boxShadow:"0 6px 24px rgba(255,107,0,.33)",letterSpacing:1,marginBottom:10}}>
-      📤 PARTAGER LE LIEN
-    </button>
-    <button onClick={onClose} style={{width:"100%",padding:13,borderRadius:999,background:"rgba(0,0,0,.05)",border:"none",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:14,cursor:"pointer",color:"var(--mu)"}}>
-      {t.ld.cancel}
-    </button>
-  </div>
+  tton */}
+<button onClick={share} style={{width:“100%”,padding:16,borderRadius:999,background:“linear-gradient(135deg,var(–pk),var(–pu))”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:19,color:”#fff”,cursor:“pointer”,boxShadow:“0 6px 24px rgba(255,107,0,.33)”,letterSpacing:1,marginBottom:10}}>
+📤 PARTAGER LE LIEN
+</button>
+<button onClick={onClose} style={{width:“100%”,padding:13,borderRadius:999,background:“rgba(0,0,0,.05)”,border:“none”,fontFamily:”‘Nunito’,sans-serif”,fontWeight:900,fontSize:14,cursor:“pointer”,color:“var(–mu)”}}>
+{t.ld.cancel}
+</button>
 </div>
-```
-
+</div>
 );
 }
 
@@ -1762,10 +1758,10 @@ return(
 <div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</div>
 <div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:10}}>
 {[{coins:500,price:“€2.99”,bonus:””},{coins:1500,price:“€7.99”,bonus:ts.bestDeal},{coins:3500,price:“€14.99”,bonus:ts.hot},{coins:10000,price:“€39.99”,bonus:ts.whale}].map((pack,i)=>(
-<div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.
-thanks,color:“var(–yw)”});}}>
+<div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.thanks,color:“var(–yw)”});}}>
 {pack.bonus&&<div style={{position:“absolute”,top:0,right:0,background:“linear-gradient(135deg,var(–pk),var(–pu))”,color:”#fff”,fontSize:8,fontWeight:900,padding:“4px 10px”,borderRadius:“0 18px 0 18px”}}>{pack.bonus}</div>}
-<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-ser
+if”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
 <div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,marginTop:4}}>{pack.price}</div>
 </div>
 ))}
@@ -2482,8 +2478,22 @@ setShareData(data);setTimeout(()=>setShowShare(true),600);
 );
 }
 
+function mountApp() {
+try {
 ReactDOM.createRoot(document.getElementById(“root”)).render(React.createElement(App));
-</script>
+window.hideSplash();
+} catch(e) {
+console.error(e);
+// Afficher erreur sur splash
+document.querySelector(”#ss”).textContent = “ERREUR JS: “ + e.message.slice(0,40);
+document.querySelector(”#ss”).style.color = “#FF6B6B”;
+}
+}
+// Attendre que Babel ait compilé (peut prendre 5-10s sur Safari)
+window.addEventListener(“load”, function() {
+setTimeout(mountApp, 500);
+});
 
+</script>
 </body>
 </html>
