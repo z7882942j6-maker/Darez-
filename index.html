@@ -96,7 +96,7 @@
 <body>
 <div id="splash">
   <div id="sl">DAREZ</div>
-  <div id="ss">CHARGEMENT...</div>
+  <div id="ss">THE GLOBAL FLASH CHALLENGE</div>
   <div id="sbw"><div id="sb"></div></div>
 </div>
 <div id="root"></div>
@@ -168,7 +168,8 @@ const _isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 // ── Splash ────────────────────────────────────────────────────────
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
-// Splash caché uniquement quand React est monté (voir mountApp)
+document.fonts.ready.then(()=>setTimeout(window.hideSplash,700));
+setTimeout(window.hideSplash,2500);
 
 
 // ── iOS Install Detection ─────────────────────────────────────────
@@ -197,7 +198,64 @@ document.getElementById("ib-c").onclick=()=>_ib.classList.remove("show");
 window.addEventListener("appinstalled",()=>{_ib.classList.remove("show");_dp=null;});
 </script>
 
-<script type="text/babel" data-presets="react,env">
+<script>
+// Compilation JSX asynchrone — ne bloque pas l'UI Safari
+(function() {
+  var sub = document.getElementById("ss");
+  var fill = document.getElementById("fill");
+  
+  // Progress animation pendant le chargement
+  var pct = 0;
+  var prog = setInterval(function() {
+    pct = Math.min(pct + 2, 85);
+    if(fill) fill.style.width = pct + "%";
+    if(pct < 30 && sub) sub.textContent = "CHARGEMENT...";
+    else if(pct < 60 && sub) sub.textContent = "COMPILATION...";
+    else if(sub) sub.textContent = "DÉMARRAGE...";
+  }, 120);
+  
+  // Attendre que Babel soit prêt puis compiler
+  function tryCompile() {
+    if (typeof Babel === "undefined") {
+      setTimeout(tryCompile, 100);
+      return;
+    }
+    
+    setTimeout(function() {
+      try {
+        var code = document.getElementById("jsx-source").textContent;
+        var compiled = Babel.transform(code, {
+          presets: [["react"], ["env", {targets:{safari:"14"}}]],
+          filename: "app.jsx"
+        }).code;
+        
+        clearInterval(prog);
+        if(fill) fill.style.width = "100%";
+        
+        setTimeout(function() {
+          try {
+            eval(compiled);
+          } catch(e) {
+            console.error("Eval error:", e);
+            if(sub) { sub.textContent = "ERR: " + e.message.slice(0,50); sub.style.color="#FF6B6B"; }
+            setTimeout(window.hideSplash, 2000);
+          }
+        }, 50);
+        
+      } catch(e) {
+        clearInterval(prog);
+        console.error("Babel error:", e);
+        if(sub) { sub.textContent = "ERR BABEL: " + e.message.slice(0,40); sub.style.color="#FF6B6B"; }
+        setTimeout(window.hideSplash, 2000);
+      }
+    }, 50);
+  }
+  
+  window.addEventListener("load", tryCompile);
+})();
+</script>
+
+<script type="text/plain" id="jsx-source">
 const { useState, useEffect, useRef, useCallback } = React;
 
 
@@ -543,19 +601,19 @@ const LANGS = {
     ld:{back:"VOLTAR",weeklyReset:"Prêmio em",prizes:"500 moedas · 200 moedas · Escudo",ranking:"RANKING",challenges:"DESAFIOS",rules:"REGRAS",hit:"ATACAR",hitTitle:"ATACAR",hitSub:"Gaste moedas para destruir seu rival",cancel:"Cancelar",coinsAdded:"moedas adicionadas",thanks:"Vamos lá!!",penalized:"Atacado!",penalizedSub:"Moedas gastas"},
     sh:{title:"ARSENAL",sub:"Moedas · Poderes · Caos",coins:"MOEDAS",pnames:["Silêncio","Sombra","Expor","Congelar","Rebaixar"],pdescs:["Não pode votar 24h","Oculto do ranking 12h","Pior pontuação divulgada","XP congelado 24h","Perde 10% XP semanal"],hits:"ATAQUES — destrua rivales",packs:"PACOTES DE MOEDAS",notEnough:"Moedas insuficientes!",needMore:"moedas faltando",activated:"ativado!",enjoy:"Aproveite seu poder",bestDeal:"MELHOR OFERTA",hot:"QUENTE",whale:"BALEIA"},
     pr:{streak:"Sequência",coins:"Moedas",best:"Melhor",league:"Liga",powers:"PODERES DE RANK",noPowers:"Sem poderes ainda — continue! 💪",journey:"PROGRESSÃO",current:"ATUAL",xp:"XP",active:"ON",base:"Base"},
-    cl:{back:"VOLTAR",title:"CRIAR SUA",word:"LIGA",nameLbl:"Nome da liga",namePh:"ex: CHAOS CREW",badgeLbl:"Distintivo",colorLbl:"Cor",launch:"LANÇAR LIGA",enterName:"Dê um nome!",maxChars:"Máx 20 caracteres"},
-    ob:{tagline:"O Desafio Flash Global",chooseLang:"Escolha seu idioma",next:"PRÓXIMO",start:"VAMOS LÁ",namePh:"Seu nome",nameLbl:"Escolha seu nome",avLbl:"Escolha seu personagem",lgLbl:"Entre em uma liga",skip:"Pular"},
-    sk:{title:"SEQUÊNCIA",days:"DIAS",keepGoing:"Continue assim!",almostLost:"Jogue hoje ou perde sua sequência!",r7:"Bônus 7 dias: +50% XP.",r30:"30 dias: Badge exclusivo."},
-    feed:{fire:"POW",comment:"Responder",share:"Compartilhar",reacted:"POW!",r5:"+5 moedas",soon:"Em breve",shared:"Compartilhado!"},
-    gl:{players:"jogadores",updated:"Ao vivo"},
-    fl:{done:"Feito",live:"Ao vivo",next:"Em breve"},
-    times:["8:30","17:30","21:00"],
-    filters:{all:"TUDO",weekly:"SEMANA",friends:"AMIGOS",country:"PAÍS"},
-    chs:["Faça sua cara mais assustadora AGORA","Pose como um super-herói pousando","Encontre algo vermelho em 20 segundos","Faça beatbox por 15 segundos","Mostre seu movimento de dança","Explique física quântica em 10 segundos","Chore como se tivesse perdido a Copa do Mundo"],
-    cats:["DUELO","CORPO","CAÇA","VOCAL","DANÇA","CÉREBRO","ATUAÇÃO"],
-    go:"VAMOS LÁ!",
-    rules:[{i:"⚡",t:"3 Flashes por dia",d:"8:30·17:30·21:00. Falhar 3=−10% XP."},{i:"🗳️",t:"Poder de voto",d:"Rank maior=mais peso. GOD=×5."},{i:"💰",t:"Prê
-      mios semanais”,d:“Top 3 ganham moedas.”},{i:“💥”,t:“Ataques”,d:“Gaste moedas para atacar rivais.”},{i:“🔥”,t:“Sequências”,d:“7 dias=+50% XP. 30=badge.”},{i:“👑”,t:“Promoção”,d:“Top 3 sobem.”},{i:“📉”,t:“Rebaixamento”,d:“Os 2 últimos descem.”}],
+    cl:{back:"VOLTAR",title:"CRIAR SUA",word
+  :“LIGA”,nameLbl:“Nome da liga”,namePh:“ex: CHAOS CREW”,badgeLbl:“Distintivo”,colorLbl:“Cor”,launch:“LANÇAR LIGA”,enterName:“Dê um nome!”,maxChars:“Máx 20 caracteres”},
+ob:{tagline:“O Desafio Flash Global”,chooseLang:“Escolha seu idioma”,next:“PRÓXIMO”,start:“VAMOS LÁ”,namePh:“Seu nome”,nameLbl:“Escolha seu nome”,avLbl:“Escolha seu personagem”,lgLbl:“Entre em uma liga”,skip:“Pular”},
+sk:{title:“SEQUÊNCIA”,days:“DIAS”,keepGoing:“Continue assim!”,almostLost:“Jogue hoje ou perde sua sequência!”,r7:“Bônus 7 dias: +50% XP.”,r30:“30 dias: Badge exclusivo.”},
+feed:{fire:“POW”,comment:“Responder”,share:“Compartilhar”,reacted:“POW!”,r5:”+5 moedas”,soon:“Em breve”,shared:“Compartilhado!”},
+gl:{players:“jogadores”,updated:“Ao vivo”},
+fl:{done:“Feito”,live:“Ao vivo”,next:“Em breve”},
+times:[“8:30”,“17:30”,“21:00”],
+filters:{all:“TUDO”,weekly:“SEMANA”,friends:“AMIGOS”,country:“PAÍS”},
+chs:[“Faça sua cara mais assustadora AGORA”,“Pose como um super-herói pousando”,“Encontre algo vermelho em 20 segundos”,“Faça beatbox por 15 segundos”,“Mostre seu movimento de dança”,“Explique física quântica em 10 segundos”,“Chore como se tivesse perdido a Copa do Mundo”],
+cats:[“DUELO”,“CORPO”,“CAÇA”,“VOCAL”,“DANÇA”,“CÉREBRO”,“ATUAÇÃO”],
+go:“VAMOS LÁ!”,
+rules:[{i:“⚡”,t:“3 Flashes por dia”,d:“8:30·17:30·21:00. Falhar 3=−10% XP.”},{i:“🗳️”,t:“Poder de voto”,d:“Rank maior=mais peso. GOD=×5.”},{i:“💰”,t:“Prêmios semanais”,d:“Top 3 ganham moedas.”},{i:“💥”,t:“Ataques”,d:“Gaste moedas para atacar rivais.”},{i:“🔥”,t:“Sequências”,d:“7 dias=+50% XP. 30=badge.”},{i:“👑”,t:“Promoção”,d:“Top 3 sobem.”},{i:“📉”,t:“Rebaixamento”,d:“Os 2 últimos descem.”}],
 },
 it:{flag:“🇮🇹”,label:“Italiano”,
 nav:{feed:“Home”,stats:“Stats”,leagues:“Leghe”,flash:“Flash”,global:“Globale”,shop:“Negozio”},
@@ -1095,31 +1153,31 @@ return (
 <div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.85)”,zIndex:850,display:“flex”,alignItems:“flex-end”,backdropFilter:“blur(8px)”}} onClick={onClose}>
 <div onClick={e=>e.stopPropagation()} style={{background:”#fff”,borderRadius:“28px 28px 0 0”,padding:“28px 20px 48px”,width:“100%”,maxWidth:430,margin:“0 auto”,animation:“slideUp .32s ease-out”,boxShadow:“0 -12px 48px rgba(0,0,0,.18)”}}>
 <div style={{width:40,height:4,borderRadius:2,background:“rgba(0,0,0,.1)”,margin:“0 auto 22px”}}/>
-<div style={{textAlign:“center”,marginBottom:20}}>
-<div style={{fontSize:44,marginBottom:6}}>🚀</div>
-<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,color:“var(–ink)”}}>Invite ta crew</div>
-{DB.binId&&<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2,textAlign:“center”}}>Code partie : <span style={{color:“var(–pk)”,fontWeight:900}}>{DB.binId.slice(-6).toUpperCase()}</span></div>}
-<div style={{fontSize:13,fontWeight:800,color:“var(–mu)”,marginTop:4}}>+50 🪙 par ami recruté</div>
-</div>
+  ```
+<div style={{textAlign:"center",marginBottom:20}}>
+      <div style={{fontSize:44,marginBottom:6}}>🚀</div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:24,color:"var(--ink)"}}>Invite ta crew</div>
+    {DB.binId&&<div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2,textAlign:"center"}}>Code partie : <span style={{color:"var(--pk)",fontWeight:900}}>{DB.binId.slice(-6).toUpperCase()}</span></div>}
+      <div style={{fontSize:13,fontWeight:800,color:"var(--mu)",marginTop:4}}>+50 🪙 par ami recruté</div>
+    </div>
 
-```
     {/* Link preview */}
     <div style={{background:"var(--bg)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:14,cursor:"pointer"}} onClick={copy}>
       <div style={{flex:1,fontSize:12,fontWeight:800,color:"var(--mu)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{link}</div>
       <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--pk)",flexShrink:0}}>{copied?"✓":"COPY"}</div>
     </div>
 
-    {/* Share bu
+    {/* Share button */}
+    <button onClick={share} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#fff",cursor:"pointer",boxShadow:"0 6px 24px rgba(255,107,0,.33)",letterSpacing:1,marginBottom:10}}>
+      📤 PARTAGER LE LIEN
+    </button>
+    <button onClick={onClose} style={{width:"100%",padding:13,borderRadius:999,background:"rgba(0,0,0,.05)",border:"none",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:14,cursor:"pointer",color:"var(--mu)"}}>
+      {t.ld.cancel}
+    </button>
+  </div>
+</div>
 ```
-  tton */}
-<button onClick={share} style={{width:“100%”,padding:16,borderRadius:999,background:“linear-gradient(135deg,var(–pk),var(–pu))”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:19,color:”#fff”,cursor:“pointer”,boxShadow:“0 6px 24px rgba(255,107,0,.33)”,letterSpacing:1,marginBottom:10}}>
-📤 PARTAGER LE LIEN
-</button>
-<button onClick={onClose} style={{width:“100%”,padding:13,borderRadius:999,background:“rgba(0,0,0,.05)”,border:“none”,fontFamily:”‘Nunito’,sans-serif”,fontWeight:900,fontSize:14,cursor:“pointer”,color:“var(–mu)”}}>
-{t.ld.cancel}
-</button>
-</div>
-</div>
+
 );
 }
 
@@ -1755,13 +1813,13 @@ return(
 ))}
 </div>
 <div style={{padding:“12px 16px 0”}}>
-<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</di
+  v>
 <div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:10}}>
 {[{coins:500,price:“€2.99”,bonus:””},{coins:1500,price:“€7.99”,bonus:ts.bestDeal},{coins:3500,price:“€14.99”,bonus:ts.hot},{coins:10000,price:“€39.99”,bonus:ts.whale}].map((pack,i)=>(
 <div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.thanks,color:“var(–yw)”});}}>
 {pack.bonus&&<div style={{position:“absolute”,top:0,right:0,background:“linear-gradient(135deg,var(–pk),var(–pu))”,color:”#fff”,fontSize:8,fontWeight:900,padding:“4px 10px”,borderRadius:“0 18px 0 18px”}}>{pack.bonus}</div>}
-<div style={{fontFamily:”‘Fredoka One’,sans-ser
-if”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
 <div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,marginTop:4}}>{pack.price}</div>
 </div>
 ))}
@@ -2478,22 +2536,8 @@ setShareData(data);setTimeout(()=>setShowShare(true),600);
 );
 }
 
-function mountApp() {
-try {
 ReactDOM.createRoot(document.getElementById(“root”)).render(React.createElement(App));
-window.hideSplash();
-} catch(e) {
-console.error(e);
-// Afficher erreur sur splash
-document.querySelector(”#ss”).textContent = “ERREUR JS: “ + e.message.slice(0,40);
-document.querySelector(”#ss”).style.color = “#FF6B6B”;
-}
-}
-// Attendre que Babel ait compilé (peut prendre 5-10s sur Safari)
-window.addEventListener(“load”, function() {
-setTimeout(mountApp, 500);
-});
-
 </script>
+
 </body>
 </html>
