@@ -590,3 +590,346 @@ function Onboarding({lang,setLang,t,onComplete}){
           <div style={{fontSize:64}}>👤</div>
           <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.nameLbl}</div>
           <input placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus style={{background:"rgba(255,255,255,.08​​​​​​​​​​​​​​​​
+function LiveCount(){
+  const[count,setCount]=useState(48291);
+  useEffect(()=>{const id=setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);return()=>clearInterval(id);},[]);
+  return <span>{count.toLocaleString()}</span>;
+}
+function Onboarding({lang,setLang,t,onComplete}){
+  const[step,setStep]=useState(0);const[name,setName]=useState("");const[avId,setAvId]=useState("sakura");
+  const ob=t.ob||{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",skip:"Skip"};
+  const TOTAL=3;
+  const next=()=>{SFX.tap();if(step<TOTAL-1)setStep(s=>s+1);else{SFX.victory();onComplete({name:name||"PLAYER",avId});}};
+  return(
+    <div style={{position:"fixed",inset:0,background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,maxWidth:430,margin:"0 auto"}}>
+      <div style={{display:"flex",gap:8,marginBottom:32}}>{Array.from({length:TOTAL}).map((_,i)=><div key={i} style={{width:i===step?24:8,height:8,borderRadius:4,background:i===step?"#FF6B00":"rgba(255,255,255,.2)",transition:"width .3s"}}/>)}</div>
+      {step===0&&(
+        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:72,background:"linear-gradient(135deg,#FF6B00,#C084FC)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1}}>DAREZ</div>
+          <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.4)",letterSpacing:2,marginBottom:16}}>{ob.tagline}</div>
+          <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10}}>
+            {Object.entries(LANGS).map(([code,l])=>(
+              <div key={code} onClick={()=>{SFX.tap();setLang(code);}} style={{display:"flex",alignItems:"center",gap:12,background:lang===code?"rgba(255,107,0,.15)":"rgba(255,255,255,.06)",border:lang===code?"1.5px solid rgba(255,107,0,.6)":"1.5px solid rgba(255,255,255,.1)",borderRadius:16,padding:"14px 16px",cursor:"pointer"}}>
+                <span style={{fontSize:28}}>{l.flag}</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff"}}>{l.label}</span>{lang===code&&<span style={{marginLeft:"auto",color:"#FF6B00",fontSize:20}}>✓</span>}
+              </div>
+            ))}
+          </div>
+          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:8}}>{ob.next} →</button>
+        </div>
+      )}
+      {step===1&&(
+        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
+          <div style={{fontSize:64}}>👤</div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.nameLbl}</div>
+          <input placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"14px 16px",color:"#fff",fontSize:18,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%",textAlign:"center"}}/>
+          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer"}}>{ob.next} →</button>
+          <button onClick={()=>onComplete({name:"PLAYER",avId})} style={{background:"none",border:"none",color:"rgba(255,255,255,.4)",fontSize:13,cursor:"pointer",fontWeight:800}}>{ob.skip}</button>
+        </div>
+      )}
+      {step===2&&(
+        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.avLbl}</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,width:"100%",maxHeight:300,overflow:"auto"}}>
+            {AVS.map(av=>(
+              <div key={av.id} onClick={()=>{SFX.boing();setAvId(av.id);}} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:8,borderRadius:16,background:avId===av.id?"rgba(255,107,0,.2)":"rgba(255,255,255,.05)",border:avId===av.id?"1.5px solid #FF6B00":"1.5px solid transparent",cursor:"pointer"}}>
+                <AvatarSVG av={av} size={54}/>
+                <span style={{fontSize:9,fontWeight:800,color:"rgba(255,255,255,.6)"}}>{av.name}</span>
+              </div>
+            ))}
+          </div>
+          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:4}}>{ob.start} ⚡</button>
+        </div>
+      )}
+    </div>
+  );
+}
+const ME={xp:15800,coins:680,score:9200};
+const CSS=`
+:root{--pk:#FF6B00;--pu:#C084FC;--yw:#FBBF24;--or:#FB923C;--gn:#22C55E;--bl:#3B82F6;--ink:#1E1B2E;--mu:#94A3B8;--bg:#F8F7FF}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'Nunito',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.app{display:flex;flex-direction:column;height:100%;background:var(--bg)}
+.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.07);padding:8px 0 calc(8px + env(safe-area-inset-bottom));flex-shrink:0;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3;border:none;background:none;cursor:pointer;padding:4px 0;transition:transform .12s;position:relative}
+.nb:active{transform:scale(.88)}
+.nb.active .ni{filter:drop-shadow(0 0 6px var(--pk))}
+.nb.active .nl{color:var(--pk)}
+.ni{font-size:22px;line-height:1}
+.nl{font-size:9px;font-weight:900;color:var(--mu);letter-spacing:.3px;font-family:'Nunito',sans-serif}
+.nbadge{position:absolute;top:0;right:calc(50% - 18px);background:var(--pk);color:#fff;border-radius:999px;min-width:16px;height:16px;font-size:9px;font-weight:900;display:grid;place-items:center;padding:0 4px}
+.card{background:#fff;border-radius:24px;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+.ob{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.obs{flex:1;display:flex;flex-direction:column;align-items:center;padding:20px 22px 32px}
+.obnext{width:100%;padding:16px;border-radius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));border:none;font-family:'Fredoka One',sans-serif;font-size:20px;color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:0 6px 24px rgba(255,107,0,.33);margin-top:auto}
+.obskip{background:none;border:none;font-size:13px;font-weight:800;color:var(--mu);cursor:pointer;padding:10px;margin-top:6px}
+.obinput{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;margin-bottom:6px;color:var(--ink)}
+.avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-height:260px;overflow-y:auto;margin-bottom:16px}
+.avitem{display:flex;flex-direction:column;align-items:center;gap:4;padding:8px;border-radius:16px;background:rgba(0,0,0,.04);cursor:pointer;border:1.5px solid transparent;transition:all .14s}
+.avitem.on{background:rgba(255,107,0,.1);border-color:var(--pk)}
+.avname{font-size:8px;font-weight:900;color:var(--mu);text-align:center}
+.dots{display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.12);transition:all .2s}
+.dot.on{width:24px;border-radius:4px;background:var(--pk)}
+.lopt{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;border:1.5px solid rgba(0,0,0,.08);cursor:pointer;width:100%;background:#fff;transition:all .14s;margin-bottom:4px}
+.lopt.on{background:rgba(255,107,0,.07);border-color:var(--pk)}
+.lg{display:flex;flex-direction:column;width:100%}
+.lgcard{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:0 16px 10px;background:#fff;border-radius:20px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.07);animation:fadeUp .28s ease-out both}
+.ltab{flex:1;padding:10px;border-radius:12px;border:none;font-weight:900;font-size:13px;cursor:pointer;transition:all .15s;font-family:'Nunito',sans-serif}
+.ltab.on{background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff}
+.ltab:not(.on){background:transparent;color:var(--mu)}
+.lhero{padding:24px 18px 20px;border-radius:0 0 32px 32px;position:relative;overflow:hidden}
+.phero{padding:28px 18px 22px;border-radius:0 0 32px 32px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+.pstat{flex:1;padding:14px 8px;text-align:center;border-right:1px solid rgba(0,0,0,.06)}
+.pstat:last-child{border-right:none}
+.gfilter{padding:8px 16px;border-radius:999px;border:none;font-weight:900;font-size:11px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'Nunito',sans-serif;flex-shrink:0}
+.gfilter.on{background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff}
+.gfilter:not(.on){background:#fff;color:var(--mu);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.shopcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px 16px;margin-bottom:10px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.07);animation:fadeUp .28s ease-out both;transition:transform .12s}
+.shopcard:active{transform:scale(.97)}
+.packcard{background:#fff;border-radius:20px;padding:16px 14px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative;overflow:hidden;transition:transform .12s}
+.packcard:active{transform:scale(.96)}
+.xpstrip{display:flex;gap:8px;margin:4px 0}
+.xpcell{flex:1;background:#fff;border-radius:16px;padding:12px 8px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.lbrow{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.06);animation:fadeUp .28s ease-out both}
+.lbrow.me{background:rgba(255,107,0,.06);box-shadow:0 0 0 1.5px var(--pk)}
+.vcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px 16px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.08);animation:fadeUp .28s ease-out both;transition:all .18s}
+.vcard.on{background:rgba(255,107,0,.08);box-shadow:0 0 0 2px var(--pk),0 6px 24px rgba(255,107,0,.15)}
+.vchk{width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.06);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900;transition:background .15s}
+.vcard.on .vchk{background:var(--pk)}
+.cddone{width:80%;padding:16px;border-radius:999px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);color:#fff;font-family:'Fredoka One',sans-serif;font-size:18px;cursor:pointer;letter-spacing:1px}
+.finput{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;color:var(--ink);text-transform:uppercase}
+.bdgopt{font-size:24px;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.04);cursor:pointer;border:1.5px solid transparent;transition:all .14s}
+.bdgopt.on{background:rgba(255,107,0,.1);border-color:var(--pk)}
+.cdot{width:32px;height:32px;border-radius:50%;cursor:pointer;transition:box-shadow .15s}
+.cdot.on{box-shadow:0 0 0 3px #fff,0 0 0 5px currentColor}
+.orb{position:absolute;border-radius:50%;filter:blur(40px)}
+.pmov{position:fixed;inset:0;background:rgba(15,12,35,.85);z-index:860;display:flex;align-items:flex-end;backdrop-filter:blur(8px)}
+.pmsh{background:#fff;border-radius:28px 28px 0 0;padding:28px 20px 48px;width:100%;max-width:430px;margin:0 auto;animation:slideUp .32s ease-out}
+.joinbtn{padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff;border:none;font-family:'Fredoka One',sans-serif;font-size:13px;cursor:pointer;flex-shrink:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.8) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes slideDown{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes barFill{from{width:0}}
+@keyframes xpFill{from{width:0}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+@keyframes flameWave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.15)}}
+@keyframes notifIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+`;
+function FlashWidget({t,onStart,showNotif}){
+  const fs=useFlashState();const isLive=fs.status==="live";
+  const ch=CHALLENGES[fs.index%CHALLENGES.length];
+  return(
+    <div onClick={()=>{if(isLive){SFX.zap();onStart();}else SFX.tap();}} style={{background:"#fff",borderRadius:24,margin:"12px 16px 0",padding:16,cursor:"pointer",boxShadow:isLive?"0 6px 28px rgba(255,107,0,.22)":"0 4px 18px rgba(0,0,0,.07)",border:isLive?"2px solid rgba(255,107,0,.3)":"2px solid transparent",transition:"all .2s",position:"relative",overflow:"hidden"}}>
+      {isLive&&<div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(255,107,0,.04),rgba(192,132,252,.03))"}}/>}
+      <div style={{display:"flex",alignItems:"center",gap:14,position:"relative",zIndex:1}}>
+        <div style={{width:12,height:12,borderRadius:"50%",background:isLive?"#FF6B00":"#94A3B8",boxShadow:isLive?"0 0 10px #FF6B00":"none",animation:isLive?"pulse 1.2s infinite":"none",flexShrink:0}}/>
+        <div style={{flex:1}}>
+          <div style={{fontSize:10,fontWeight:900,color:isLive?"#FF6B00":"#94A3B8",letterSpacing:1,marginBottom:3}}>{isLive?t.home.live:(t.home.next_fl||"NEXT")+" →"}</div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#1E1B2E",lineHeight:1.2}}>{ch.emoji} {t.chs[ch.id-1]}</div>
+          {!isLive&&<div style={{fontSize:11,fontWeight:900,color:"#94A3B8",marginTop:4}}>⏰ {fmtCountdown(fs.next)}</div>}
+        </div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:isLive?28:20,color:isLive?"#FF6B00":"#94A3B8",flexShrink:0}}>{isLive?"▶":"⏳"}</div>
+      </div>
+      {isLive&&<div style={{height:4,background:"rgba(255,107,0,.12)",borderRadius:2,marginTop:12,overflow:"hidden"}}><div style={{height:"100%",width:`${(fs.secsRemaining/(FLASH_DURATION_MIN*60))*100}%`,background:"linear-gradient(90deg,#FF6B00,#C084FC)",borderRadius:2,transition:"width 1s linear"}}/></div>}
+    </div>
+  );
+}
+function FlashBar({t}){
+  const fs=useFlashState();
+  return(
+    <div style={{display:"flex",gap:8,padding:"12px 16px 0",overflowX:"auto"}}>
+      {FLASH_TIMES.map((ft,i)=>{
+        const now=new Date(),tm=now.getHours()*60+now.getMinutes();
+        const isDone=tm>=ft.h*60+ft.m+FLASH_DURATION_MIN;
+        const isActive=fs.status==="live"&&fs.index===i;
+        const timeStr=`${String(ft.h).padStart(2,"0")}:${String(ft.m).padStart(2,"0")}`;
+        return(<div key={i} style={{flexShrink:0,display:"flex",alignItems:"center",gap:10,background:isActive?"linear-gradient(135deg,#FF6B00,#C084FC)":"#fff",borderRadius:16,padding:"10px 14px",boxShadow:isActive?"0 4px 16px rgba(255,107,0,.3)":"0 2px 10px rgba(0,0,0,.06)",opacity:isDone?.55:1}}>
+          <span style={{fontSize:16}}>{isDone?"✅":isActive?"🔴":"⏰"}</span>
+          <div><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:isActive?"#fff":"#1E1B2E"}}>{timeStr}</div><div style={{fontSize:9,fontWeight:900,color:isActive?"rgba(255,255,255,.8)":"#94A3B8"}}>{isDone?(t.fl&&t.fl.done)||"Done":isActive?fmtCountdown(fs.secsRemaining):(t.fl&&t.fl.next)||"Soon"}</div></div>
+        </div>);
+      })}
+    </div>
+  );
+}
+function StreakModal({streak,t,onClose}){
+  const sk=t.sk||{title:"STREAK",days:"DAYS",keepGoing:"Keep it up!",r7:"7-day bonus: +50% XP!",r30:"30-day streak: Exclusive badge!"};
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:900,display:"flex",alignItems:"center",justifyContent:"center",padding:24,backdropFilter:"blur(12px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"linear-gradient(145deg,#FF6B00,#C084FC)",borderRadius:32,padding:"44px 28px",width:"100%",maxWidth:340,textAlign:"center",boxShadow:"0 28px 80px rgba(0,0,0,.4)",animation:"popIn .6s cubic-bezier(.2,0,.38,1.4)"}}>
+        <div style={{fontSize:72,marginBottom:4}}>🔥</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:14,color:"rgba(255,255,255,.7)",letterSpacing:3,marginBottom:8}}>{sk.title}</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:64,color:"#fff",lineHeight:1,marginBottom:8}}>{streak}</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.8)",marginBottom:20}}>{sk.days}</div>
+        <div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,.75)",marginBottom:24}}>{streak>=7?sk.r7:sk.keepGoing}</div>
+        <button onClick={onClose} style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:999,width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:20,cursor:"pointer"}}>LET'S GO ⚡</button>
+      </div>
+    </div>
+  );
+}
+function LangSheet({lang,setLang,onClose}){
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:850,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}>
+        <div style={{width:40,height:4,borderRadius:2,background:"rgba(0,0,0,.1)",margin:"0 auto 22px"}}/>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}}>🌍 Language</div>
+        {Object.entries(LANGS).map(([code,l])=>(
+          <div key={code} onClick={()=>{SFX.tap();setLang(code);onClose();}} style={{display:"flex",alignItems:"center",gap:12,padding:"14px 16px",borderRadius:16,background:lang===code?"rgba(255,107,0,.08)":"transparent",cursor:"pointer",marginBottom:4}}>
+            <span style={{fontSize:28}}>{l.flag}</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#1E1B2E"}}>{l.label}</span>{lang===code&&<span style={{marginLeft:"auto",color:"#FF6B00",fontSize:18}}>✓</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function Ticker(){
+  const msgs=["⚡ zara_flash just scored 9,200 pts!","🔥 drift.exe is on a 7-day streak!","👑 neon_leo reached BLAZE rank!","💥 sky.wav hit a rival with Freeze!","🏆 CHAOS CREW leads the weekly board!"];
+  const[i,setI]=useState(0);
+  useEffect(()=>{const id=setInterval(()=>setI(n=>(n+1)%msgs.length),3500);return()=>clearInterval(id);},[]);
+  return(<div style={{background:"#1E1B2E",padding:"7px 16px",overflow:"hidden",height:30,display:"flex",alignItems:"center"}}><div key={i} style={{fontFamily:"'Fredoka One',sans-serif",fontSize:11,color:"rgba(255,255,255,.6)",animation:"slideDown .4s ease-out",whiteSpace:"nowrap"}}>{msgs[i]}</div></div>);
+}
+function LeagueDetail({league,onBack,showNotif,setPT,t,userName}){
+  const[tab,setTab]=useState("ranking");const tl=t.ld||{back:"BACK",weeklyReset:"Prize in",prizes:"500 coins · 200 coins · Shield",ranking:"RANKING",challenges:"CHALLENGES",rules:"RULES",hit:"HIT",hitTitle:"HIT",hitSub:"Spend coins to wreck rival",cancel:"Cancel",coinsAdded:"coins added",thanks:"Let's go!"};
+  const sorted=[...MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
+  const rules=t.rules||[{i:"⚡",t:"3 Daily Flashes",d:"8:30·17:30·21:00"},{i:"🗳️",t:"Vote Power",d:"Higher rank = more weight"},{i:"💰",t:"Weekly Prizes",d:"Top 3 earn coins"},{i:"🔥",t:"Streaks",d:"7 days = +50% XP"}];
+  return(
+    <div>
+      <div style={{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:"22px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
+        <button onClick={()=>{SFX.tap();onBack();}} style={{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",border:"none",borderRadius:"999px",padding:"7px 14px",color:"#fff",fontSize:12,cursor:"pointer",fontWeight:900,marginBottom:14}}>← {tl.back}</button>
+        <div style={{fontSize:44,marginBottom:8}}>{league.badge}</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff"}}>{league.name}</div>
+        <div style={{display:"flex",gap:8,marginTop:10,flexWrap:"wrap"}}>
+          {[`👥 ${league.members}`,`🏆 #${league.rank}`].map((txt,i)=>(
+            <div key={i} style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",borderRadius:"999px",padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}}>{txt}</div>
+          ))}
+        </div>
+      </div>
+      <div style={{display:"flex",borderBottom:"1px solid rgba(0,0,0,.07)",padding:"0 16px",gap:4}}>
+        {[["ranking",tl.ranking],["challenges",tl.challenges],["rules",tl.rules||"Rules"]].map(([id,label])=>(
+          <button key={id} onClick={()=>{SFX.tap();setTab(id);}} style={{flex:1,padding:"12px 4px",border:"none",background:"none",fontWeight:900,fontSize:12,cursor:"pointer",color:tab===id?"#FF6B00":"#94A3B8",borderBottom:tab===id?"2.5px solid #FF6B00":"2.5px solid transparent",transition:"all .15s",fontFamily:"'Nunito',sans-serif"}}>{label}</button>
+        ))}
+      </div>
+      {tab==="ranking"&&sorted.map((p,i)=>(
+        <div key={p.id} style={{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}}>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
+          <AvatarSVG av={getAv(p.avId)} size={40}/>
+          <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{p.name} {p.flag}</div></div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:league.color}}>{p.xp.toLocaleString()}</div>
+          <button onClick={()=>{SFX.zap();setPT(p);}} style={{padding:"5px 10px",borderRadius:"999px",background:`${league.color}18`,color:league.color,fontSize:10,fontWeight:900,cursor:"pointer",border:`1.5px solid ${league.color}40`,fontFamily:"'Nunito',sans-serif"}}>{tl.hit}</button>
+        </div>
+      ))}
+      {tab==="challenges"&&CHALLENGES.map((ch,i)=>(
+        <div key={ch.id} style={{display:"flex",alignItems:"center",gap:12,padding:"13px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}}>
+          <span style={{fontSize:28}}>{ch.emoji}</span>
+          <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.chs[ch.id-1]}</div><div style={{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:2}}>{ch.timer}s · +{ch.xp} XP</div></div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}}>+{ch.xp}</div>
+        </div>
+      ))}
+      {tab==="rules"&&<div style={{padding:"14px 16px"}}>{rules.map((r,i)=>(
+        <div key={i} style={{display:"flex",gap:11,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)"}}>
+          <span style={{fontSize:20,flexShrink:0}}>{r.i}</span>
+          <div><div style={{fontWeight:900,fontSize:13}}>{r.t}</div><div style={{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:3}}>{r.d}</div></div>
+        </div>
+      ))}</div>}
+      <div style={{height:20}}/>
+    </div>
+  );
+}
+const PENALTIES=[{id:"s",emoji:"🤫",cost:150},{id:"sh",emoji:"👤",cost:200},{id:"e",emoji:"📢",cost:180},{id:"f",emoji:"🧊",cost:250},{id:"d",emoji:"📉",cost:300}];
+export default function App(){
+  const[lang,setLang]=useState(()=>LS.get("lang","en"));
+  const t=LANGS[lang];
+  useEffect(()=>LS.set("lang",lang),[lang]);
+  const[onboarded,setOnboarded]=useState(()=>!!LS.get("onboarded"));
+  const[userName,setUserName]=useState(()=>LS.get("username","YOU"));
+  const[userAvId,setUserAvId]=useState(()=>LS.get("avid","sakura"));
+  const[tab,setTab]=useState("home");
+  const[sub,setSub]=useState(null);
+  const[selLeague,setSelLeague]=useState(null);
+  const[notif,setNotif]=useState(null);
+  const[penTarget,setPenTarget]=useState(null);
+  const[showStreak,setShowStreak]=useState(false);
+  const[showLang,setShowLang]=useState(false);
+  const[confetti,setConfetti]=useState(0);
+  const[showShare,setShowShare]=useState(false);
+  const[shareData,setShareData]=useState({xp:120,score:8340,rank:4,chText:"Make your scariest face",chEmoji:"😱"});
+  const[showInvite,setShowInvite]=useState(false);
+  const streak=9;
+  const nTimer=useRef(null);
+  const showNotif=useCallback((n)=>{setNotif(n);clearTimeout(nTimer.current);nTimer.current=setTimeout(()=>setNotif(null),3000);},[]);
+  const navItems=[{id:"home",icon:"🏠",badge:2},{id:"leagues",icon:"⚔️",badge:1},{id:"flash",icon:"⚡",badge:null},{id:"history",icon:"📊",badge:null},{id:"shop",icon:"🛒",badge:null}];
+  const handleNav=(id)=>{if(id==="flash"){SFX.zap();setSub("challenge");setTab("flash");return;}SFX.tap();setTab(id);setSub(null);};
+  const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,history:t.nav.stats||"Stats",shop:t.nav.shop};
+  if(!onboarded)return(
+    <>
+      <Onboarding lang={lang} setLang={setLang} t={t} onComplete={({name,avId})=>{
+        const uname=name.toUpperCase()||"PLAYER";
+        setUserName(uname);setUserAvId(avId);
+        LS.set("username",uname);LS.set("avid",avId);LS.set("onboarded",true);
+        setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
+        setTimeout(()=>setShowStreak(true),900);
+      }}/>
+      <Particles trigger={confetti}/>
+    </>
+  );
+  const inCh=sub==="challenge";
+  return(
+    <>
+      <style>{CSS}</style>
+      <div className="app">
+        <Particles trigger={confetti}/>
+        <Notif notif={notif}/>
+        {showStreak&&<StreakModal streak={streak} t={t} onClose={()=>setShowStreak(false)}/>}
+        {showLang&&<LangSheet lang={lang} setLang={setLang} onClose={()=>setShowLang(false)}/>}
+        {showInvite&&<div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:850,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={()=>setShowInvite(false)}><div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}}>📤 Invite friends</div><button onClick={()=>setShowInvite(false)} style={{width:"100%",padding:14,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",cursor:"pointer"}}>COPY LINK</button></div></div>}
+        {penTarget&&(
+          <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:860,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={()=>setPenTarget(null)}>
+            <div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}>
+              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:4}}>💥 HIT {penTarget.name.toUpperCase()}</div>
+              {PENALTIES.map((p,i)=>(
+                <div key={p.id} onClick={()=>{SFX.zap();showNotif({icon:p.emoji,text:`${["Silence","Shadow","Expose","Freeze","Demote"][i]} → ${penTarget.name}!`,color:"#FBBF24"});setPenTarget(null);}} style={{background:"rgba(0,0,0,.03)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:11,cursor:"pointer",marginBottom:8}}>
+                  <div style={{width:40,height:40,borderRadius:12,background:"linear-gradient(135deg,#FF6B00,#C084FC)",display:"grid",placeItems:"center",fontSize:18}}>{p.emoji}</div>
+                  <div style={{flex:1,fontWeight:900,fontSize:13}}>🪙{p.cost}</div>
+                </div>
+              ))}
+              <button onClick={()=>setPenTarget(null)} style={{width:"100%",padding:12,background:"rgba(0,0,0,.06)",border:"none",borderRadius:999,fontSize:13,fontWeight:900,cursor:"pointer",fontFamily:"'Nunito',sans-serif",color:"#94A3B8"}}>Cancel</button>
+            </div>
+          </div>
+        )}
+        {!inCh&&<Ticker/>}
+        {inCh
+          ?<ChallengeFlow onDone={(data)=>{setSub(null);setTab("home");if(data){setShareData(data);setTimeout(()=>setShowShare(true),600);}}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName}/>
+          :sub==="create_league"
+            ?<div className="scroll" style={{flex:1}}><CreateLeague onBack={()=>setSub(null)} showNotif={showNotif} t={t}/></div>
+            :sub==="league_detail"
+              ?<div className="scroll" style={{flex:1}}><LeagueDetail league={selLeague} onBack={()=>setSub(null)} showNotif={showNotif} setPT={setPenTarget} t={t} userName={userName}/></div>
+              :<div className="scroll" style={{flex:1}}>
+                {tab==="home"&&<HomeScreen onStart={()=>{SFX.zap();setSub("challenge");}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
+                {tab==="leagues"&&<LeaguesScreen showNotif={showNotif} onDetail={l=>{setSelLeague(l);setSub("league_detail");}} onCreate={()=>setSub("create_league")} onInvite={()=>setShowInvite(true)} t={t}/>}
+                {tab==="flash"&&<HomeScreen onStart={()=>setSub("challenge")} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
+                {tab==="history"&&<GlobalScreen t={t} userName={userName}/>}
+                {tab==="shop"&&<ShopScreen showNotif={showNotif} t={t}/>}
+              </div>
+        }
+        {!inCh&&(
+          <nav className="nav">
+            {navItems.map(item=>(
+              <button key={item.id} className={`nb ${tab===item.id&&!sub?"active":""}`} onClick={()=>handleNav(item.id)} style={{position:"relative"}}>
+                {item.badge&&tab!==item.id&&<div className="nbadge">{item.badge}</div>}
+                <span className="ni" style={item.id==="flash"?{filter:"drop-shadow(0 0 6px #FBBF24)"}:{}}>{item.icon}</span>
+                <span className="nl" style={item.id==="flash"?{color:"#FBBF24"}:{}}>{navLabels[item.id]}</span>
+              </button>
+            ))}
+          </nav>
+        )}
+      </div>
+    </>
+  );
+}
+</script>
+</body>
+</html>
