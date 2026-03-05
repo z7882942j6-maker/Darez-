@@ -31,6 +31,7 @@ html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-we
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
 window.__DAREZ={};
 const _store={};const LS={get:(k,d=null)=>{try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return _store[k]!==undefined?_store[k]:d;}},set:(k,v)=>{try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){_store[k]=v;}}};
+window.onerror=function(m){const s=document.getElementById("ss");if(s){s.textContent=m.slice(0,60);s.style.color="#FF6B6B";}};
 
 const{useState,useEffect,useRef,useCallback}=React;
 window.__H={useState,useEffect,useRef,useCallback};
