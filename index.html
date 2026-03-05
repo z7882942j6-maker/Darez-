@@ -141,7 +141,7 @@
 
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sucrase@3.35.0/dist/browser.js"></script>
 
 <script>
 // ── Manifest PWA inline ──────────────────────────────────────────
@@ -216,7 +216,7 @@ window.addEventListener("appinstalled",()=>{_ib.classList.remove("show");_dp=nul
   
   // Attendre que Babel soit prêt puis compiler
   function tryCompile() {
-    if (typeof Babel === "undefined") {
+    if (typeof sucrase === "undefined") {
       setTimeout(tryCompile, 100);
       return;
     }
@@ -224,9 +224,10 @@ window.addEventListener("appinstalled",()=>{_ib.classList.remove("show");_dp=nul
     setTimeout(function() {
       try {
         var code = document.getElementById("jsx-source").textContent;
-        var compiled = Babel.transform(code, {
-          presets: [["react"], ["env", {targets:{safari:"14"}}]],
-          filename: "app.jsx"
+        var compiled = sucrase.transform(code, {
+          transforms: ["jsx", "imports"],
+          jsxPragma: "React.createElement",
+          jsxFragmentPragma: "React.Fragment"
         }).code;
         
         clearInterval(prog);
@@ -601,8 +602,8 @@ const LANGS = {
     ld:{back:"VOLTAR",weeklyReset:"Prêmio em",prizes:"500 moedas · 200 moedas · Escudo",ranking:"RANKING",challenges:"DESAFIOS",rules:"REGRAS",hit:"ATACAR",hitTitle:"ATACAR",hitSub:"Gaste moedas para destruir seu rival",cancel:"Cancelar",coinsAdded:"moedas adicionadas",thanks:"Vamos lá!!",penalized:"Atacado!",penalizedSub:"Moedas gastas"},
     sh:{title:"ARSENAL",sub:"Moedas · Poderes · Caos",coins:"MOEDAS",pnames:["Silêncio","Sombra","Expor","Congelar","Rebaixar"],pdescs:["Não pode votar 24h","Oculto do ranking 12h","Pior pontuação divulgada","XP congelado 24h","Perde 10% XP semanal"],hits:"ATAQUES — destrua rivales",packs:"PACOTES DE MOEDAS",notEnough:"Moedas insuficientes!",needMore:"moedas faltando",activated:"ativado!",enjoy:"Aproveite seu poder",bestDeal:"MELHOR OFERTA",hot:"QUENTE",whale:"BALEIA"},
     pr:{streak:"Sequência",coins:"Moedas",best:"Melhor",league:"Liga",powers:"PODERES DE RANK",noPowers:"Sem poderes ainda — continue! 💪",journey:"PROGRESSÃO",current:"ATUAL",xp:"XP",active:"ON",base:"Base"},
-    cl:{back:"VOLTAR",title:"CRIAR SUA",word
-  :“LIGA”,nameLbl:“Nome da liga”,namePh:“ex: CHAOS CREW”,badgeLbl:“Distintivo”,colorLbl:“Cor”,launch:“LANÇAR LIGA”,enterName:“Dê um nome!”,maxChars:“Máx 20 caracteres”},
+    cl
+  :{back:“VOLTAR”,title:“CRIAR SUA”,word:“LIGA”,nameLbl:“Nome da liga”,namePh:“ex: CHAOS CREW”,badgeLbl:“Distintivo”,colorLbl:“Cor”,launch:“LANÇAR LIGA”,enterName:“Dê um nome!”,maxChars:“Máx 20 caracteres”},
 ob:{tagline:“O Desafio Flash Global”,chooseLang:“Escolha seu idioma”,next:“PRÓXIMO”,start:“VAMOS LÁ”,namePh:“Seu nome”,nameLbl:“Escolha seu nome”,avLbl:“Escolha seu personagem”,lgLbl:“Entre em uma liga”,skip:“Pular”},
 sk:{title:“SEQUÊNCIA”,days:“DIAS”,keepGoing:“Continue assim!”,almostLost:“Jogue hoje ou perde sua sequência!”,r7:“Bônus 7 dias: +50% XP.”,r30:“30 dias: Badge exclusivo.”},
 feed:{fire:“POW”,comment:“Responder”,share:“Compartilhar”,reacted:“POW!”,r5:”+5 moedas”,soon:“Em breve”,shared:“Compartilhado!”},
@@ -1152,15 +1153,16 @@ if (!visible) return null;
 return (
 <div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.85)”,zIndex:850,display:“flex”,alignItems:“flex-end”,backdropFilter:“blur(8px)”}} onClick={onClose}>
 <div onClick={e=>e.stopPropagation()} style={{background:”#fff”,borderRadius:“28px 28px 0 0”,padding:“28px 20px 48px”,width:“100%”,maxWidth:430,margin:“0 auto”,animation:“slideUp .32s ease-out”,boxShadow:“0 -12px 48px rgba(0,0,0,.18)”}}>
-<div style={{width:40,height:4,borderRadius:2,background:“rgba(0,0,0,.1)”,margin:“0 auto 22px”}}/>
-  ```
-<div style={{textAlign:"center",marginBottom:20}}>
-      <div style={{fontSize:44,marginBottom:6}}>🚀</div>
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:24,color:"var(--ink)"}}>Invite ta crew</div>
-    {DB.binId&&<div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2,textAlign:"center"}}>Code partie : <span style={{color:"var(--pk)",fontWeight:900}}>{DB.binId.slice(-6).toUpperCase()}</span></div>}
-      <div style={{fontSize:13,fontWeight:800,color:"var(--mu)",marginTop:4}}>+50 🪙 par ami recruté</div>
-    </div>
+<div style={{width:40,height:4,borderRadius:2,background:“rgba(0,0,0,.1)”,marg
+  in:“0 auto 22px”}}/>
+<div style={{textAlign:“center”,marginBottom:20}}>
+<div style={{fontSize:44,marginBottom:6}}>🚀</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,color:“var(–ink)”}}>Invite ta crew</div>
+{DB.binId&&<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2,textAlign:“center”}}>Code partie : <span style={{color:“var(–pk)”,fontWeight:900}}>{DB.binId.slice(-6).toUpperCase()}</span></div>}
+<div style={{fontSize:13,fontWeight:800,color:“var(–mu)”,marginTop:4}}>+50 🪙 par ami recruté</div>
+</div>
 
+```
     {/* Link preview */}
     <div style={{background:"var(--bg)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:14,cursor:"pointer"}} onClick={copy}>
       <div style={{flex:1,fontSize:12,fontWeight:800,color:"var(--mu)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{link}</div>
@@ -1813,8 +1815,8 @@ return(
 ))}
 </div>
 <div style={{padding:“12px 16px 0”}}>
-<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</di
-  v>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{t
+  s.packs}</div>
 <div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:10}}>
 {[{coins:500,price:“€2.99”,bonus:””},{coins:1500,price:“€7.99”,bonus:ts.bestDeal},{coins:3500,price:“€14.99”,bonus:ts.hot},{coins:10000,price:“€39.99”,bonus:ts.whale}].map((pack,i)=>(
 <div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.thanks,color:“var(–yw)”});}}>
