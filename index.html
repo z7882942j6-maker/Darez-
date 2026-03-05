@@ -643,7 +643,8 @@ function App(){
 }
 
 // Launch
-window.__stopProg();
+window.__stopProg();if(!window.__DAREZ||!window.__DAREZ.AVS){const s=document.getElementById("ss");if(s){s.textContent="BLOCK2 MANQUANT";s.style.color="#FF6B6B";}return;}
+
 setTimeout(()=>{
   try{
     ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
