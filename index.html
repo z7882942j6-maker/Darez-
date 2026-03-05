@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#FF6B00"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="DAREZ"/>
@@ -15,90 +14,79 @@ html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-we
 #root{width:100%;height:100%;max-width:430px;margin:0 auto;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 #splash{position:fixed;inset:0;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
 #splash.out{opacity:0;pointer-events:none}
-#sl{font-family:"Fredoka One",sans-serif;font-size:80px;background:linear-gradient(135deg,#FF6B00,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:sp .6s cubic-bezier(.2,0,.38,1.4) both}
+#sl{font-family:"Fredoka One",sans-serif;font-size:80px;background:linear-gradient(135deg,#FF6B00,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 #ss{font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:3px;margin-top:8px}
 #sbw{width:48px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:48px;overflow:hidden}
 #sb{height:100%;background:linear-gradient(90deg,#FF6B00,#C084FC);border-radius:2px;width:0;transition:width .3s}
-@keyframes sp{from{opacity:0;transform:scale(.8) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
-#ios-banner{position:fixed;bottom:0;left:0;right:0;background:rgba(30,27,46,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.12);padding:16px 20px calc(16px + env(safe-area-inset-bottom));z-index:600;transform:translateY(100%);transition:transform .4s cubic-bezier(.2,0,.38,1.1)}
-#ios-banner.show{transform:translateY(0)}
+@keyframes sp{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
 </style>
 </head>
 <body>
 <div id="splash"><div id="sl">DAREZ</div><div id="ss">CHARGEMENT...</div><div id="sbw"><div id="sb"></div></div></div>
 <div id="root"></div>
-<div id="ios-banner">
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:24px">⚡</div><div><div style="font-family:'Fredoka One',sans-serif;font-size:17px;color:#fff">Installer DAREZ</div><div style="font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px">Accès direct depuis ton écran d'accueil</div></div></div>
-<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
-<div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px"><div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-family:'Fredoka One',sans-serif;font-size:13px;color:#fff">1</div><div style="font-size:13px;font-weight:800;color:rgba(255,255,255,.85);flex:1">Appuie sur le bouton Partager ⬆️</div></div>
-<div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px"><div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-family:'Fredoka One',sans-serif;font-size:13px;color:#fff">2</div><div style="font-size:13px;font-weight:800;color:rgba(255,255,255,.85);flex:1">Choisis "Sur l'écran d'accueil" 📱</div></div>
-<div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px"><div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-family:'Fredoka One',sans-serif;font-size:13px;color:#fff">3</div><div style="font-size:13px;font-weight:800;color:rgba(255,255,255,.85);flex:1">Appuie sur "Ajouter" ✅</div></div>
-</div>
-<button onclick="document.getElementById('ios-banner').classList.remove('show');localStorage.setItem('darez_ios_ok',1)" style="width:100%;padding:12px;background:rgba(255,255,255,.08);border:none;border-radius:999px;color:rgba(255,255,255,.5);font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;cursor:pointer">J'ai compris</button>
-</div>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/5.3.3/typescript.min.js"></script>
 <script>
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
-const _isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
-if(_isIOS&&!window.navigator.standalone&&!localStorage.getItem("darez_ios_ok"))setTimeout(()=>document.getElementById("ios-banner").classList.add("show"),4000);
+window.__DAREZ={};
+const LS={get:(k,d=null)=>{try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){}}};
+window.__LS=LS;
+const{useState,useEffect,useRef,useCallback}=React;
+window.__H={useState,useEffect,useRef,useCallback};
+
+// Progress
+const fill=document.getElementById("sb"),sub=document.getElementById("ss");
+let p=0;
+const prog=setInterval(()=>{p=Math.min(p+2,85);if(fill)fill.style.width=p+"%";if(sub)sub.textContent=p<30?"CHARGEMENT...":p<60?"INITIALISATION...":"DÉMARRAGE...";},60);
+window.__stopProg=()=>{clearInterval(prog);if(fill)fill.style.width="100%";};
 </script>
 <script>
-(function(){
-var sub=document.getElementById("ss"),fill=document.getElementById("sb"),pct=0;
-var prog=setInterval(function(){pct=Math.min(pct+3,90);if(fill)fill.style.width=pct+"%";if(sub)sub.textContent=pct<40?"CHARGEMENT...":pct<75?"COMPILATION...":"DÉMARRAGE...";},80);
-function run(){
-if(typeof ts==="undefined"){setTimeout(run,100);return;}
-clearInterval(prog);if(fill)fill.style.width="95%";
-setTimeout(function(){
-try{
-var code=document.getElementById("jsx-src").textContent;
-var out=ts.transpileModule(code,{compilerOptions:{jsx:2,target:99,module:0}}).outputText;
-out=out.replace(/"use strict";\n?/g,"").replace(/Object\.defineProperty\(exports[^;]+;/g,"").replace(/exports\.default\s*=/g,"window.__App=");
-if(fill)fill.style.width="100%";
-setTimeout(function(){
-try{
-eval(out);
-var A=window.__App;
-if(!A)throw new Error("App not found");
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(A));
-window.hideSplash();
-}catch(e){if(sub){sub.textContent=e.message.slice(0,80);sub.style.color="#FF6B6B";}setTimeout(window.hideSplash,4000);}
-},50);
-}catch(e){if(sub){sub.textContent=e.message.slice(0,80);sub.style.color="#FF6B6B";}setTimeout(window.hideSplash,4000);}
-},100);
-}
-window.addEventListener("load",run);
-})();
-</script>
-<script type="text/plain" id="jsx-src">
-const { useState, useEffect, useRef, useCallback } = React;
-const BIN_API="https://api.jsonbin.io/v3/b";
-const BIN_KEY="$2a$10$WFMHbdDLRqUHMJMbRZ4TdeWbFKBb5FJRQGfKPDXpVm7tT7pQvFS8C";
-const LS={get:(k,d=null)=>{try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){}}};
-function getPlayerId(){let id=LS.get("pid");if(!id){id="p_"+Math.random().toString(36).slice(2,10);LS.set("pid",id);}return id;}
-function emptyState(){return{v:1,created:Date.now(),players:{},feed:[],leaderboard:[],leagues:{},lastFlash:{date:null,scores:{},votes:{}}};}
-async function binGet(id){try{const r=await fetch(`${BIN_API}/${id}/latest`,{headers:{"X-Master-Key":BIN_KEY,"X-Bin-Meta":"false"}});return r.ok?await r.json():null;}catch(e){return null;}}
-async function binCreate(data){try{const r=await fetch(BIN_API,{method:"POST",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"darez"},body:JSON.stringify(data)});const d=await r.json();return d.metadata?.id||null;}catch(e){return null;}}
-async function binUpdate(id,data){try{const r=await fetch(`${BIN_API}/${id}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY},body:JSON.stringify(data)});return r.ok;}catch(e){return false;}}
-const DB={binId:LS.get("bin_id"),state:null,listeners:[],_poll:null,_hash:"",
-  async init(j=null){if(j){this.binId=j;LS.set("bin_id",j);}if(this.binId){const d=await binGet(this.binId);if(d){this.state=d;this._notify();this._startPoll();return{ok:true,binId:this.binId};}}const s=emptyState();const id=await binCreate(s);if(id){this.binId=id;LS.set("bin_id",id);this.state=s;this._notify();this._startPoll();return{ok:true,binId:id};}this.state=LS.get("state")||emptyState();this._notify();return{ok:false,binId:null};},
-  async save(){LS.set("state",this.state);if(this.binId)await binUpdate(this.binId,this.state);this._notify();},
-  _startPoll(){if(this._poll)clearInterval(this._poll);this._poll=setInterval(async()=>{if(!this.binId)return;const d=await binGet(this.binId);if(!d)return;const h=JSON.stringify(d).length+"_"+(d.feed?.length||0);if(h!==this._hash){this._hash=h;this.state=d;this._notify();}},5000);},
-  _notify(){this.listeners.forEach(fn=>fn(this.state));},
-  subscribe(fn){this.listeners.push(fn);return()=>{this.listeners=this.listeners.filter(l=>l!==fn);};},
-  async upsertPlayer(id,data){if(!this.state)return;this.state.players[id]={...(this.state.players[id]||{}),...data,updatedAt:Date.now()};this._rebuildLeaderboard();await this.save();},
-  _rebuildLeaderboard(){this.state.leaderboard=Object.entries(this.state.players).map(([id,p])=>({...p,id})).sort((a,b)=>(b.xp||0)-(a.xp||0)).slice(0,50);},
-  async submitScore(pid,score,xp,coins,chText,chEmoji){if(!this.state)return;const p=this.state.players[pid]||{};const today=new Date().toDateString();const yest=new Date(Date.now()-86400000).toDateString();const streak=p.lastPlayed===today?p.streak||1:p.lastPlayed===yest?(p.streak||0)+1:1;this.state.players[pid]={...p,xp:(p.xp||0)+xp,coins:(p.coins||0)+coins,streak,lastPlayed:today};if(!this.state.lastFlash.scores)this.state.lastFlash.scores={};this.state.lastFlash.scores[pid]=score;this.state.lastFlash.date=today;this.state.feed=([{pid,score,xp,time:Date.now(),name:p.name||"Player",avId:p.avId||"sakura",flag:p.flag||"🌍",chText,chEmoji},...(this.state.feed||[])]).slice(0,30);this._rebuildLeaderboard();await this.save();},
-  async submitVote(vId,tId){if(!this.state?.lastFlash)return;if(!this.state.lastFlash.votes)this.state.lastFlash.votes={};this.state.lastFlash.votes[vId]=tId;await this.save();},
-  async createLeague(pid,name,badge,color){if(!this.state)return null;const id="lg_"+Math.random().toString(36).slice(2,8);this.state.leagues[id]={id,name,badge,color,ownerId:pid,members:[pid],weeklyXP:{[pid]:0},createdAt:Date.now()};await this.save();return id;},
-  async joinLeague(pid,lgId){if(!this.state?.leagues?.[lgId])return false;const lg=this.state.leagues[lgId];if(!lg.members.includes(pid))lg.members.push(pid);lg.weeklyXP=lg.weeklyXP||{};lg.weeklyXP[pid]=lg.weeklyXP[pid]||0;await this.save();return true;},
-  getLeaderboard(){return this.state?.leaderboard||[];},getLeagues(){return Object.values(this.state?.leagues||{});},getFeed(){return this.state?.feed||[];},getPlayer(id){return this.state?.players?.[id]||null;},
+// BLOCK 1 — Data & Audio
+const SFX={_ctx:null,ctx(){if(!this._ctx)this._ctx=new(window.AudioContext||window.webkitAudioContext)();return this._ctx;},n(f,t,d,v=0.28,type="sine"){try{const c=this.ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.value=f;const s=c.currentTime+t;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+0.015);g.gain.setValueAtTime(v,s+d-0.04);g.gain.linearRampToValueAtTime(0,s+d);o.start(s);o.stop(s+d+0.05);}catch(e){}},tap(){this.n(880,0,0.07,0.2);},victory(){[523,659,784,1047,1319,1568].forEach((f,i)=>this.n(f,i*.1,.15,.3,"triangle"));},coin(){[880,1100,1320,1760].forEach((f,i)=>this.n(f,i*.055,.1,.22));},fail(){[466,415,370,311].forEach((f,i)=>this.n(f,i*.1,.15,.3,"sawtooth"));},zap(){this.n(140,0,.05,.5,"sawtooth");this.n(600,.07,.09,.2);},unlock(){this.n(523,0,.32,.22,"triangle");this.n(784,.22,.32,.22,"triangle");this.n(1047,.44,.42,.3,"triangle");},boing(){[780,560,920].forEach((f,i)=>this.n(f,i*0.045,0.08,0.18));},whoosh(){try{const c=this.ctx(),o=c.createOscillator(),g=c.createGain(),t=c.currentTime;o.connect(g);g.connect(c.destination);o.type="sine";o.frequency.setValueAtTime(180,t);o.frequency.exponentialRampToValueAtTime(900,t+.15);o.frequency.exponentialRampToValueAtTime(140,t+.32);g.gain.setValueAtTime(.28,t);g.gain.linearRampToValueAtTime(0,t+.38);o.start(t);o.stop(t+.4);}catch(e){}},danger(){this.n(880,0,.06,.42,"square");},voteLock(){this.n(392,0,.16,.32,"triangle");this.n(523,.42,.42,.42,"triangle");},tick(n){if(n>0){this.n(660,0,.09,.38,"square");}else{[523,784,1047].forEach((f,i)=>this.n(f,i*.07,.18,.32,"triangle"));}}};
+window.SFX=SFX;
+
+const RANKS=[
+  {id:"rookie",label:"ROOKIE",icon:"🌱",color:"#94A3B8",g1:"#334155",g2:"#1E293B",min:0,max:1000,perks:[]},
+  {id:"riser",label:"RISER",icon:"⚡",color:"#22D3EE",g1:"#0891B2",g2:"#0E7490",min:1000,max:3000,perks:["Vote ×1.2"]},
+  {id:"spark",label:"SPARK",icon:"🔥",color:"#F59E0B",g1:"#D97706",g2:"#B45309",min:3000,max:7000,perks:["Vote ×1.5","Coins +10%"]},
+  {id:"blaze",label:"BLAZE",icon:"💥",color:"#F97316",g1:"#EA580C",g2:"#C2410C",min:7000,max:15000,perks:["Vote ×2","Shield/week"]},
+  {id:"phantom",label:"PHANTOM",icon:"👻",color:"#A855F7",g1:"#9333EA",g2:"#7E22CE",min:15000,max:30000,perks:["Vote ×3","Invisible"]},
+  {id:"god",label:"DAREZ GOD",icon:"👑",color:"#FFD700",g1:"#F59E0B",g2:"#D97706",min:30000,max:Infinity,perks:["Vote ×5","All free"]},
+];
+const CHALLENGES=[
+  {id:1,emoji:"😱",timer:45,xp:120,coins:30},{id:2,emoji:"⚡",timer:30,xp:150,coins:40},
+  {id:3,emoji:"🔴",timer:25,xp:100,coins:25},{id:4,emoji:"🎤",timer:20,xp:180,coins:50},
+  {id:5,emoji:"🕺",timer:30,xp:160,coins:45},{id:6,emoji:"🤯",timer:12,xp:250,coins:70},
+  {id:7,emoji:"🎭",timer:30,xp:200,coins:55},
+];
+const FLASH_TIMES=[{h:8,m:30},{h:17,m:30},{h:21,m:0}];
+const FLASH_DURATION_MIN=30;
+const MOCK_PLAYERS=[
+  {id:"p1",name:"zara_flash",avId:"blaze",xp:8420,score:9200,coins:340,streak:12,flag:"🇧🇷"},
+  {id:"p2",name:"drift.exe",avId:"ninja",xp:7100,score:8750,coins:210,streak:7,flag:"🇯🇵"},
+  {id:"p3",name:"neon_leo",avId:"fox",xp:6300,score:8100,coins:180,streak:5,flag:"🇫🇷"},
+  {id:"p4",name:"sky.wav",avId:"thunder",xp:5800,score:7600,coins:150,streak:3,flag:"🇺🇸"},
+  {id:"p5",name:"luna_riot",avId:"sakura",xp:4200,score:6900,coins:120,streak:9,flag:"🇪🇸"},
+];
+const MOCK_LEAGUES=[
+  {id:"l1",name:"CHAOS CREW",badge:"💥",color:"#FF6B00",members:847,rank:1,points:12400},
+  {id:"l2",name:"SHADOW GUILD",badge:"👻",color:"#A855F7",members:623,rank:2,points:9800},
+  {id:"l3",name:"BLAZE SQUAD",badge:"🔥",color:"#F97316",members:512,rank:3,points:8200},
+  {id:"l4",name:"CRYSTAL TEAM",badge:"💎",color:"#22D3EE",members:389,rank:4,points:6100},
+];
+const LANGS={
+  en:{flag:"🇬🇧",label:"English",nav:{feed:"Home",leagues:"Leagues",flash:"Flash",stats:"Stats",shop:"Shop"},home:{live:"FLASH IS LIVE",players:"players",myLeagues:"MY LEAGUES",seeAll:"See all",feed:"FEED",xpTo:"XP to next rank",ago:"ago",done_fl:"DONE",next_fl:"NEXT"},ch:{getReady:"GET READY",done:"DONE ✓",playersNow:"players going wild"},vote:{q:"Who absolutely KILLED IT?",hint:"Vote for the best",lock:"LOCK IN"},res:{title:"GLOBAL RANKING",xp:"XP EARNED",rank:"YOUR RANK",coins:"COINS",share:"SHARE SCORE",back:"BACK TO HOME",top:"TOP PLAYERS"},lg:{title:"LEAGUES & CREWS",sub:"Compete privately",create:"CREATE MY LEAGUE",invite:"Invite friends",inviteSub:"50 coins per recruit",inviteBtn:"INVITE",mine:"MY LEAGUES",disc:"DISCOVER",join:"JOIN",member:"MEMBER",members:"members"},ld:{back:"BACK",ranking:"RANKING",challenges:"CHALLENGES",rules:"RULES",hit:"HIT",cancel:"Cancel"},sh:{title:"ARSENAL",coins:"COINS",pnames:["Silence","Shadow","Expose","Freeze","Demote"],pdescs:["Can't vote 24h","Hidden 12h","Worst score shown","XP frozen 24h","Lose 10% XP"],notEnough:"Not enough coins!",activated:"activated!"},pr:{streak:"Streak",coins:"Coins",xp:"XP",powers:"RANK POWERS",noPowers:"No powers yet 💪",journey:"RANK JOURNEY",current:"NOW"},cl:{back:"BACK",title:"CREATE YOUR",word:"LEAGUE",nameLbl:"League Name",namePh:"e.g. CHAOS CREW",badgeLbl:"Badge",colorLbl:"Color",launch:"LAUNCH LEAGUE",enterName:"Give it a name!",maxChars:"Max 20 chars"},ob:{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",skip:"Skip"},sk:{title:"STREAK",days:"DAYS",keepGoing:"Keep it up!",r7:"7-day bonus: +50% XP!"},fl:{done:"Done",live:"Live",next:"Soon"},gl:{players:"players",updated:"Live"},chs:["Make your scariest face RIGHT NOW","Strike a superhero landing pose","Find something red in 20 seconds","Beatbox for 15 seconds","Show your signature dance move","Explain quantum physics in 10 seconds","Cry like you just lost the World Cup"],go:"GO!",rules:[{i:"⚡",t:"3 Daily Flashes",d:"8:30·17:30·21:00"},{i:"🗳️",t:"Vote Power",d:"Higher rank = more weight"},{i:"💰",t:"Weekly Prizes",d:"Top 3 earn coins"},{i:"🔥",t:"Streaks",d:"7 days = +50% XP"}]},
+  fr:{flag:"🇫🇷",label:"Français",nav:{feed:"Accueil",leagues:"Ligues",flash:"Flash",stats:"Stats",shop:"Boutique"},home:{live:"FLASH EN DIRECT",players:"joueurs",myLeagues:"MES LIGUES",seeAll:"Voir tout",feed:"FIL D'ACTU",xpTo:"XP pour rang suivant",ago:"",done_fl:"FAIT",next_fl:"PROCHAIN"},ch:{getReady:"PRÉPARE-TOI",done:"TERMINÉ ✓",playersNow:"joueurs en feu"},vote:{q:"Qui a vraiment TOUT DÉCHIRÉ ?",hint:"Vote pour le meilleur",lock:"VALIDER"},res:{title:"CLASSEMENT MONDIAL",xp:"XP GAGNÉ",rank:"TON RANG",coins:"PIÈCES",share:"PARTAGER",back:"RETOUR",top:"TOP JOUEURS"},lg:{title:"LIGUES & ÉQUIPES",sub:"Joue en privé",create:"CRÉER MA LIGUE",invite:"Invite des amis",inviteSub:"50 pièces par recrue",inviteBtn:"INVITER",mine:"MES LIGUES",disc:"DÉCOUVRIR",join:"REJOINDRE",member:"MEMBRE",members:"membres"},ld:{back:"RETOUR",ranking:"CLASSEMENT",challenges:"DÉFIS",rules:"RÈGLES",hit:"FRAPPER",cancel:"Annuler"},sh:{title:"ARSENAL",coins:"PIÈCES",pnames:["Silence","Ombre","Exposer","Geler","Rétrograder"],pdescs:["Ne peut pas voter 24h","Caché 12h","Pire score diffusé","XP gelé 24h","Perd 10% XP"],notEnough:"Pas assez de pièces !",activated:"activé !"},pr:{streak:"Série",coins:"Pièces",xp:"XP",powers:"POUVOIRS",noPowers:"Aucun pouvoir encore 💪",journey:"PROGRESSION",current:"ACTUEL"},cl:{back:"RETOUR",title:"CRÉER TA",word:"LIGUE",nameLbl:"Nom de la ligue",namePh:"ex: CHAOS CREW",badgeLbl:"Badge",colorLbl:"Couleur",launch:"LANCER LA LIGUE",enterName:"Donne-lui un nom !",maxChars:"Max 20 caractères"},ob:{tagline:"Le Défi Flash Mondial",chooseLang:"Choisis ta langue",next:"SUIVANT",start:"C'EST PARTI",namePh:"Ton pseudo",nameLbl:"Choisis ton pseudo",avLbl:"Choisis ton personnage",skip:"Passer"},sk:{title:"SÉRIE",days:"JOURS",keepGoing:"Continue !",r7:"Bonus 7 jours : +50% XP !"},fl:{done:"Fait",live:"En direct",next:"Bientôt"},gl:{players:"joueurs",updated:"En direct"},chs:["Fais ta tête la plus terrifiante MAINTENANT","Prends la pose d'un super-héros","Trouve quelque chose de rouge en 20 secondes","Beatboxe pendant 15 secondes","Montre ton mouvement de danse","Explique la physique quantique en 10 secondes","Pleure comme si tu venais de perdre la Coupe du Monde"],go:"C'EST PARTI!",rules:[{i:"⚡",t:"3 Flashs par jour",d:"8h30·17h30·21h00"},{i:"🗳️",t:"Pouvoir de vote",d:"Rang élevé = plus de poids"},{i:"💰",t:"Prix hebdomadaires",d:"Top 3 gagnent des pièces"},{i:"🔥",t:"Séries",d:"7 jours = +50% XP"}]},
 };
-function useDB(){const[state,setState]=useState(()=>DB.state||emptyState());const[binId,setBinId]=useState(()=>DB.binId);const[ready,setReady]=useState(false);useEffect(()=>{const unsub=DB.subscribe(s=>{setState(s||emptyState());});const j=new URLSearchParams(window.location.search).get("join")||null;if(!DB.state||j){DB.init(j).then(({binId:id})=>{setBinId(id);setReady(true);});}else{setReady(true);}return unsub;},[]);return{state,binId,ready};}
-function getInviteLink(binId){if(!binId)return window.location.href;const url=new URL(window.location.href);url.searchParams.set("join",binId);return url.toString();}
-const SFX={_ctx:null,ctx(){if(!this._ctx)this._ctx=new(window.AudioContext||window.webkitAudioContext)();return this._ctx;},n(f,t,d,v=0.28,type="sine"){try{const c=this.ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=type;o.frequency.value=f;const s=c.currentTime+t;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+0.015);g.gain.setValueAtTime(v,s+d-0.04);g.gain.linearRampToValueAtTime(0,s+d);o.start(s);o.stop(s+d+0.05);}catch(e){}},tap(){this.n(880,0,0.07,0.2);this.n(1100,0.05,0.06,0.12);},boing(){[780,560,480,680,920].forEach((f,i)=>this.n(f,i*0.045,0.08,0.18));},victory(){const ns=[523,659,784,1047,784,1047,1319,1568],ds=[.12,.1,.1,.2,.08,.08,.1,.38];let t=0;ns.forEach((f,i)=>{this.n(f,t,ds[i]+.05,.3,"triangle");t+=ds[i];});},whoosh(){try{const c=this.ctx(),o=c.createOscillator(),g=c.createGain(),t=c.currentTime;o.connect(g);g.connect(c.destination);o.type="sine";o.frequency.setValueAtTime(180,t);o.frequency.exponentialRampToValueAtTime(900,t+.15);o.frequency.exponentialRampToValueAtTime(140,t+.32);g.gain.setValueAtTime(.28,t);g.gain.linearRampToValueAtTime(0,t+.38);o.start(t);o.stop(t+.4);}catch(e){}},coin(){[880,1100,1320,1760].forEach((f,i)=>this.n(f,i*.055,.1,.22));},tap2(){this.n(660,0,.09,.38,"square");this.n(880,.045,.06,.22);},fail(){[466,415,370,311].forEach((f,i)=>this.n(f,i*.1,.15,.3,"sawtooth"));},voteLock(){this.n(392,0,.16,.32,"triangle");this.n(392,.2,.16,.32,"triangle");this.n(523,.42,.42,.42,"triangle");},tick(n){if(n>0){this.n(660,0,.09,.38,"square");this.n(880,.045,.06,.22);}else{[523,784,1047,1319].forEach((f,i)=>this.n(f,i*.07,.18,.32,"triangle"));}},danger(){this.n(880,0,.06,.42,"square");this.n(1100,.07,.05,.3,"square");},streakFire(){[262,330,392,523,659,784,1047].forEach((f,i)=>{this.n(f,i*.07,.2,.2);this.n(f*1.5,i*.07,.18,.1);});this.n(1568,.6,.45,.32,"triangle");},unlock(){[[523,659,784],[659,784,1047]].forEach(([a,b,c],t)=>{this.n(a,t*.22,.32,.22,"triangle");this.n(b,t*.22,.32,.18,"triangle");this.n(c,t*.22,.32,.14,"triangle");});this.n(1047,.48,.42,.3,"triangle");},zap(){this.n(140,0,.05,.5,"sawtooth");this.n(300,.035,.05,.38,"square");this.n(600,.07,.09,.2);}};
+const ME={xp:15800,coins:680,score:9200};
+const PENALTIES=[{id:"s",emoji:"🤫",cost:150},{id:"sh",emoji:"👤",cost:200},{id:"e",emoji:"📢",cost:180},{id:"f",emoji:"🧊",cost:250},{id:"d",emoji:"📉",cost:300}];
+function getRank(xp){return RANKS.slice().reverse().find(r=>xp>=r.min)||RANKS[0];}
+function getAv(id){return AVS.find(a=>a.id===id)||AVS[4];}
+function fmtCountdown(secs){if(!secs||secs<=0)return"0:00";const m=Math.floor(secs/60),s=secs%60;return`${m}:${String(s).padStart(2,"0")}`;}
+window.__DAREZ={SFX,RANKS,CHALLENGES,FLASH_TIMES,FLASH_DURATION_MIN,MOCK_PLAYERS,MOCK_LEAGUES,LANGS,ME,PENALTIES,getRank,getAv,fmtCountdown};
+</script>
+<script>
+// BLOCK 2 — Avatars + Components
 const AVS=[
   {id:"ninja",name:"Ninja",bg:"#1A1A2E",skin:"#FFCBA4",hair:"#111",ec:"#FF3366",mt:"smirk",ac:"mask"},
   {id:"blaze",name:"Blaze",bg:"#FF5722",skin:"#FFCBA4",hair:"#FF2D00",ec:"#FFE600",mt:"grin",ac:"flames"},
@@ -121,137 +109,100 @@ const AVS=[
   {id:"angel",name:"Angel",bg:"#FFFDE7",skin:"#FFE4C4",hair:"#FFD54F",ec:"#81D4FA",mt:"cute",ac:"halo"},
   {id:"reaper",name:"Reaper",bg:"#0A0A0A",skin:"#E0E0E0",hair:"#0A0A0A",ec:"#39FF14",mt:"evil",ac:"hood"},
 ];
+window.__DAREZ.AVS=AVS;
+
 function AvatarSVG({av,size=52}){
   const s=size,cx=s/2,eyeY=s*.43,eyeX=s*.16,eyeRx=s*.085,eyeRy=s*.105,pupR=s*.054;
   const skinY=s*.5,skinRx=s*.26,skinRy=s*.28,hairY=s*.3;
-  const mouths={
-    smile:<path d={`M${cx-s*.12} ${s*.63} Q${cx} ${s*.72} ${cx+s*.12} ${s*.63}`} stroke="#CC7755" strokeWidth={s*.027} fill="none" strokeLinecap="round"/>,
-    grin:<path d={`M${cx-s*.15} ${s*.61} Q${cx} ${s*.75} ${cx+s*.15} ${s*.61}`} stroke="#CC7755" strokeWidth={s*.028} fill="none" strokeLinecap="round"/>,
-    smirk:<path d={`M${cx-s*.1} ${s*.64} Q${cx+s*.07} ${s*.69} ${cx+s*.14} ${s*.61}`} stroke="#CC7755" strokeWidth={s*.026} fill="none" strokeLinecap="round"/>,
-    cute:<><path d={`M${cx-s*.1} ${s*.63} Q${cx} ${s*.71} ${cx+s*.1} ${s*.63}`} stroke="#F48FB1" strokeWidth={s*.025} fill="none" strokeLinecap="round"/><circle cx={cx-s*.14} cy={s*.66} r={s*.04} fill="#F48FB1" opacity=".65"/><circle cx={cx+s*.14} cy={s*.66} r={s*.04} fill="#F48FB1" opacity=".65"/></>,
-    sharp:<path d={`M${cx-s*.14} ${s*.63} L${cx-s*.06} ${s*.68} L${cx} ${s*.63} L${cx+s*.06} ${s*.68} L${cx+s*.14} ${s*.63}`} stroke="#CC7755" strokeWidth={s*.024} fill="none" strokeLinecap="round" strokeLinejoin="round"/>,
-    roar:<ellipse cx={cx} cy={s*.65} rx={s*.11} ry={s*.075} fill="#B71C1C"/>,
-    evil:<path d={`M${cx-s*.12} ${s*.64} Q${cx} ${s*.59} ${cx+s*.12} ${s*.64}`} stroke="#880E4F" strokeWidth={s*.028} fill="none" strokeLinecap="round"/>,
-    bot:<rect x={cx-s*.1} y={s*.61} width={s*.2} height={s*.08} rx={s*.025} fill="#00E5FF" opacity=".9"/>,
+  const M=React.createElement;
+  const mouth=()=>{
+    if(av.mt==="smile")return M("path",{d:`M${cx-s*.12} ${s*.63} Q${cx} ${s*.72} ${cx+s*.12} ${s*.63}`,stroke:"#CC7755",strokeWidth:s*.027,fill:"none",strokeLinecap:"round"});
+    if(av.mt==="grin")return M("path",{d:`M${cx-s*.15} ${s*.61} Q${cx} ${s*.75} ${cx+s*.15} ${s*.61}`,stroke:"#CC7755",strokeWidth:s*.028,fill:"none",strokeLinecap:"round"});
+    if(av.mt==="smirk")return M("path",{d:`M${cx-s*.1} ${s*.64} Q${cx+s*.07} ${s*.69} ${cx+s*.14} ${s*.61}`,stroke:"#CC7755",strokeWidth:s*.026,fill:"none",strokeLinecap:"round"});
+    if(av.mt==="cute")return M(React.Fragment,null,M("path",{d:`M${cx-s*.1} ${s*.63} Q${cx} ${s*.71} ${cx+s*.1} ${s*.63}`,stroke:"#F48FB1",strokeWidth:s*.025,fill:"none",strokeLinecap:"round"}),M("circle",{cx:cx-s*.14,cy:s*.66,r:s*.04,fill:"#F48FB1",opacity:".65"}),M("circle",{cx:cx+s*.14,cy:s*.66,r:s*.04,fill:"#F48FB1",opacity:".65"}));
+    if(av.mt==="roar")return M("ellipse",{cx,cy:s*.65,rx:s*.11,ry:s*.075,fill:"#B71C1C"});
+    if(av.mt==="evil")return M("path",{d:`M${cx-s*.12} ${s*.64} Q${cx} ${s*.59} ${cx+s*.12} ${s*.64}`,stroke:"#880E4F",strokeWidth:s*.028,fill:"none",strokeLinecap:"round"});
+    if(av.mt==="bot")return M("rect",{x:cx-s*.1,y:s*.61,width:s*.2,height:s*.08,rx:s*.025,fill:"#00E5FF",opacity:".9"});
+    return M("path",{d:`M${cx-s*.14} ${s*.63} L${cx} ${s*.68} L${cx+s*.14} ${s*.63}`,stroke:"#CC7755",strokeWidth:s*.024,fill:"none",strokeLinecap:"round"});
   };
-  const accs={
-    mask:<rect x={cx-s*.24} y={s*.49} width={s*.48} height={s*.17} rx={s*.07} fill="#111" opacity=".88"/>,
-    flames:[s*.28,s*.42,s*.56].map((x,i)=><path key={i} d={`M${x} ${s*.22} C${x-s*.06} ${s*.1} ${x+s*.06} ${s*.06} ${x+s*.04} ${s*.14}`} fill="#FF6D00" opacity=".85"/>),
-    ice:<><path d={`M${cx-s*.18} ${s*.16} L${cx} ${s*.05} L${cx+s*.18} ${s*.16}`} stroke="#80D8FF" strokeWidth={s*.025} fill="none"/><circle cx={cx} cy={s*.04} r={s*.04} fill="#80D8FF"/></>,
-    ears:<><ellipse cx={cx-s*.27} cy={s*.18} rx={s*.1} ry={s*.13} fill="#4A4E69"/><ellipse cx={cx+s*.27} cy={s*.18} rx={s*.1} ry={s*.13} fill="#4A4E69"/></>,
-    flowers:[cx-s*.18,cx,cx+s*.18].map((x,i)=><circle key={i} cx={x} cy={s*.1} r={s*.055} fill={i===1?"#E91E63":"#F48FB1"}/>),
-    bolt:<path d={`M${cx+s*.08} ${s*.06} L${cx-s*.04} ${s*.24} L${cx+s*.05} ${s*.24} L${cx-s*.08} ${s*.4} L${cx+s*.18} ${s*.2} L${cx+s*.06} ${s*.2} Z`} fill="#FDD835"/>,
-    stars:[[cx-s*.28,s*.12],[cx+s*.28,s*.1],[cx,s*.04]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r={s*.04} fill="#CE93D8"/>),
-    horns:<><path d={`M${cx-s*.22} ${s*.22} L${cx-s*.28} ${s*.05} L${cx-s*.12} ${s*.18}`} fill="#00695C"/><path d={`M${cx+s*.22} ${s*.22} L${cx+s*.28} ${s*.05} L${cx+s*.12} ${s*.18}`} fill="#00695C"/></>,
-    panda_ears:<><circle cx={cx-s*.28} cy={s*.18} r={s*.1} fill="#212121"/><circle cx={cx+s*.28} cy={s*.18} r={s*.1} fill="#212121"/></>,
-    demon_horns:<><path d={`M${cx-s*.22} ${s*.22} L${cx-s*.26} ${s*.04} L${cx-s*.1} ${s*.19}`} fill="#FF1744"/><path d={`M${cx+s*.22} ${s*.22} L${cx+s*.26} ${s*.04} L${cx+s*.1} ${s*.19}`} fill="#FF1744"/></>,
-    waves:<path d={`M${cx-s*.28} ${s*.25} Q${cx-s*.14} ${s*.16} ${cx} ${s*.25} Q${cx+s*.14} ${s*.34} ${cx+s*.28} ${s*.25}`} stroke="#00E5FF" strokeWidth={s*.025} fill="none" strokeLinecap="round"/>,
-    spikes:[cx-s*.2,cx-s*.06,cx+s*.06,cx+s*.2].map((x,i)=><path key={i} d={`M${x} ${s*.23} L${x+s*.05} ${s*.05} L${x+s*.1} ${s*.23}`} fill="#E040FB"/>),
-    fox_ears:<><path d={`M${cx-s*.26} ${s*.22} L${cx-s*.32} ${s*.04} L${cx-s*.14} ${s*.18}`} fill="#BF360C"/><path d={`M${cx+s*.26} ${s*.22} L${cx+s*.32} ${s*.04} L${cx+s*.14} ${s*.18}`} fill="#BF360C"/></>,
-    galaxy:[...Array(6)].map((_,i)=><circle key={i} cx={cx-s*.25+i*s*.1} cy={s*.09} r={s*.025} fill={["#EA80FC","#80D8FF","#FFD740","#FF6D6D","#80FF80","#CE93D8"][i]}/>),
-    mane:<ellipse cx={cx} cy={s*.42} rx={s*.34} ry={s*.31} fill="#F57F17" opacity=".75"/>,
-    antenna:<><line x1={cx} y1={s*.06} x2={cx} y2={s*.18} stroke="#37474F" strokeWidth={s*.04}/><circle cx={cx} cy={s*.04} r={s*.06} fill="#00E5FF"/></>,
-    hat:<><path d={`M${cx-s*.28} ${s*.28} L${cx-s*.14} ${s*.06} L${cx+s*.14} ${s*.06} L${cx+s*.28} ${s*.28}`} fill="#4A148C"/><rect x={cx-s*.3} y={s*.26} width={s*.6} height={s*.08} rx={s*.04} fill="#6A1B9A"/></>,
-    halo:<ellipse cx={cx} cy={s*.09} rx={s*.17} ry={s*.045} fill="none" stroke="#FFD54F" strokeWidth={s*.038}/>,
-    hood:<path d={`M${cx-s*.36} ${s*.28} Q${cx-s*.2} ${s*.03} ${cx} ${s*.05} Q${cx+s*.2} ${s*.03} ${cx+s*.36} ${s*.28}`} fill="#0A0A0A" opacity=".94"/>,
-    stripes:null,
+  const acc=()=>{
+    if(av.ac==="mask")return M("rect",{x:cx-s*.24,y:s*.49,width:s*.48,height:s*.17,rx:s*.07,fill:"#111",opacity:".88"});
+    if(av.ac==="flames")return M(React.Fragment,null,...[s*.28,s*.42,s*.56].map((x,i)=>M("path",{key:i,d:`M${x} ${s*.22} C${x-s*.06} ${s*.1} ${x+s*.06} ${s*.06} ${x+s*.04} ${s*.14}`,fill:"#FF6D00",opacity:".85"})));
+    if(av.ac==="ice")return M(React.Fragment,null,M("path",{d:`M${cx-s*.18} ${s*.16} L${cx} ${s*.05} L${cx+s*.18} ${s*.16}`,stroke:"#80D8FF",strokeWidth:s*.025,fill:"none"}),M("circle",{cx,cy:s*.04,r:s*.04,fill:"#80D8FF"}));
+    if(av.ac==="ears")return M(React.Fragment,null,M("ellipse",{cx:cx-s*.27,cy:s*.18,rx:s*.1,ry:s*.13,fill:"#4A4E69"}),M("ellipse",{cx:cx+s*.27,cy:s*.18,rx:s*.1,ry:s*.13,fill:"#4A4E69"}));
+    if(av.ac==="flowers")return M(React.Fragment,null,...[cx-s*.18,cx,cx+s*.18].map((x,i)=>M("circle",{key:i,cx:x,cy:s*.1,r:s*.055,fill:i===1?"#E91E63":"#F48FB1"})));
+    if(av.ac==="bolt")return M("path",{d:`M${cx+s*.08} ${s*.06} L${cx-s*.04} ${s*.24} L${cx+s*.05} ${s*.24} L${cx-s*.08} ${s*.4} L${cx+s*.18} ${s*.2} L${cx+s*.06} ${s*.2} Z`,fill:"#FDD835"});
+    if(av.ac==="stars")return M(React.Fragment,null,...[[cx-s*.28,s*.12],[cx+s*.28,s*.1],[cx,s*.04]].map(([x,y],i)=>M("circle",{key:i,cx:x,cy:y,r:s*.04,fill:"#CE93D8"})));
+    if(av.ac==="horns")return M(React.Fragment,null,M("path",{d:`M${cx-s*.22} ${s*.22} L${cx-s*.28} ${s*.05} L${cx-s*.12} ${s*.18}`,fill:"#00695C"}),M("path",{d:`M${cx+s*.22} ${s*.22} L${cx+s*.28} ${s*.05} L${cx+s*.12} ${s*.18}`,fill:"#00695C"}));
+    if(av.ac==="panda_ears")return M(React.Fragment,null,M("circle",{cx:cx-s*.28,cy:s*.18,r:s*.1,fill:"#212121"}),M("circle",{cx:cx+s*.28,cy:s*.18,r:s*.1,fill:"#212121"}));
+    if(av.ac==="demon_horns")return M(React.Fragment,null,M("path",{d:`M${cx-s*.22} ${s*.22} L${cx-s*.26} ${s*.04} L${cx-s*.1} ${s*.19}`,fill:"#FF1744"}),M("path",{d:`M${cx+s*.22} ${s*.22} L${cx+s*.26} ${s*.04} L${cx+s*.1} ${s*.19}`,fill:"#FF1744"}));
+    if(av.ac==="waves")return M("path",{d:`M${cx-s*.28} ${s*.25} Q${cx-s*.14} ${s*.16} ${cx} ${s*.25} Q${cx+s*.14} ${s*.34} ${cx+s*.28} ${s*.25}`,stroke:"#00E5FF",strokeWidth:s*.025,fill:"none",strokeLinecap:"round"});
+    if(av.ac==="spikes")return M(React.Fragment,null,...[cx-s*.2,cx-s*.06,cx+s*.06,cx+s*.2].map((x,i)=>M("path",{key:i,d:`M${x} ${s*.23} L${x+s*.05} ${s*.05} L${x+s*.1} ${s*.23}`,fill:"#E040FB"})));
+    if(av.ac==="fox_ears")return M(React.Fragment,null,M("path",{d:`M${cx-s*.26} ${s*.22} L${cx-s*.32} ${s*.04} L${cx-s*.14} ${s*.18}`,fill:"#BF360C"}),M("path",{d:`M${cx+s*.26} ${s*.22} L${cx+s*.32} ${s*.04} L${cx+s*.14} ${s*.18}`,fill:"#BF360C"}));
+    if(av.ac==="galaxy")return M(React.Fragment,null,...[...Array(6)].map((_,i)=>M("circle",{key:i,cx:cx-s*.25+i*s*.1,cy:s*.09,r:s*.025,fill:["#EA80FC","#80D8FF","#FFD740","#FF6D6D","#80FF80","#CE93D8"][i]})));
+    if(av.ac==="mane")return M("ellipse",{cx,cy:s*.42,rx:s*.34,ry:s*.31,fill:"#F57F17",opacity:".75"});
+    if(av.ac==="antenna")return M(React.Fragment,null,M("line",{x1:cx,y1:s*.06,x2:cx,y2:s*.18,stroke:"#37474F",strokeWidth:s*.04}),M("circle",{cx,cy:s*.04,r:s*.06,fill:"#00E5FF"}));
+    if(av.ac==="hat")return M(React.Fragment,null,M("path",{d:`M${cx-s*.28} ${s*.28} L${cx-s*.14} ${s*.06} L${cx+s*.14} ${s*.06} L${cx+s*.28} ${s*.28}`,fill:"#4A148C"}),M("rect",{x:cx-s*.3,y:s*.26,width:s*.6,height:s*.08,rx:s*.04,fill:"#6A1B9A"}));
+    if(av.ac==="halo")return M("ellipse",{cx,cy:s*.09,rx:s*.17,ry:s*.045,fill:"none",stroke:"#FFD54F",strokeWidth:s*.038});
+    if(av.ac==="hood")return M("path",{d:`M${cx-s*.36} ${s*.28} Q${cx-s*.2} ${s*.03} ${cx} ${s*.05} Q${cx+s*.2} ${s*.03} ${cx+s*.36} ${s*.28}`,fill:"#0A0A0A",opacity:".94"});
+    return null;
   };
-  const acc=accs[av.ac];
-  return(
-    <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{display:"block",borderRadius:"50%",flexShrink:0}}>
-      <circle cx={cx} cy={cx} r={cx} fill={av.bg}/>
-      {av.ac==="mane"&&acc}
-      <ellipse cx={cx} cy={hairY} rx={s*.28} ry={s*.25} fill={av.hair}/>
-      <ellipse cx={cx} cy={skinY} rx={skinRx} ry={skinRy} fill={av.skin}/>
-      <ellipse cx={cx-eyeX} cy={eyeY} rx={eyeRx} ry={eyeRy} fill="#fff"/>
-      <ellipse cx={cx+eyeX} cy={eyeY} rx={eyeRx} ry={eyeRy} fill="#fff"/>
-      <circle cx={cx-eyeX} cy={eyeY} r={pupR} fill={av.ec}/>
-      <circle cx={cx+eyeX} cy={eyeY} r={pupR} fill={av.ec}/>
-      <circle cx={cx-eyeX+pupR*.5} cy={eyeY-pupR*.5} r={pupR*.36} fill="#fff" opacity=".92"/>
-      <circle cx={cx+eyeX+pupR*.5} cy={eyeY-pupR*.5} r={pupR*.36} fill="#fff" opacity=".92"/>
-      {mouths[av.mt]||null}
-      {av.ac!=="mane"&&acc}
-    </svg>
+  const a=acc();
+  return M("svg",{width:s,height:s,viewBox:`0 0 ${s} ${s}`,style:{display:"block",borderRadius:"50%",flexShrink:0}},
+    M("circle",{cx,cy:cx,r:cx,fill:av.bg}),
+    av.ac==="mane"&&a,
+    M("ellipse",{cx,cy:hairY,rx:s*.28,ry:s*.25,fill:av.hair}),
+    M("ellipse",{cx,cy:skinY,rx:skinRx,ry:skinRy,fill:av.skin}),
+    M("ellipse",{cx:cx-eyeX,cy:eyeY,rx:eyeRx,ry:eyeRy,fill:"#fff"}),
+    M("ellipse",{cx:cx+eyeX,cy:eyeY,rx:eyeRx,ry:eyeRy,fill:"#fff"}),
+    M("circle",{cx:cx-eyeX,cy:eyeY,r:pupR,fill:av.ec}),
+    M("circle",{cx:cx+eyeX,cy:eyeY,r:pupR,fill:av.ec}),
+    M("circle",{cx:cx-eyeX+pupR*.5,cy:eyeY-pupR*.5,r:pupR*.36,fill:"#fff",opacity:".92"}),
+    M("circle",{cx:cx+eyeX+pupR*.5,cy:eyeY-pupR*.5,r:pupR*.36,fill:"#fff",opacity:".92"}),
+    mouth(),
+    av.ac!=="mane"&&a
   );
 }
-const LANGS={
-  en:{flag:"🇬🇧",label:"English",
-    nav:{feed:"Home",stats:"Stats",leagues:"Leagues",flash:"Flash",global:"Global",shop:"Shop"},
-    home:{live:"FLASH IS LIVE",players:"players",myLeagues:"MY LEAGUES",seeAll:"See all",feed:"FEED",xpTo:"XP to next rank",ago:"ago",done_fl:"DONE",next_fl:"NEXT"},
-    ch:{getReady:"GET READY",done:"DONE ✓",playersNow:"players going wild"},
-    vote:{q:"Who absolutely KILLED IT?",hint:"Vote for the best · Your vote matters",lock:"LOCK IN"},
-    res:{title:"GLOBAL RANKING",xp:"XP EARNED",rank:"YOUR RANK",coins:"COINS",share:"SHARE MY SCORE",back:"BACK TO HOME",top:"TOP PLAYERS",shared:"Score shared!",sharedSub:"Your crew sees it"},
-    lg:{title:"LEAGUES & CREWS",sub:"Compete privately · Climb global ranks",create:"CREATE MY LEAGUE",invite:"Invite friends",inviteSub:"50 coins per recruit",inviteBtn:"INVITE",mine:"MY LEAGUES",disc:"DISCOVER",join:"JOIN",member:"MEMBER",invCopied:"Link copied!",invCopiedSub:"Share with your crew",joined:"Joined! +100 coins",joinedSub:"Welcome to the crew",members:"members"},
-    ob:{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",skip:"Skip"},
-    chs:["Make your scariest face RIGHT NOW","Strike a superhero landing pose","Find something red in 20 seconds","Beatbox for 15 seconds","Show your signature dance move","Explain quantum physics in 10 seconds","Cry like you just lost the World Cup"],
-    go:"GO!",
-  },
-  fr:{flag:"🇫🇷",label:"Français",
-    nav:{feed:"Accueil",stats:"Stats",leagues:"Ligues",flash:"Flash",global:"Global",shop:"Boutique"},
-    home:{live:"FLASH EN DIRECT",players:"joueurs",myLeagues:"MES LIGUES",seeAll:"Voir tout",feed:"FIL D'ACTU",xpTo:"XP pour le rang suivant",ago:"",done_fl:"FAIT",next_fl:"PROCHAIN"},
-    ch:{getReady:"PRÉPARE-TOI",done:"TERMINÉ ✓",playersNow:"joueurs en feu"},
-    vote:{q:"Qui a vraiment TOUT DÉCHIRÉ ?",hint:"Vote pour le meilleur · Ton vote compte",lock:"VALIDER"},
-    res:{title:"CLASSEMENT MONDIAL",xp:"XP GAGNÉ",rank:"TON RANG",coins:"PIÈCES",share:"PARTAGER MON SCORE",back:"RETOUR À L'ACCUEIL",top:"TOP JOUEURS",shared:"Score partagé !",sharedSub:"Ta crew le voit"},
-    lg:{title:"LIGUES & ÉQUIPES",sub:"Joue en privé · Monte dans les classements",create:"CRÉER MA LIGUE",invite:"Invite des amis",inviteSub:"50 pièces par recrue",inviteBtn:"INVITER",mine:"MES LIGUES",disc:"DÉCOUVRIR",join:"REJOINDRE",member:"MEMBRE",invCopied:"Lien copié !",invCopiedSub:"Partage avec ta crew",joined:"Rejoint ! +100 pièces",joinedSub:"Bienvenue dans la crew",members:"membres"},
-    ob:{tagline:"Le Défi Flash Mondial",chooseLang:"Choisis ta langue",next:"SUIVANT",start:"C'EST PARTI",namePh:"Ton pseudo",nameLbl:"Choisis ton pseudo",avLbl:"Choisis ton personnage",skip:"Passer"},
-    chs:["Fais ta tête la plus terrifiante MAINTENANT","Prends la pose d'un super-héros qui atterrit","Trouve quelque chose de rouge en 20 secondes","Beatboxe pendant 15 secondes","Montre ton mouvement de danse signature","Explique la physique quantique en 10 secondes","Pleure comme si tu venais de perdre la Coupe du Monde"],
-    go:"C'EST PARTI!",
-  },
-};
-const RANKS=[
-  {id:"rookie",label:"ROOKIE",icon:"🌱",color:"#94A3B8",g1:"#334155",g2:"#1E293B",min:0,max:1000,perks:[]},
-  {id:"riser",label:"RISER",icon:"⚡",color:"#22D3EE",g1:"#0891B2",g2:"#0E7490",min:1000,max:3000,perks:["Vote weight ×1.2"]},
-  {id:"spark",label:"SPARK",icon:"🔥",color:"#F59E0B",g1:"#D97706",g2:"#B45309",min:3000,max:7000,perks:["Vote weight ×1.5","Coin bonus +10%"]},
-  {id:"blaze",label:"BLAZE",icon:"💥",color:"#F97316",g1:"#EA580C",g2:"#C2410C",min:7000,max:15000,perks:["Vote weight ×2","Shield once/week"]},
-  {id:"phantom",label:"PHANTOM",icon:"👻",color:"#A855F7",g1:"#9333EA",g2:"#7E22CE",min:15000,max:30000,perks:["Vote weight ×3","Invisible mode"]},
-  {id:"god",label:"DAREZ GOD",icon:"👑",color:"#FFD700",g1:"#F59E0B",g2:"#D97706",min:30000,max:Infinity,perks:["Vote weight ×5","All powers free"]},
-];
-const CHALLENGES=[
-  {id:1,emoji:"😱",timer:45,xp:120,coins:30},
-  {id:2,emoji:"⚡",timer:30,xp:150,coins:40},
-  {id:3,emoji:"🔴",timer:25,xp:100,coins:25},
-  {id:4,emoji:"🎤",timer:20,xp:180,coins:50},
-  {id:5,emoji:"🕺",timer:30,xp:160,coins:45},
-  {id:6,emoji:"🤯",timer:12,xp:250,coins:70},
-  {id:7,emoji:"🎭",timer:30,xp:200,coins:55},
-];
-const FLASH_TIMES=[{h:8,m:30},{h:17,m:30},{h:21,m:0}];
-const FLASH_DURATION_MIN=30;
-const MOCK_PLAYERS=[
-  {id:"p1",name:"zara_flash 🇧🇷",avId:"blaze",xp:8420,score:9200,coins:340,streak:12,flag:"🇧🇷"},
-  {id:"p2",name:"drift.exe 🇯🇵",avId:"ninja",xp:7100,score:8750,coins:210,streak:7,flag:"🇯🇵"},
-  {id:"p3",name:"neon_leo 🇫🇷",avId:"fox",xp:6300,score:8100,coins:180,streak:5,flag:"🇫🇷"},
-  {id:"p4",name:"sky.wav 🇺🇸",avId:"thunder",xp:5800,score:7600,coins:150,streak:3,flag:"🇺🇸"},
-  {id:"p5",name:"luna_riot 🇪🇸",avId:"sakura",xp:4200,score:6900,coins:120,streak:9,flag:"🇪🇸"},
-];
-const MOCK_LEAGUES=[
-  {id:"l1",name:"CHAOS CREW",badge:"💥",color:"#FF6B00",members:847,rank:1,weeklyXP:12400},
-  {id:"l2",name:"SHADOW GUILD",badge:"👻",color:"#A855F7",members:623,rank:2,weeklyXP:9800},
-  {id:"l3",name:"BLAZE SQUAD",badge:"🔥",color:"#F97316",members:512,rank:3,weeklyXP:8200},
-  {id:"l4",name:"CRYSTAL TEAM",badge:"💎",color:"#22D3EE",members:389,rank:4,weeklyXP:6100},
-];
-function getRank(xp){return RANKS.slice().reverse().find(r=>xp>=r.min)||RANKS[0];}
-function getAv(id){return AVS.find(a=>a.id===id)||AVS[0];}
-function fmtCountdown(secs){if(secs<=0)return"0:00";const m=Math.floor(secs/60),s=secs%60;return`${m}:${String(s).padStart(2,"0")}`;}
+window.__DAREZ.AvatarSVG=AvatarSVG;
+
+const CSS=`
+:root{--pk:#FF6B00;--pu:#C084FC;--yw:#FBBF24;--or:#FB923C;--gn:#22C55E;--bl:#3B82F6;--ink:#1E1B2E;--mu:#94A3B8;--bg:#F8F7FF}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'Nunito',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.app{display:flex;flex-direction:column;height:100%;background:var(--bg)}
+.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.07);padding:8px 0 calc(8px + env(safe-area-inset-bottom));flex-shrink:0;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;cursor:pointer;padding:4px 0;transition:transform .12s;position:relative}
+.nb:active{transform:scale(.88)}
+.nb.active .ni{filter:drop-shadow(0 0 6px var(--pk))}
+.nb.active .nl{color:var(--pk)}
+.ni{font-size:22px;line-height:1}
+.nl{font-size:9px;font-weight:900;color:var(--mu);letter-spacing:.3px}
+.nbadge{position:absolute;top:0;right:calc(50% - 18px);background:var(--pk);color:#fff;border-radius:999px;min-width:16px;height:16px;font-size:9px;font-weight:900;display:grid;place-items:center;padding:0 4px}
+.card{background:#fff;border-radius:24px;box-shadow:0 4px 16px rgba(0,0,0,.07)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes xpFill{from{width:0}}
+@keyframes barFill{from{width:0}}
+`;
+window.__DAREZ.CSS=CSS;
+
 function useFlashState(){
   const[fs,setFs]=useState(()=>{
     const now=new Date(),h=now.getHours(),m=now.getMinutes();
-    for(let i=0;i<FLASH_TIMES.length;i++){
-      const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;
-      if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();return{status:"live",index:i,secsRemaining:secs,next:0};}
-    }
+    for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();return{status:"live",index:i,secsRemaining:secs,next:0};}}
     const now2=h*60+m;
     for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m;if(start>now2){const secs=(start-now2)*60-now.getSeconds();return{status:"next",index:i,secsRemaining:0,next:secs};}}
-    const tomorrow=FLASH_TIMES[0],secs=(tomorrow.h*60+tomorrow.m-(now2-1440))*60;
-    return{status:"next",index:0,secsRemaining:0,next:Math.max(0,secs)};
+    return{status:"next",index:0,secsRemaining:0,next:3600};
   });
   useEffect(()=>{
     const id=setInterval(()=>{
       const now=new Date(),h=now.getHours(),m=now.getMinutes();
-      for(let i=0;i<FLASH_TIMES.length;i++){
-        const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;
-        if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();setFs({status:"live",index:i,secsRemaining:secs,next:0});return;}
-      }
+      for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();setFs({status:"live",index:i,secsRemaining:secs,next:0});return;}}
       const now2=h*60+m;
       for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m;if(start>now2){const secs=(start-now2)*60-now.getSeconds();setFs({status:"next",index:i,secsRemaining:0,next:secs});return;}}
       setFs({status:"next",index:0,secsRemaining:0,next:0});
@@ -260,15 +211,184 @@ function useFlashState(){
   },[]);
   return fs;
 }
+
 function Particles({trigger}){
   const[ps,setPs]=useState([]);
-  useEffect(()=>{if(!trigger)return;setPs(Array.from({length:18},(_,i)=>({id:Date.now()+i,x:Math.random()*100,c:["#FF6B00","#C084FC","#FFE600","#00E5FF","#FF3366"][i%5],d:2+Math.random()*2})));setTimeout(()=>setPs([]),3000);},[trigger]);
-  return(<div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:999}}>{ps.map(p=>(<div key={p.id} style={{position:"absolute",left:`${p.x}%`,top:"-10px",width:8,height:8,borderRadius:"50%",background:p.c,animation:`fall ${p.d}s linear forwards`}}/>))}</div>);
+  useEffect(()=>{if(!trigger)return;setPs(Array.from({length:16},(_,i)=>({id:Date.now()+i,x:Math.random()*100,c:["#FF6B00","#C084FC","#FFE600","#00E5FF","#FF3366"][i%5],d:2+Math.random()*2})));setTimeout(()=>setPs([]),3000);},[trigger]);
+  return React.createElement("div",{style:{position:"fixed",inset:0,pointerEvents:"none",zIndex:999}},
+    ...ps.map(p=>React.createElement("div",{key:p.id,style:{position:"absolute",left:`${p.x}%`,top:"-10px",width:8,height:8,borderRadius:"50%",background:p.c,animation:`fall ${p.d}s linear forwards`}}))
+  );
 }
+
 function Notif({notif}){
   if(!notif)return null;
-  return(<div style={{position:"fixed",top:56,left:"50%",transform:"translateX(-50%)",background:notif.color||"var(--pk)",borderRadius:999,padding:"10px 20px",display:"flex",alignItems:"center",gap:8,zIndex:800,boxShadow:"0 6px 24px rgba(0,0,0,.2)",animation:"slideDown .3s ease-out",whiteSpace:"nowrap"}}><span style={{fontSize:18}}>{notif.icon}</span><div><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"#fff"}}>{notif.text}</div>{notif.sub&&<div style={{fontSize:10,fontWeight:800,color:"rgba(255,255,255,.75)"}}>{notif.sub}</div>}</div></div>);
+  return React.createElement("div",{style:{position:"fixed",top:56,left:"50%",transform:"translateX(-50%)",background:notif.color||"var(--pk)",borderRadius:999,padding:"10px 20px",display:"flex",alignItems:"center",gap:8,zIndex:800,boxShadow:"0 6px 24px rgba(0,0,0,.2)",whiteSpace:"nowrap"}},
+    React.createElement("span",{style:{fontSize:18}},notif.icon),
+    React.createElement("div",null,
+      React.createElement("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"#fff"}},notif.text),
+      notif.sub&&React.createElement("div",{style:{fontSize:10,fontWeight:800,color:"rgba(255,255,255,.75)"}},notif.sub)
+    )
+  );
 }
+
+function FlashWidget({t,onStart}){
+  const fs=useFlashState();const isLive=fs.status==="live";
+  const ch=CHALLENGES[fs.index%CHALLENGES.length];
+  const M=React.createElement;
+  return M("div",{onClick:()=>{if(isLive){SFX.zap();onStart();}else SFX.tap();},style:{background:"#fff",borderRadius:24,margin:"12px 16px 0",padding:16,cursor:"pointer",boxShadow:isLive?"0 6px 28px rgba(255,107,0,.22)":"0 4px 18px rgba(0,0,0,.07)",border:isLive?"2px solid rgba(255,107,0,.3)":"2px solid transparent",transition:"all .2s",position:"relative",overflow:"hidden"}},
+    isLive&&M("div",{style:{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(255,107,0,.04),rgba(192,132,252,.03))"}}),
+    M("div",{style:{display:"flex",alignItems:"center",gap:14,position:"relative",zIndex:1}},
+      M("div",{style:{width:12,height:12,borderRadius:"50%",background:isLive?"#FF6B00":"#94A3B8",boxShadow:isLive?"0 0 10px #FF6B00":"none",animation:isLive?"pulse 1.2s infinite":"none",flexShrink:0}}),
+      M("div",{style:{flex:1}},
+        M("div",{style:{fontSize:10,fontWeight:900,color:isLive?"#FF6B00":"#94A3B8",letterSpacing:1,marginBottom:3}},isLive?t.home.live:(t.home.next_fl||"NEXT")+" →"),
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#1E1B2E",lineHeight:1.2}},ch.emoji+" "+(t.chs[ch.id-1]||"")),
+        !isLive&&M("div",{style:{fontSize:11,fontWeight:900,color:"#94A3B8",marginTop:4}},"⏰ "+fmtCountdown(fs.next))
+      ),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:isLive?28:20,color:isLive?"#FF6B00":"#94A3B8",flexShrink:0}},isLive?"▶":"⏳")
+    ),
+    isLive&&M("div",{style:{height:4,background:"rgba(255,107,0,.12)",borderRadius:2,marginTop:12,overflow:"hidden"}},
+      M("div",{style:{height:"100%",width:`${(fs.secsRemaining/(FLASH_DURATION_MIN*60))*100}%`,background:"linear-gradient(90deg,#FF6B00,#C084FC)",borderRadius:2,transition:"width 1s linear"}})
+    )
+  );
+}
+
+function StreakModal({streak,t,onClose}){
+  const sk=t.sk||{title:"STREAK",days:"DAYS",keepGoing:"Keep it up!",r7:"7-day bonus: +50% XP!"};
+  return React.createElement("div",{style:{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:900,display:"flex",alignItems:"center",justifyContent:"center",padding:24,backdropFilter:"blur(12px)"},onClick:onClose},
+    React.createElement("div",{onClick:e=>e.stopPropagation(),style:{background:"linear-gradient(145deg,#FF6B00,#C084FC)",borderRadius:32,padding:"44px 28px",width:"100%",maxWidth:340,textAlign:"center",animation:"popIn .6s cubic-bezier(.2,0,.38,1.4)"}},
+      React.createElement("div",{style:{fontSize:72,marginBottom:4}},"🔥"),
+      React.createElement("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:64,color:"#fff",lineHeight:1,marginBottom:8}},streak),
+      React.createElement("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.8)",marginBottom:20}},sk.days),
+      React.createElement("div",{style:{fontSize:13,fontWeight:800,color:"rgba(255,255,255,.75)",marginBottom:24}},streak>=7?sk.r7:sk.keepGoing),
+      React.createElement("button",{onClick:onClose,style:{background:"rgba(255,255,255,.22)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:999,width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:20,cursor:"pointer"}},"LET'S GO ⚡")
+    )
+  );
+}
+
+function LangSheet({lang,setLang,onClose}){
+  return React.createElement("div",{style:{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:850,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"},onClick:onClose},
+    React.createElement("div",{onClick:e=>e.stopPropagation(),style:{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}},
+      React.createElement("div",{style:{width:40,height:4,borderRadius:2,background:"rgba(0,0,0,.1)",margin:"0 auto 22px"}}),
+      React.createElement("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}},"🌍 Language"),
+      ...Object.entries(LANGS).map(([code,l])=>
+        React.createElement("div",{key:code,onClick:()=>{SFX.tap();setLang(code);onClose();},style:{display:"flex",alignItems:"center",gap:12,padding:"14px 16px",borderRadius:16,background:lang===code?"rgba(255,107,0,.08)":"transparent",cursor:"pointer",marginBottom:4}},
+          React.createElement("span",{style:{fontSize:28}},l.flag),
+          React.createElement("span",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#1E1B2E"}},l.label),
+          lang===code&&React.createElement("span",{style:{marginLeft:"auto",color:"#FF6B00",fontSize:18}},"✓")
+        )
+      )
+    )
+  );
+}
+
+function Onboarding({lang,setLang,t,onComplete}){
+  const[step,setStep]=useState(0);
+  const[name,setName]=useState("");
+  const[avId,setAvId]=useState("sakura");
+  const ob=t.ob||{};const TOTAL=3;
+  const next=()=>{SFX.tap();if(step<TOTAL-1)setStep(s=>s+1);else{SFX.victory();onComplete({name:name||"PLAYER",avId});}};
+  const M=React.createElement;
+  const inputStyle={background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"14px 16px",color:"#fff",fontSize:18,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%",textAlign:"center"};
+  const btnStyle={width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:8};
+  return M("div",{style:{position:"fixed",inset:0,background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,maxWidth:430,margin:"0 auto"}},
+    M("div",{style:{display:"flex",gap:8,marginBottom:32}},
+      ...Array.from({length:TOTAL}).map((_,i)=>M("div",{key:i,style:{width:i===step?24:8,height:8,borderRadius:4,background:i===step?"#FF6B00":"rgba(255,255,255,.2)",transition:"width .3s"}}))
+    ),
+    step===0&&M("div",{style:{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:72,background:"linear-gradient(135deg,#FF6B00,#C084FC)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1}},"DAREZ"),
+      M("div",{style:{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.4)",letterSpacing:2,marginBottom:16}},ob.tagline||"The Global Flash Challenge"),
+      M("div",{style:{width:"100%",display:"flex",flexDirection:"column",gap:10}},
+        ...Object.entries(LANGS).map(([code,l])=>
+          M("div",{key:code,onClick:()=>{SFX.tap();setLang(code);},style:{display:"flex",alignItems:"center",gap:12,background:lang===code?"rgba(255,107,0,.15)":"rgba(255,255,255,.06)",border:lang===code?"1.5px solid rgba(255,107,0,.6)":"1.5px solid rgba(255,255,255,.1)",borderRadius:16,padding:"14px 16px",cursor:"pointer"}},
+            M("span",{style:{fontSize:28}},l.flag),
+            M("span",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff"}},l.label),
+            lang===code&&M("span",{style:{marginLeft:"auto",color:"#FF6B00",fontSize:20}},"✓")
+          )
+        )
+      ),
+      M("button",{onClick:next,style:btnStyle},(ob.next||"NEXT")+" →")
+    ),
+    step===1&&M("div",{style:{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}},
+      M("div",{style:{fontSize:64}},"👤"),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}},ob.nameLbl||"Pick your username"),
+      M("input",{placeholder:ob.namePh||"Username",value:name,onChange:e=>setName(e.target.value),maxLength:20,autoFocus:true,style:inputStyle}),
+      M("button",{onClick:next,style:btnStyle},(ob.next||"NEXT")+" →"),
+      M("button",{onClick:()=>onComplete({name:"PLAYER",avId}),style:{background:"none",border:"none",color:"rgba(255,255,255,.4)",fontSize:13,cursor:"pointer",fontWeight:800,marginTop:4}},ob.skip||"Skip")
+    ),
+    step===2&&M("div",{style:{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:12}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}},ob.avLbl||"Pick your character"),
+      M("div",{style:{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,width:"100%",maxHeight:320,overflowY:"auto"}},
+        ...AVS.map(av=>M("div",{key:av.id,onClick:()=>{SFX.boing();setAvId(av.id);},style:{display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:8,borderRadius:16,background:avId===av.id?"rgba(255,107,0,.2)":"rgba(255,255,255,.05)",border:avId===av.id?"1.5px solid #FF6B00":"1.5px solid transparent",cursor:"pointer"}},
+          React.createElement(AvatarSVG,{av,size:54}),
+          M("span",{style:{fontSize:9,fontWeight:800,color:"rgba(255,255,255,.6)"}},av.name)
+        ))
+      ),
+      M("button",{onClick:next,style:{...btnStyle,marginTop:4}},(ob.start||"LET'S GO")+" ⚡")
+    )
+  );
+}
+window.__DAREZ.Onboarding=Onboarding;
+window.__DAREZ.useFlashState=useFlashState;
+window.__DAREZ.Particles=Particles;
+window.__DAREZ.Notif=Notif;
+window.__DAREZ.FlashWidget=FlashWidget;
+window.__DAREZ.StreakModal=StreakModal;
+window.__DAREZ.LangSheet=LangSheet;
+</script>
+<script>
+// BLOCK 3 — Screens + App
+const{AvatarSVG,CSS,useFlashState,Particles,Notif,FlashWidget,StreakModal,LangSheet,Onboarding}=window.__DAREZ;
+
+function HomeScreen({onStart,showNotif,t,userAvId,userName,streak,onStreakClick,showLS}){
+  const rank=getRank(ME.xp);const th=t.home;
+  const nr=RANKS[RANKS.indexOf(rank)+1];
+  const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
+  const M=React.createElement;
+  const feed=[{p:MOCK_PLAYERS[0],ch:CHALLENGES[4],time:"2m"},{p:MOCK_PLAYERS[1],ch:CHALLENGES[6],time:"8m"},{p:MOCK_PLAYERS[2],ch:CHALLENGES[3],time:"15m"}];
+  return M("div",null,
+    M("div",{style:{padding:"20px 18px 18px",background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}},
+      M("div",{style:{position:"absolute",width:200,height:200,borderRadius:"50%",background:"rgba(255,107,0,.22)",top:-70,right:-50,filter:"blur(40px)"}}),
+      M("div",{style:{display:"flex",alignItems:"center",gap:13,position:"relative",zIndex:2,marginBottom:14}},
+        M("div",{style:{cursor:"pointer"},onClick:showLS},M(AvatarSVG,{av:getAv(userAvId),size:52})),
+        M("div",{style:{flex:1}},
+          M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff"}},userName),
+          M("div",{style:{display:"flex",alignItems:"center",gap:8,marginTop:6,flexWrap:"wrap"}},
+            M("div",{style:{padding:"4px 12px",borderRadius:"999px",fontSize:10,fontWeight:900,background:"rgba(255,255,255,.12)",color:rank.color,border:`1.5px solid ${rank.color}44`}},rank.icon+" "+rank.label),
+            M("div",{onClick:onStreakClick,style:{display:"flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:"999px",background:"rgba(251,191,36,.15)",border:"1.5px solid rgba(251,191,36,.3)",fontSize:11,fontWeight:900,color:"#FBBF24",cursor:"pointer"}},"🔥 "+streak+"d"),
+            M("div",{style:{fontSize:11,fontWeight:900,color:"#FBBF24",background:"rgba(251,191,36,.12)",padding:"4px 10px",borderRadius:"999px"}},"🪙 "+ME.coins)
+          )
+        )
+      ),
+      M("div",{style:{position:"relative",zIndex:2}},
+        M("div",{style:{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:800,marginBottom:6}},
+          M("span",null,rank.icon+" "+rank.label),
+          nr&&M("span",null,(nr.min-ME.xp).toLocaleString()+" "+th.xpTo)
+        ),
+        M("div",{style:{height:10,background:"rgba(255,255,255,.1)",borderRadius:5,overflow:"hidden"}},
+          M("div",{style:{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${rank.g1},${rank.g2})`,borderRadius:5}})
+        )
+      )
+    ),
+    M(FlashWidget,{t,onStart}),
+    M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#1E1B2E",padding:"16px 18px 8px"}},th.feed),
+    ...feed.map((item,i)=>M("div",{key:i,style:{background:"#fff",borderRadius:20,margin:"0 16px 12px",overflow:"hidden",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}},
+      M("div",{style:{display:"flex",alignItems:"center",gap:10,padding:"13px 14px 8px"}},
+        M(AvatarSVG,{av:getAv(item.p.avId),size:38}),
+        M("div",{style:{flex:1}},
+          M("div",{style:{fontWeight:900,fontSize:13}},item.p.name+" "+item.p.flag),
+          M("div",{style:{fontSize:10,fontWeight:700,color:"#94A3B8",marginTop:1}},item.time+" "+th.ago)
+        )
+      ),
+      M("div",{style:{padding:"0 14px 10px",fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#1E1B2E"}},item.ch.emoji+" "+(t.chs[item.ch.id-1]||"")),
+      M("div",{style:{height:90,background:"linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.07))",margin:"0 14px",borderRadius:16,display:"grid",placeItems:"center"}},M(AvatarSVG,{av:getAv(item.p.avId),size:60})),
+      M("div",{style:{display:"flex",borderTop:"1px solid rgba(0,0,0,.06)"}},
+        ...["🔥 POW","💬 Reply","📤 Share"].map((label,j)=>M("button",{key:j,onClick:()=>{SFX.coin();showNotif({icon:"🔥",text:"POW!",sub:"+5 coins",color:"#FF6B00"});},style:{flex:1,padding:"11px 4px",border:"none",background:"none",fontSize:11,fontWeight:900,cursor:"pointer",color:"#94A3B8",borderRight:j<2?"1px solid rgba(0,0,0,.06)":"none"}},label))
+      )
+    )),
+    M("div",{style:{height:20}})
+  );
+}
+
 function ChallengeFlow({onDone,showNotif,t,userAvId,userName}){
   const[phase,setPhase]=useState("cd");
   const[cdN,setCdN]=useState(3);
@@ -276,572 +396,183 @@ function ChallengeFlow({onDone,showNotif,t,userAvId,userName}){
   const[tLeft,setTLeft]=useState(0);
   const[voted,setVoted]=useState(null);
   const[confetti,setConfetti]=useState(0);
-  const[grad]=useState(()=>["linear-gradient(160deg,#FF6B00,#7C3AED)","linear-gradient(160deg,#FB923C,#FF6B00)","linear-gradient(160deg,#38BDF8,#3B82F6)"][Math.floor(Math.random()*3)]);
   const tRef=useRef(null);
-  const tc=t.ch,tv=t.vote,tr=t.res;
+  const M=React.createElement;
+  const grads=["linear-gradient(160deg,#FF6B00,#7C3AED)","linear-gradient(160deg,#FB923C,#FF6B00)","linear-gradient(160deg,#38BDF8,#3B82F6)"];
+  const[grad]=useState(()=>grads[Math.floor(Math.random()*grads.length)]);
   useEffect(()=>{if(phase!=="cd")return;if(cdN===0){SFX.tick(0);setTimeout(()=>setPhase("ch"),550);return;}SFX.tick(cdN);const tm=setTimeout(()=>setCdN(n=>n-1),1000);return()=>clearTimeout(tm);},[phase,cdN]);
   useEffect(()=>{if(phase!=="ch")return;setTLeft(ch.timer);let e=0;tRef.current=setInterval(()=>{e++;const l=ch.timer-e;setTLeft(l);if(l<=5&&l>0)SFX.danger();if(l<=0){clearInterval(tRef.current);SFX.zap();setPhase("vote");}},1000);return()=>clearInterval(tRef.current);},[phase]);
-  const submit=async()=>{if(!voted)return;SFX.voteLock();setConfetti(c=>c+1);showNotif({icon:"⚡",text:`+${ch.xp} XP!`,sub:t.ch.done,color:"var(--yw)"});setTimeout(()=>setPhase("res"),700);};
   const sorted=[...MOCK_PLAYERS].sort((a,b)=>b.score-a.score);
   const maxS=sorted[0].score;
-  return(
-    <div style={{flex:1,display:"flex",flexDirection:"column",position:"relative"}}>
-      <Particles trigger={confetti}/>
-      {phase==="cd"&&(
-        <div style={{position:"absolute",inset:0,background:grad,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.7)",letterSpacing:4,marginBottom:12}}>{tc.getReady}</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:120,color:"#fff",lineHeight:1,animation:"popIn .4s cubic-bezier(.2,0,.38,1.4)"}} key={cdN}>{cdN===0?t.go:cdN}</div>
-        </div>
-      )}
-      {phase==="ch"&&(
-        <div style={{position:"absolute",inset:0,background:grad,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,gap:20}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:cdN<=5?"100px":"80px",color:cdN<=5?"#FF3366":"#fff",lineHeight:1,transition:"all .3s"}}>{tLeft}</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",textAlign:"center",lineHeight:1.3}}>{ch.emoji} {t.chs[ch.id-1]}</div>
-          <button onClick={()=>{clearInterval(tRef.current);SFX.zap();setPhase("vote");}} style={{marginTop:"auto",padding:"14px 32px",borderRadius:999,background:"rgba(255,255,255,.22)",border:"2px solid rgba(255,255,255,.5)",color:"#fff",fontFamily:"'Fredoka One',sans-serif",fontSize:18,cursor:"pointer"}}>{tc.done}</button>
-        </div>
-      )}
-      {phase==="vote"&&(
-        <div style={{padding:"24px 18px",display:"flex",flexDirection:"column",gap:13,flex:1,overflow:"auto"}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"var(--ink)",lineHeight:1.2}}>{tv.q}</div>
-          <p style={{fontSize:12,fontWeight:800,color:"var(--mu)",marginTop:-6}}>{tv.hint}</p>
-          {[{id:"a",avId:"blaze",name:"zara_flash 🇧🇷"},{id:"b",avId:"ninja",name:"drift.exe 🇯🇵"},{id:"c",avId:"fox",name:"neon_leo 🇫🇷"}].map((o,i)=>(
-            <div key={o.id} onClick={()=>{SFX.tap();setVoted(o.id);}} style={{background:voted===o.id?"linear-gradient(135deg,rgba(255,107,0,.12),rgba(192,132,252,.08))":"#fff",borderRadius:20,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:voted===o.id?"0 0 0 2px var(--pk),0 6px 24px rgba(255,107,0,.15)":"0 3px 14px rgba(0,0,0,.08)",transition:"all .18s",animationDelay:`${i*.08}s`}}>
-              <AvatarSVG av={getAv(o.avId)} size={46}/>
-              <div style={{flex:1}}><div style={{fontWeight:900,fontSize:14}}>{o.name}</div><div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>#{i+1}</div></div>
-              <div style={{width:24,height:24,borderRadius:"50%",background:voted===o.id?"var(--pk)":"rgba(0,0,0,.06)",display:"grid",placeItems:"center",color:"#fff",fontSize:13,fontWeight:900}}>{voted===o.id?"✓":""}</div>
-            </div>
-          ))}
-          <button onClick={submit} style={{padding:16,borderRadius:"999px",background:voted?"linear-gradient(135deg,var(--pk),var(--pu))":"rgba(0,0,0,.07)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:voted?"#fff":"var(--mu)",cursor:"pointer",transition:"all .2s",letterSpacing:1,marginTop:"auto"}}>{tv.lock} {voted?"→":""}</button>
-        </div>
-      )}
-      {phase==="res"&&(
-        <div style={{padding:"20px 18px",display:"flex",flexDirection:"column",gap:13,overflow:"auto",flex:1}}>
-          <div style={{textAlign:"center",animation:"popIn .5s cubic-bezier(.2,0,.38,1.4)"}}><div style={{fontSize:52}}>🏆</div><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--ink)"}}>{tr.title}</div></div>
-          <div style={{display:"flex",gap:8}}>
-            {[{n:`+${ch.xp}`,l:tr.xp,c:"var(--pk)"},{n:`+${Math.round(ch.xp*.3)}`,l:tr.coins||"COINS",c:"var(--yw)"},{n:"#4",l:tr.rank,c:"var(--gn)"}].map((item,i)=>(
-              <div key={i} style={{flex:1,background:"#fff",borderRadius:16,padding:"12px 8px",textAlign:"center",boxShadow:"0 3px 12px rgba(0,0,0,.07)"}}>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:item.c,lineHeight:1}}>{item.n}</div>
-                <div style={{fontSize:9,fontWeight:900,color:"var(--mu)",marginTop:4,letterSpacing:.5}}>{item.l}</div>
-              </div>
-            ))}
-          </div>
-          {sorted.map((p,i)=>(
-            <div key={p.id} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:"#fff",borderRadius:16,boxShadow:"0 2px 10px rgba(0,0,0,.06)",animationDelay:`${i*.06}s`}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-              <AvatarSVG av={getAv(p.avId)} size={36}/>
-              <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{p.name} {p.flag}</div><div style={{height:4,background:"rgba(0,0,0,.06)",borderRadius:2,marginTop:4}}><div style={{height:"100%",width:`${(p.score/maxS)*100}%`,background:"linear-gradient(90deg,var(--pk),var(--pu))",borderRadius:2}}/></div></div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"var(--pk)"}}>{p.score.toLocaleString()}</div>
-            </div>
-          ))}
-          <button onClick={()=>{SFX.coin();onDone({xp:ch.xp,score:9200,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:14,borderRadius:"999px",background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",color:"#fff",fontFamily:"'Fredoka One',sans-serif",fontSize:17,cursor:"pointer",boxShadow:"0 6px 24px rgba(255,107,0,.3)",letterSpacing:1}}>📤 {tr.share}</button>
-          <button onClick={()=>{SFX.whoosh();onDone({xp:ch.xp,score:9200,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:15,borderRadius:"999px",background:"linear-gradient(135deg,#1E1B2E,#2D1B5E)",color:"#fff",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:17,cursor:"pointer",letterSpacing:1}}>⚡ {tr.back}</button>
-        </div>
-      )}
-    </div>
+  return M("div",{style:{flex:1,display:"flex",flexDirection:"column",position:"relative"}},
+    M(Particles,{trigger:confetti}),
+    phase==="cd"&&M("div",{style:{position:"absolute",inset:0,background:grad,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.7)",letterSpacing:4,marginBottom:12}},t.ch.getReady),
+      M("div",{key:cdN,style:{fontFamily:"'Fredoka One',sans-serif",fontSize:120,color:"#fff",lineHeight:1,animation:"popIn .4s cubic-bezier(.2,0,.38,1.4)"}},cdN===0?t.go:cdN)
+    ),
+    phase==="ch"&&M("div",{style:{position:"absolute",inset:0,background:grad,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,gap:20}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:tLeft<=5?100:80,color:tLeft<=5?"#FF3366":"#fff",lineHeight:1,transition:"all .3s"}},tLeft),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",textAlign:"center",lineHeight:1.3}},ch.emoji+" "+(t.chs[ch.id-1]||"")),
+      M("button",{onClick:()=>{clearInterval(tRef.current);SFX.zap();setPhase("vote");},style:{marginTop:"auto",padding:"14px 32px",borderRadius:999,background:"rgba(255,255,255,.22)",border:"2px solid rgba(255,255,255,.5)",color:"#fff",fontFamily:"'Fredoka One',sans-serif",fontSize:18,cursor:"pointer"}},t.ch.done)
+    ),
+    phase==="vote"&&M("div",{style:{padding:"24px 18px",display:"flex",flexDirection:"column",gap:13,flex:1,overflow:"auto"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#1E1B2E",lineHeight:1.2}},t.vote.q),
+      M("p",{style:{fontSize:12,fontWeight:800,color:"#94A3B8",marginTop:-6}},t.vote.hint),
+      ...[{id:"a",avId:"blaze",name:"zara_flash 🇧🇷"},{id:"b",avId:"ninja",name:"drift.exe 🇯🇵"},{id:"c",avId:"fox",name:"neon_leo 🇫🇷"}].map((o,i)=>
+        M("div",{key:o.id,onClick:()=>{SFX.tap();setVoted(o.id);},style:{background:voted===o.id?"rgba(255,107,0,.08)":"#fff",borderRadius:20,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:voted===o.id?"0 0 0 2px #FF6B00,0 6px 24px rgba(255,107,0,.15)":"0 3px 14px rgba(0,0,0,.08)",transition:"all .18s"}},
+          M(AvatarSVG,{av:getAv(o.avId),size:46}),
+          M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:14}},o.name),M("div",{style:{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:2}},"#"+(i+1))),
+          M("div",{style:{width:24,height:24,borderRadius:"50%",background:voted===o.id?"#FF6B00":"rgba(0,0,0,.06)",display:"grid",placeItems:"center",color:"#fff",fontSize:13,fontWeight:900}},voted===o.id?"✓":"")
+        )
+      ),
+      M("button",{onClick:()=>{if(!voted)return;SFX.voteLock();setConfetti(c=>c+1);showNotif({icon:"⚡",text:`+${ch.xp} XP!`,sub:t.ch.done,color:"#FBBF24"});setTimeout(()=>setPhase("res"),700);},style:{padding:16,borderRadius:"999px",background:voted?"linear-gradient(135deg,#FF6B00,#C084FC)":"rgba(0,0,0,.07)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:voted?"#fff":"#94A3B8",cursor:"pointer",transition:"all .2s",letterSpacing:1,marginTop:"auto"}},t.vote.lock+(voted?" →":""))
+    ),
+    phase==="res"&&M("div",{style:{padding:"20px 18px",display:"flex",flexDirection:"column",gap:13,overflow:"auto",flex:1}},
+      M("div",{style:{textAlign:"center",animation:"popIn .5s cubic-bezier(.2,0,.38,1.4)"}},M("div",{style:{fontSize:52}},"🏆"),M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#1E1B2E"}},t.res.title)),
+      M("div",{style:{display:"flex",gap:8}},
+        ...[{n:`+${ch.xp}`,l:t.res.xp,c:"#FF6B00"},{n:`+${Math.round(ch.xp*.3)}`,l:t.res.coins||"COINS",c:"#FBBF24"},{n:"#4",l:t.res.rank,c:"#22C55E"}].map((item,i)=>
+          M("div",{key:i,style:{flex:1,background:"#fff",borderRadius:16,padding:"12px 8px",textAlign:"center",boxShadow:"0 3px 12px rgba(0,0,0,.07)"}},
+            M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:item.c,lineHeight:1}},item.n),
+            M("div",{style:{fontSize:9,fontWeight:900,color:"#94A3B8",marginTop:4,letterSpacing:.5}},item.l)
+          )
+        )
+      ),
+      ...sorted.map((p,i)=>M("div",{key:p.id,style:{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:"#fff",borderRadius:16,boxShadow:"0 2px 10px rgba(0,0,0,.06)"}},
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}},i===0?"🥇":i===1?"🥈":i===2?"🥉":"#"+(i+1)),
+        M(AvatarSVG,{av:getAv(p.avId),size:36}),
+        M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:13}},p.name+" "+p.flag),M("div",{style:{height:4,background:"rgba(0,0,0,.06)",borderRadius:2,marginTop:4}},M("div",{style:{height:"100%",width:`${(p.score/maxS)*100}%`,background:"linear-gradient(90deg,#FF6B00,#C084FC)",borderRadius:2}}))),
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}},p.score.toLocaleString())
+      )),
+      M("button",{onClick:()=>{SFX.whoosh();onDone({xp:ch.xp,score:9200,chText:t.chs[ch.id-1],chEmoji:ch.emoji});},style:{padding:15,borderRadius:"999px",background:"linear-gradient(135deg,#1E1B2E,#2D1B5E)",color:"#fff",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:17,cursor:"pointer",letterSpacing:1}},"⚡ "+t.res.back)
+    )
   );
 }
-function HomeScreen({onStart,showNotif,t,userAvId,userName,streak,onStreakClick,lang,showLS}){
-  const th=t.home;const rank=getRank(ME.xp);
-  const nri=RANKS.indexOf(rank)+1;const nr=RANKS[nri];
-  const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
-  const feed=[
-    {p:MOCK_PLAYERS[0],ch:CHALLENGES[4],time:"2m",score:9200},
-    {p:MOCK_PLAYERS[1],ch:CHALLENGES[6],time:"8m",score:8100},
-    {p:MOCK_PLAYERS[2],ch:CHALLENGES[3],time:"15m",score:7600},
-  ];
-  return(
-    <div>
-      <div style={{padding:"20px 18px 18px",background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:200,height:200,borderRadius:"50%",background:"rgba(255,107,0,.22)",top:-70,right:-50,filter:"blur(40px)"}}/>
-        <div style={{position:"absolute",width:130,height:130,borderRadius:"50%",background:"rgba(192,132,252,.18)",bottom:-40,left:10,filter:"blur(30px)"}}/>
-        <div style={{display:"flex",alignItems:"center",gap:13,position:"relative",zIndex:2,marginBottom:14}}>
-          <div style={{cursor:"pointer"}} onClick={showLS}><AvatarSVG av={getAv(userAvId)} size={52}/></div>
-          <div style={{flex:1}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,justifyContent:"space-between"}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff"}}>{userName}</div>
-            </div>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginTop:6,flexWrap:"wrap"}}>
-              <div style={{padding:"4px 12px",borderRadius:"999px",fontSize:10,fontWeight:900,background:"rgba(255,255,255,.12)",color:rank.color,border:`1.5px solid ${rank.color}44`}}>{rank.icon} {rank.label}</div>
-              <div onClick={onStreakClick} style={{display:"flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:"999px",background:"rgba(251,191,36,.15)",border:"1.5px solid rgba(251,191,36,.3)",fontSize:11,fontWeight:900,color:"#FBBF24",cursor:"pointer"}}>🔥 {streak}d</div>
-              <div style={{fontSize:11,fontWeight:900,color:"#FBBF24",background:"rgba(251,191,36,.12)",padding:"4px 10px",borderRadius:"999px"}}>🪙 {ME.coins}</div>
-            </div>
-          </div>
-        </div>
-        <div style={{position:"relative",zIndex:2}}>
-          <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:800,marginBottom:6}}>
-            <span>{rank.icon} {rank.label}</span>
-            {nr&&<span>{(nr.min-ME.xp).toLocaleString()} {th.xpTo}</span>}
-          </div>
-          <div style={{height:10,background:"rgba(255,255,255,.1)",borderRadius:5,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${rank.g1},${rank.g2})`,borderRadius:5}}/>
-          </div>
-        </div>
-      </div>
-      <FlashBar t={t}/>
-      <FlashWidget t={t} onStart={onStart} showNotif={showNotif}/>
-      <div style={{margin:"12px 16px 0",background:"linear-gradient(135deg,#0F172A,#1E1B4B)",borderRadius:20,padding:"13px 16px",display:"flex",alignItems:"center",gap:12}}>
-        <div style={{fontSize:26,flexShrink:0}}>🏆</div>
-        <div style={{flex:1}}><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"#fff"}}>SEASON 1</div><div style={{fontSize:11,fontWeight:800,color:"rgba(255,255,255,.5)",marginTop:2}}>Top 3 promote each week</div></div>
-      </div>
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#1E1B2E",padding:"16px 18px 8px"}}>{th.feed}</div>
-      {feed.map((item,i)=>(
-        <div key={i} style={{background:"#fff",borderRadius:20,margin:"0 16px 12px",overflow:"hidden",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,padding:"13px 14px 8px"}}>
-            <AvatarSVG av={getAv(item.p.avId)} size={38}/>
-            <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{item.p.name} {item.p.flag}</div><div style={{fontSize:10,fontWeight:700,color:"#94A3B8",marginTop:1}}>{item.time} {th.ago}</div></div>
-          </div>
-          <div style={{padding:"0 14px 10px",fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#1E1B2E"}}>{item.ch.emoji} {t.chs[item.ch.id-1]}</div>
-          <div style={{height:100,background:"linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.07))",margin:"0 14px",borderRadius:16,display:"grid",placeItems:"center"}}><AvatarSVG av={getAv(item.p.avId)} size={60}/></div>
-          <div style={{display:"flex",borderTop:"1px solid rgba(0,0,0,.06)"}}>
-            {[["🔥 POW",()=>{SFX.coin();showNotif({icon:"🔥",text:"POW!",sub:"+5 coins",color:"#FF6B00"});}],["💬 Reply",()=>SFX.tap()],["📤 Share",()=>SFX.coin()]].map(([label,fn],j)=>(
-              <button key={j} onClick={fn} style={{flex:1,padding:"11px 4px",border:"none",background:"none",fontSize:11,fontWeight:900,cursor:"pointer",color:"#94A3B8",borderRight:j<2?"1px solid rgba(0,0,0,.06)":"none"}}>{label}</button>
-            ))}
-          </div>
-        </div>
-      ))}
-      <div style={{height:20}}/>
-    </div>
-  );
-}
-function LeaguesScreen({showNotif,onDetail,onCreate,onInvite,t}){
-  const[tab,setTab]=useState("mine");const tl=t.lg;
-  const shown=tab==="mine"?MOCK_LEAGUES.slice(0,2):MOCK_LEAGUES.slice(2);
-  return(
-    <div>
-      <div style={{background:"linear-gradient(160deg,#FF6B00,#9333EA)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:150,height:150,borderRadius:"50%",background:"rgba(255,255,255,.1)",top:-50,right:-30}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:30,color:"#fff",position:"relative",zIndex:1}}>{tl.title}</div>
-        <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.72)",marginTop:4,position:"relative",zIndex:1}}>{tl.sub}</div>
-        <div style={{display:"flex",gap:10,marginTop:14,position:"relative",zIndex:1}}>
-          <button onClick={()=>{SFX.unlock();onCreate();}} style={{flex:1,background:"rgba(255,255,255,.22)",backdropFilter:"blur(8px)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:"999px",padding:"14px",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer"}}>⚡ {tl.create}</button>
-          <button onClick={()=>{SFX.tap();onInvite();}} style={{flex:1,background:"rgba(255,255,255,.88)",color:"#FF6B00",border:"none",borderRadius:"999px",padding:"14px",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer"}}>📤 {tl.inviteBtn}</button>
-        </div>
-      </div>
-      <div style={{display:"flex",gap:6,padding:"12px 16px 8px"}}>
-        {["mine","disc"].map(tb=>(
-          <button key={tb} onClick={()=>{SFX.tap();setTab(tb);}} style={{flex:1,padding:"10px",borderRadius:12,border:"none",background:tab===tb?"linear-gradient(135deg,#FF6B00,#C084FC)":"rgba(0,0,0,.05)",color:tab===tb?"#fff":"#94A3B8",fontFamily:"'Fredoka One',sans-serif",fontSize:14,cursor:"pointer"}}>{tb==="mine"?tl.mine:tl.disc}</button>
-        ))}
-      </div>
-      {shown.map((l,i)=>(
-        <div key={l.id} onClick={()=>{SFX.whoosh();onDetail(l);}} style={{background:"#fff",borderRadius:20,margin:"0 16px 10px",padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}}>
-          <div style={{width:50,height:50,borderRadius:14,background:`${l.color}22`,display:"grid",placeItems:"center",fontSize:24,flexShrink:0}}>{l.badge}</div>
-          <div style={{flex:1}}><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17}}>{l.name}</div><div style={{fontSize:11,fontWeight:800,color:"#94A3B8",marginTop:2}}>{l.members} {tl.members}</div></div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"#22C55E"}}>{tl.member}</div>
-        </div>
-      ))}
-      <div style={{height:20}}/>
-    </div>
-  );
-}
+
 function GlobalScreen({t,userName}){
   const sorted=[...MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
-  return(
-    <div>
-      <div style={{background:"linear-gradient(160deg,#0F172A,#1E3A5F)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:140,height:140,borderRadius:"50%",background:"rgba(56,189,248,.15)",top:-40,right:-20}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>{t.res.title}</div>
-        <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.5)",marginTop:4,position:"relative",zIndex:1}}>48,291 {t.gl.players} · {t.gl.updated}</div>
-      </div>
-      {sorted.map((p,i)=>{
-        const rank=getRank(p.xp);
-        return(
-          <div key={p.id} style={{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,width:30,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-            <AvatarSVG av={getAv(p.avId)} size={42}/>
-            <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{p.name} {p.flag} <span style={{color:rank.color}}>{rank.icon}</span></div><div style={{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:1}}>{rank.label} · 🔥{p.streak}</div></div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}}>{p.xp.toLocaleString()}</div>
-          </div>
-        );
-      })}
-      <div style={{height:20}}/>
-    </div>
+  const M=React.createElement;
+  return M("div",null,
+    M("div",{style:{background:"linear-gradient(160deg,#0F172A,#1E3A5F)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}},t.res.title),
+      M("div",{style:{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.5)",marginTop:4,position:"relative",zIndex:1}},"48,291 "+t.gl.players+" · "+t.gl.updated)
+    ),
+    ...sorted.map((p,i)=>{
+      const rank=getRank(p.xp);
+      return M("div",{key:p.id,style:{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}},
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:22,width:30,textAlign:"center"}},i===0?"🥇":i===1?"🥈":i===2?"🥉":"#"+(i+1)),
+        M(AvatarSVG,{av:getAv(p.avId),size:42}),
+        M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:13}},p.name+" "+p.flag+" "+rank.icon),M("div",{style:{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:1}},rank.label+" · 🔥"+p.streak)),
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}},p.xp.toLocaleString())
+      );
+    }),
+    M("div",{style:{height:20}})
   );
 }
-function ProfileScreen({t,userAvId,userName,streak,onStreakClick,lang,showLS}){
-  const rank=getRank(ME.xp);const tp=t.pr||{streak:"Streak",coins:"Coins",best:"Best",league:"League",powers:"RANK POWERS",noPowers:"No powers yet 💪",journey:"RANK JOURNEY",current:"NOW",xp:"XP",active:"ON",base:"Base"};
-  const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
-  return(
-    <div>
-      <div style={{background:`linear-gradient(160deg,${rank.g1},${rank.g2})`,padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:160,height:160,borderRadius:"50%",background:"rgba(255,255,255,.12)",top:-50,right:-30}}/>
-        <div style={{position:"relative",zIndex:1,display:"inline-block",marginBottom:10}}><AvatarSVG av={getAv(userAvId)} size={86}/></div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>{userName}</div>
-        <div style={{display:"flex",justifyContent:"center",marginTop:8,position:"relative",zIndex:1}}>
-          <div style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",borderRadius:"999px",padding:"5px 16px",fontWeight:900,fontSize:13,color:"#fff"}}>{rank.icon} {rank.label}</div>
-        </div>
-        <div style={{marginTop:14,position:"relative",zIndex:1}}>
-          <div style={{height:10,background:"rgba(255,255,255,.18)",borderRadius:5,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${pct}%`,background:"rgba(255,255,255,.8)",borderRadius:5}}/>
-          </div>
-          <div style={{fontSize:10,fontWeight:800,color:"rgba(255,255,255,.6)",marginTop:4}}>{ME.xp.toLocaleString()} {tp.xp}</div>
-        </div>
-      </div>
-      <div style={{display:"flex",margin:"14px 16px",background:"#fff",borderRadius:20,boxShadow:"0 4px 20px rgba(0,0,0,.07)",overflow:"hidden"}}>
-        {[[streak+"🔥",tp.streak,onStreakClick],[ME.coins+"🪙",tp.coins,null],[ME.xp+"⚡",tp.xp,null]].map(([val,label,cb],i)=>(
-          <div key={i} onClick={cb||undefined} style={{flex:1,padding:"14px 8px",textAlign:"center",borderRight:i<2?"1px solid rgba(0,0,0,.06)":"none",cursor:cb?"pointer":"default"}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#FF6B00"}}>{val}</div>
-            <div style={{fontSize:9,fontWeight:900,color:"#94A3B8",letterSpacing:.5,textTransform:"uppercase",marginTop:3}}>{label}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{padding:"0 16px"}}>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"#94A3B8",marginBottom:10}}>{tp.powers}</div>
-        {rank.perks.length===0
-          ?<div style={{textAlign:"center",padding:24,color:"#94A3B8",fontWeight:800,fontSize:13}}>{tp.noPowers}</div>
-          :rank.perks.map((perk,i)=>(
-            <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)"}}>
-              <div style={{width:36,height:36,borderRadius:12,background:"linear-gradient(135deg,#FF6B00,#C084FC)",display:"grid",placeItems:"center",fontSize:16}}>✨</div>
-              <div style={{flex:1,fontWeight:900,fontSize:13}}>{perk}</div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:11,color:"#22C55E"}}>{tp.active}</div>
-            </div>
-          ))
-        }
-      </div>
-      <div style={{padding:"8px 16px"}}>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"#94A3B8",marginBottom:10}}>{tp.journey}</div>
-        {RANKS.map((r,i)=>{
-          const unlocked=ME.xp>=r.min;const curr=r.id===getRank(ME.xp).id;
-          return(
-            <div key={r.id} style={{display:"flex",gap:12,alignItems:"center",marginBottom:8,opacity:unlocked?1:.3}}>
-              <div style={{width:40,height:40,borderRadius:12,background:unlocked?`linear-gradient(135deg,${r.g1},${r.g2})`:"#eee",display:"grid",placeItems:"center",fontSize:18,flexShrink:0}}>{r.icon}</div>
-              <div style={{flex:1}}>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,display:"flex",alignItems:"center",gap:8}}>{r.label}{curr&&<span style={{fontSize:10,background:`${r.color}22`,color:r.color,borderRadius:"999px",padding:"2px 8px",fontWeight:900}}>{tp.current}</span>}</div>
-                <div style={{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:1}}>{r.min.toLocaleString()}+ {tp.xp}</div>
-              </div>
-              {unlocked&&<span style={{color:r.color,fontSize:16}}>✓</span>}
-            </div>
-          );
-        })}
-      </div>
-      <div style={{height:20}}/>
-    </div>
-  );
-}
+
 function ShopScreen({showNotif,t}){
-  const[coins,setCoins]=useState(ME.coins);const ts=t.sh||{title:"ARSENAL",sub:"Coins · Powers · Chaos",coins:"COINS",pnames:["Silence","Shadow","Expose","Freeze","Demote"],pdescs:["Can't vote 24h","Hidden 12h","Worst score shown","XP frozen 24h","Lose 10% XP"],hits:"HITS",packs:"COIN PACKS",notEnough:"Not enough coins!",needMore:"coins short",activated:"activated!",enjoy:"Enjoy",bestDeal:"BEST DEAL",hot:"HOT",whale:"WHALE"};
-  const PENALTIES=[{id:"s",emoji:"🤫",cost:150},{id:"sh",emoji:"👤",cost:200},{id:"e",emoji:"📢",cost:180},{id:"f",emoji:"🧊",cost:250},{id:"d",emoji:"📉",cost:300}];
-  return(
-    <div>
-      <div style={{background:"linear-gradient(160deg,#4C1D95,#7C3AED)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:130,height:130,borderRadius:"50%",background:"rgba(192,132,252,.2)",top:-30,right:-20}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>DAREZ <span style={{color:"#FBBF24"}}>{ts.title}</span></div>
-        <div style={{display:"inline-flex",alignItems:"center",gap:8,marginTop:14,background:"rgba(251,191,36,.2)",borderRadius:"999px",padding:"8px 16px",position:"relative",zIndex:1}}>
-          <span style={{fontSize:20}}>🪙</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#FBBF24"}}>{coins.toLocaleString()}</span>
-        </div>
-      </div>
-      <div style={{padding:"14px 16px 0"}}>
-        {PENALTIES.map((p,i)=>(
-          <div key={p.id} onClick={()=>{if(p.cost>coins){SFX.fail();showNotif({icon:"💸",text:ts.notEnough,color:"#FF6B00"});return;}SFX.unlock();setCoins(c=>c-p.cost);showNotif({icon:p.emoji,text:`${ts.pnames[i]} ${ts.activated}`,sub:ts.enjoy,color:"#22C55E"});}} style={{background:"#fff",borderRadius:20,margin:"0 0 10px",padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:"0 3px 14px rgba(0,0,0,.07)"}}>
-            <div style={{width:46,height:46,borderRadius:14,background:"linear-gradient(135deg,#FF6B00,#C084FC)",display:"grid",placeItems:"center",fontSize:20}}>{p.emoji}</div>
-            <div style={{flex:1}}><div style={{fontWeight:900,fontSize:14}}>{ts.pnames[i]}</div><div style={{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:2}}>{ts.pdescs[i]}</div></div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#FF6B00"}}>🪙{p.cost}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{height:30}}/>
-    </div>
+  const[coins,setCoins]=useState(ME.coins);
+  const M=React.createElement;
+  const ts=t.sh||{};
+  return M("div",null,
+    M("div",{style:{background:"linear-gradient(160deg,#4C1D95,#7C3AED)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}},"DAREZ ",M("span",{style:{color:"#FBBF24"}},ts.title||"ARSENAL")),
+      M("div",{style:{display:"inline-flex",alignItems:"center",gap:8,marginTop:14,background:"rgba(251,191,36,.2)",borderRadius:"999px",padding:"8px 16px",position:"relative",zIndex:1}},
+        M("span",{style:{fontSize:20}},"🪙"),M("span",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#FBBF24"}},coins.toLocaleString())
+      )
+    ),
+    M("div",{style:{padding:"14px 16px 0"}},
+      ...PENALTIES.map((p,i)=>M("div",{key:p.id,onClick:()=>{if(p.cost>coins){SFX.fail();showNotif({icon:"💸",text:ts.notEnough||"Not enough!",color:"#FF6B00"});return;}SFX.unlock();setCoins(c=>c-p.cost);showNotif({icon:p.emoji,text:(ts.pnames&&ts.pnames[i]||"Power")+" "+(ts.activated||"activated!"),color:"#22C55E"});},style:{background:"#fff",borderRadius:20,margin:"0 0 10px",padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:"0 3px 14px rgba(0,0,0,.07)"}},
+        M("div",{style:{width:46,height:46,borderRadius:14,background:"linear-gradient(135deg,#FF6B00,#C084FC)",display:"grid",placeItems:"center",fontSize:20}},p.emoji),
+        M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:14}},ts.pnames&&ts.pnames[i]||"Power"),M("div",{style:{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:2}},ts.pdescs&&ts.pdescs[i]||"")),
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#FF6B00"}},"🪙"+p.cost)
+      ))
+    ),
+    M("div",{style:{height:30}})
   );
 }
+
+function LeaguesScreen({showNotif,onDetail,onCreate,t}){
+  const[tab,setTab]=useState("mine");const tl=t.lg||{};const M=React.createElement;
+  const shown=tab==="mine"?MOCK_LEAGUES.slice(0,2):MOCK_LEAGUES.slice(2);
+  return M("div",null,
+    M("div",{style:{background:"linear-gradient(160deg,#FF6B00,#9333EA)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:30,color:"#fff",position:"relative",zIndex:1}},tl.title||"LEAGUES"),
+      M("div",{style:{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.72)",marginTop:4,position:"relative",zIndex:1}},tl.sub||""),
+      M("div",{style:{display:"flex",gap:10,marginTop:14,position:"relative",zIndex:1}},
+        M("button",{onClick:()=>{SFX.unlock();onCreate();},style:{flex:1,background:"rgba(255,255,255,.22)",backdropFilter:"blur(8px)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:"999px",padding:"14px",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer"}},"⚡ "+(tl.create||"CREATE"))
+      )
+    ),
+    M("div",{style:{display:"flex",gap:6,padding:"12px 16px 8px"}},
+      ...["mine","disc"].map(tb=>M("button",{key:tb,onClick:()=>{SFX.tap();setTab(tb);},style:{flex:1,padding:"10px",borderRadius:12,border:"none",background:tab===tb?"linear-gradient(135deg,#FF6B00,#C084FC)":"rgba(0,0,0,.05)",color:tab===tb?"#fff":"#94A3B8",fontFamily:"'Fredoka One',sans-serif",fontSize:14,cursor:"pointer"}},tb==="mine"?(tl.mine||"MY LEAGUES"):(tl.disc||"DISCOVER")))
+    ),
+    ...shown.map((l,i)=>M("div",{key:l.id,onClick:()=>{SFX.whoosh();onDetail(l);},style:{background:"#fff",borderRadius:20,margin:"0 16px 10px",padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}},
+      M("div",{style:{width:50,height:50,borderRadius:14,background:`${l.color}22`,display:"grid",placeItems:"center",fontSize:24,flexShrink:0}},l.badge),
+      M("div",{style:{flex:1}},M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:17}},l.name),M("div",{style:{fontSize:11,fontWeight:800,color:"#94A3B8",marginTop:2}},l.members+" "+(tl.members||"members"))),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"#22C55E"}},tl.member||"MEMBER")
+    )),
+    M("div",{style:{height:20}})
+  );
+}
+
 function CreateLeague({onBack,showNotif,t}){
   const[name,setName]=useState("");const[badge,setBadge]=useState("💀");const[color,setColor]=useState("#FF6B00");
-  const tc=t.cl||{back:"BACK",title:"CREATE YOUR",word:"LEAGUE",nameLbl:"League Name",namePh:"e.g. CHAOS CREW",badgeLbl:"Badge",colorLbl:"Color",launch:"LAUNCH LEAGUE",enterName:"Give it a name!",maxChars:"Max 20 chars"};
+  const tc=t.cl||{};const M=React.createElement;
   const badges=["💀","🔥","⚡","🌊","👻","🐉","🦊","🤖","😈","🐺","🦁","💎","🌸","⭐","🎯"];
   const colors=["#FF6B00","#FB923C","#FBBF24","#34D399","#38BDF8","#C084FC","#1E1B2E","#EC4899"];
-  return(
-    <div style={{padding:"22px 18px",display:"flex",flexDirection:"column",gap:16,minHeight:"100%"}}>
-      <button onClick={()=>{SFX.tap();onBack();}} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",fontSize:13,cursor:"pointer",fontWeight:900,color:"#94A3B8"}}>← {tc.back}</button>
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#1E1B2E"}}>{tc.title} <span style={{color}}>{tc.word}</span></div>
-      <input placeholder={tc.namePh} value={name} onChange={e=>setName(e.target.value.toUpperCase())} maxLength={20} style={{background:"rgba(0,0,0,.05)",border:"1.5px solid rgba(0,0,0,.1)",borderRadius:14,padding:"14px 16px",color:"#1E1B2E",fontSize:18,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%"}}/>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:8}}>{badges.map(b=><div key={b} onClick={()=>{SFX.tap();setBadge(b);}} style={{fontSize:28,textAlign:"center",padding:10,borderRadius:14,background:badge===b?"linear-gradient(135deg,#FF6B00,#C084FC)":"rgba(0,0,0,.05)",cursor:"pointer"}}>{b}</div>)}</div>
-      <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>{colors.map(c=><div key={c} onClick={()=>{SFX.tap();setColor(c);}} style={{width:32,height:32,borderRadius:"50%",background:c,cursor:"pointer",boxShadow:color===c?"0 0 0 3px #fff,0 0 0 5px "+c:"none"}}/>)}</div>
-      <button onClick={()=>{if(!name.trim()){SFX.fail();showNotif({icon:"⚠️",text:tc.enterName,color:"#FF6B00"});return;}SFX.unlock();showNotif({icon:"🎉",text:`${badge} ${name}!`,color:"#FBBF24"});onBack();}} style={{background:`linear-gradient(135deg,${color},${color}CC)`,color:"#fff",border:"none",borderRadius:"999px",width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:18,cursor:"pointer",marginTop:"auto"}}>⚡ {tc.launch}</button>
-    </div>
+  return M("div",{style:{padding:"22px 18px",display:"flex",flexDirection:"column",gap:16,minHeight:"100%"}},
+    M("button",{onClick:()=>{SFX.tap();onBack();},style:{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",fontSize:13,cursor:"pointer",fontWeight:900,color:"#94A3B8"}},"← "+(tc.back||"BACK")),
+    M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#1E1B2E"}},(tc.title||"CREATE YOUR")+" ",M("span",{style:{color}},tc.word||"LEAGUE")),
+    M("input",{placeholder:tc.namePh||"e.g. CHAOS CREW",value:name,onChange:e=>setName(e.target.value.toUpperCase()),maxLength:20,style:{background:"rgba(0,0,0,.05)",border:"1.5px solid rgba(0,0,0,.1)",borderRadius:14,padding:"14px 16px",color:"#1E1B2E",fontSize:18,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%"}}),
+    M("div",{style:{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:8}},
+      ...badges.map(b=>M("div",{key:b,onClick:()=>{SFX.tap();setBadge(b);},style:{fontSize:28,textAlign:"center",padding:10,borderRadius:14,background:badge===b?"linear-gradient(135deg,#FF6B00,#C084FC)":"rgba(0,0,0,.05)",cursor:"pointer"}},b))
+    ),
+    M("div",{style:{display:"flex",gap:10,flexWrap:"wrap"}},
+      ...colors.map(c=>M("div",{key:c,onClick:()=>{SFX.tap();setColor(c);},style:{width:32,height:32,borderRadius:"50%",background:c,cursor:"pointer",boxShadow:color===c?"0 0 0 3px #fff,0 0 0 5px "+c:"none"}}))
+    ),
+    M("button",{onClick:()=>{if(!name.trim()){SFX.fail();showNotif({icon:"⚠️",text:tc.enterName||"Give it a name!",color:"#FF6B00"});return;}SFX.unlock();showNotif({icon:"🎉",text:badge+" "+name,color:"#FBBF24"});onBack();},style:{background:`linear-gradient(135deg,${color},${color}CC)`,color:"#fff",border:"none",borderRadius:"999px",width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:18,cursor:"pointer",marginTop:"auto"}},"⚡ "+(tc.launch||"LAUNCH LEAGUE"))
   );
 }
-function LiveCount(){
-  const[count,setCount]=useState(48291);
-  useEffect(()=>{const id=setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);return()=>clearInterval(id);},[]);
-  return <span>{count.toLocaleString()}</span>;
-}
-function Onboarding({lang,setLang,t,onComplete}){
-  const[step,setStep]=useState(0);const[name,setName]=useState("");const[avId,setAvId]=useState("sakura");
-  const ob=t.ob||{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",skip:"Skip"};
-  const TOTAL=3;
-  const next=()=>{SFX.tap();if(step<TOTAL-1)setStep(s=>s+1);else{SFX.victory();onComplete({name:name||"PLAYER",avId});}};
-  return(
-    <div style={{position:"fixed",inset:0,background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,maxWidth:430,margin:"0 auto"}}>
-      <div style={{display:"flex",gap:8,marginBottom:32}}>{Array.from({length:TOTAL}).map((_,i)=><div key={i} style={{width:i===step?24:8,height:8,borderRadius:4,background:i===step?"#FF6B00":"rgba(255,255,255,.2)",transition:"width .3s"}}/>)}</div>
-      {step===0&&(
-        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:72,background:"linear-gradient(135deg,#FF6B00,#C084FC)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1}}>DAREZ</div>
-          <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.4)",letterSpacing:2,marginBottom:16}}>{ob.tagline}</div>
-          <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10}}>
-            {Object.entries(LANGS).map(([code,l])=>(
-              <div key={code} onClick={()=>{SFX.tap();setLang(code);}} style={{display:"flex",alignItems:"center",gap:12,background:lang===code?"rgba(255,107,0,.15)":"rgba(255,255,255,.06)",border:lang===code?"1.5px solid rgba(255,107,0,.6)":"1.5px solid rgba(255,255,255,.1)",borderRadius:16,padding:"14px 16px",cursor:"pointer"}}>
-                <span style={{fontSize:28}}>{l.flag}</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff"}}>{l.label}</span>{lang===code&&<span style={{marginLeft:"auto",color:"#FF6B00",fontSize:20}}>✓</span>}
-              </div>
-            ))}
-          </div>
-          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:8}}>{ob.next} →</button>
-        </div>
-      )}
-      {step===1&&(
-        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
-          <div style={{fontSize:64}}>👤</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.nameLbl}</div>
-          <input placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus style={{background:"rgba(255,255,255,.08​​​​​​​​​​​​​​​​
-function LiveCount(){
-  const[count,setCount]=useState(48291);
-  useEffect(()=>{const id=setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);return()=>clearInterval(id);},[]);
-  return <span>{count.toLocaleString()}</span>;
-}
-function Onboarding({lang,setLang,t,onComplete}){
-  const[step,setStep]=useState(0);const[name,setName]=useState("");const[avId,setAvId]=useState("sakura");
-  const ob=t.ob||{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",skip:"Skip"};
-  const TOTAL=3;
-  const next=()=>{SFX.tap();if(step<TOTAL-1)setStep(s=>s+1);else{SFX.victory();onComplete({name:name||"PLAYER",avId});}};
-  return(
-    <div style={{position:"fixed",inset:0,background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,maxWidth:430,margin:"0 auto"}}>
-      <div style={{display:"flex",gap:8,marginBottom:32}}>{Array.from({length:TOTAL}).map((_,i)=><div key={i} style={{width:i===step?24:8,height:8,borderRadius:4,background:i===step?"#FF6B00":"rgba(255,255,255,.2)",transition:"width .3s"}}/>)}</div>
-      {step===0&&(
-        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:72,background:"linear-gradient(135deg,#FF6B00,#C084FC)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1}}>DAREZ</div>
-          <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.4)",letterSpacing:2,marginBottom:16}}>{ob.tagline}</div>
-          <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10}}>
-            {Object.entries(LANGS).map(([code,l])=>(
-              <div key={code} onClick={()=>{SFX.tap();setLang(code);}} style={{display:"flex",alignItems:"center",gap:12,background:lang===code?"rgba(255,107,0,.15)":"rgba(255,255,255,.06)",border:lang===code?"1.5px solid rgba(255,107,0,.6)":"1.5px solid rgba(255,255,255,.1)",borderRadius:16,padding:"14px 16px",cursor:"pointer"}}>
-                <span style={{fontSize:28}}>{l.flag}</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff"}}>{l.label}</span>{lang===code&&<span style={{marginLeft:"auto",color:"#FF6B00",fontSize:20}}>✓</span>}
-              </div>
-            ))}
-          </div>
-          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:8}}>{ob.next} →</button>
-        </div>
-      )}
-      {step===1&&(
-        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
-          <div style={{fontSize:64}}>👤</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.nameLbl}</div>
-          <input placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"14px 16px",color:"#fff",fontSize:18,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%",textAlign:"center"}}/>
-          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer"}}>{ob.next} →</button>
-          <button onClick={()=>onComplete({name:"PLAYER",avId})} style={{background:"none",border:"none",color:"rgba(255,255,255,.4)",fontSize:13,cursor:"pointer",fontWeight:800}}>{ob.skip}</button>
-        </div>
-      )}
-      {step===2&&(
-        <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"#fff"}}>{ob.avLbl}</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10,width:"100%",maxHeight:300,overflow:"auto"}}>
-            {AVS.map(av=>(
-              <div key={av.id} onClick={()=>{SFX.boing();setAvId(av.id);}} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:8,borderRadius:16,background:avId===av.id?"rgba(255,107,0,.2)":"rgba(255,255,255,.05)",border:avId===av.id?"1.5px solid #FF6B00":"1.5px solid transparent",cursor:"pointer"}}>
-                <AvatarSVG av={av} size={54}/>
-                <span style={{fontSize:9,fontWeight:800,color:"rgba(255,255,255,.6)"}}>{av.name}</span>
-              </div>
-            ))}
-          </div>
-          <button onClick={next} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",marginTop:4}}>{ob.start} ⚡</button>
-        </div>
-      )}
-    </div>
-  );
-}
-const ME={xp:15800,coins:680,score:9200};
-const CSS=`
-:root{--pk:#FF6B00;--pu:#C084FC;--yw:#FBBF24;--or:#FB923C;--gn:#22C55E;--bl:#3B82F6;--ink:#1E1B2E;--mu:#94A3B8;--bg:#F8F7FF}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);font-family:'Nunito',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
-.app{display:flex;flex-direction:column;height:100%;background:var(--bg)}
-.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
-.nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.07);padding:8px 0 calc(8px + env(safe-area-inset-bottom));flex-shrink:0;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3;border:none;background:none;cursor:pointer;padding:4px 0;transition:transform .12s;position:relative}
-.nb:active{transform:scale(.88)}
-.nb.active .ni{filter:drop-shadow(0 0 6px var(--pk))}
-.nb.active .nl{color:var(--pk)}
-.ni{font-size:22px;line-height:1}
-.nl{font-size:9px;font-weight:900;color:var(--mu);letter-spacing:.3px;font-family:'Nunito',sans-serif}
-.nbadge{position:absolute;top:0;right:calc(50% - 18px);background:var(--pk);color:#fff;border-radius:999px;min-width:16px;height:16px;font-size:9px;font-weight:900;display:grid;place-items:center;padding:0 4px}
-.card{background:#fff;border-radius:24px;box-shadow:0 4px 16px rgba(0,0,0,.07)}
-.ob{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.obs{flex:1;display:flex;flex-direction:column;align-items:center;padding:20px 22px 32px}
-.obnext{width:100%;padding:16px;border-radius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));border:none;font-family:'Fredoka One',sans-serif;font-size:20px;color:#fff;cursor:pointer;letter-spacing:1px;box-shadow:0 6px 24px rgba(255,107,0,.33);margin-top:auto}
-.obskip{background:none;border:none;font-size:13px;font-weight:800;color:var(--mu);cursor:pointer;padding:10px;margin-top:6px}
-.obinput{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;margin-bottom:6px;color:var(--ink)}
-.avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-height:260px;overflow-y:auto;margin-bottom:16px}
-.avitem{display:flex;flex-direction:column;align-items:center;gap:4;padding:8px;border-radius:16px;background:rgba(0,0,0,.04);cursor:pointer;border:1.5px solid transparent;transition:all .14s}
-.avitem.on{background:rgba(255,107,0,.1);border-color:var(--pk)}
-.avname{font-size:8px;font-weight:900;color:var(--mu);text-align:center}
-.dots{display:flex;gap:6px;align-items:center}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.12);transition:all .2s}
-.dot.on{width:24px;border-radius:4px;background:var(--pk)}
-.lopt{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;border:1.5px solid rgba(0,0,0,.08);cursor:pointer;width:100%;background:#fff;transition:all .14s;margin-bottom:4px}
-.lopt.on{background:rgba(255,107,0,.07);border-color:var(--pk)}
-.lg{display:flex;flex-direction:column;width:100%}
-.lgcard{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:0 16px 10px;background:#fff;border-radius:20px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.07);animation:fadeUp .28s ease-out both}
-.ltab{flex:1;padding:10px;border-radius:12px;border:none;font-weight:900;font-size:13px;cursor:pointer;transition:all .15s;font-family:'Nunito',sans-serif}
-.ltab.on{background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff}
-.ltab:not(.on){background:transparent;color:var(--mu)}
-.lhero{padding:24px 18px 20px;border-radius:0 0 32px 32px;position:relative;overflow:hidden}
-.phero{padding:28px 18px 22px;border-radius:0 0 32px 32px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
-.pstat{flex:1;padding:14px 8px;text-align:center;border-right:1px solid rgba(0,0,0,.06)}
-.pstat:last-child{border-right:none}
-.gfilter{padding:8px 16px;border-radius:999px;border:none;font-weight:900;font-size:11px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:'Nunito',sans-serif;flex-shrink:0}
-.gfilter.on{background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff}
-.gfilter:not(.on){background:#fff;color:var(--mu);box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.shopcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px 16px;margin-bottom:10px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.07);animation:fadeUp .28s ease-out both;transition:transform .12s}
-.shopcard:active{transform:scale(.97)}
-.packcard{background:#fff;border-radius:20px;padding:16px 14px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative;overflow:hidden;transition:transform .12s}
-.packcard:active{transform:scale(.96)}
-.xpstrip{display:flex;gap:8px;margin:4px 0}
-.xpcell{flex:1;background:#fff;border-radius:16px;padding:12px 8px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.07)}
-.lbrow{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.06);animation:fadeUp .28s ease-out both}
-.lbrow.me{background:rgba(255,107,0,.06);box-shadow:0 0 0 1.5px var(--pk)}
-.vcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px 16px;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.08);animation:fadeUp .28s ease-out both;transition:all .18s}
-.vcard.on{background:rgba(255,107,0,.08);box-shadow:0 0 0 2px var(--pk),0 6px 24px rgba(255,107,0,.15)}
-.vchk{width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.06);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900;transition:background .15s}
-.vcard.on .vchk{background:var(--pk)}
-.cddone{width:80%;padding:16px;border-radius:999px;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);color:#fff;font-family:'Fredoka One',sans-serif;font-size:18px;cursor:pointer;letter-spacing:1px}
-.finput{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;color:var(--ink);text-transform:uppercase}
-.bdgopt{font-size:24px;text-align:center;padding:10px;border-radius:14px;background:rgba(0,0,0,.04);cursor:pointer;border:1.5px solid transparent;transition:all .14s}
-.bdgopt.on{background:rgba(255,107,0,.1);border-color:var(--pk)}
-.cdot{width:32px;height:32px;border-radius:50%;cursor:pointer;transition:box-shadow .15s}
-.cdot.on{box-shadow:0 0 0 3px #fff,0 0 0 5px currentColor}
-.orb{position:absolute;border-radius:50%;filter:blur(40px)}
-.pmov{position:fixed;inset:0;background:rgba(15,12,35,.85);z-index:860;display:flex;align-items:flex-end;backdrop-filter:blur(8px)}
-.pmsh{background:#fff;border-radius:28px 28px 0 0;padding:28px 20px 48px;width:100%;max-width:430px;margin:0 auto;animation:slideUp .32s ease-out}
-.joinbtn{padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff;border:none;font-family:'Fredoka One',sans-serif;font-size:13px;cursor:pointer;flex-shrink:0}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes popIn{from{opacity:0;transform:scale(.8) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@keyframes slideDown{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-@keyframes barFill{from{width:0}}
-@keyframes xpFill{from{width:0}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
-@keyframes flameWave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.15)}}
-@keyframes notifIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-`;
-function FlashWidget({t,onStart,showNotif}){
-  const fs=useFlashState();const isLive=fs.status==="live";
-  const ch=CHALLENGES[fs.index%CHALLENGES.length];
-  return(
-    <div onClick={()=>{if(isLive){SFX.zap();onStart();}else SFX.tap();}} style={{background:"#fff",borderRadius:24,margin:"12px 16px 0",padding:16,cursor:"pointer",boxShadow:isLive?"0 6px 28px rgba(255,107,0,.22)":"0 4px 18px rgba(0,0,0,.07)",border:isLive?"2px solid rgba(255,107,0,.3)":"2px solid transparent",transition:"all .2s",position:"relative",overflow:"hidden"}}>
-      {isLive&&<div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(255,107,0,.04),rgba(192,132,252,.03))"}}/>}
-      <div style={{display:"flex",alignItems:"center",gap:14,position:"relative",zIndex:1}}>
-        <div style={{width:12,height:12,borderRadius:"50%",background:isLive?"#FF6B00":"#94A3B8",boxShadow:isLive?"0 0 10px #FF6B00":"none",animation:isLive?"pulse 1.2s infinite":"none",flexShrink:0}}/>
-        <div style={{flex:1}}>
-          <div style={{fontSize:10,fontWeight:900,color:isLive?"#FF6B00":"#94A3B8",letterSpacing:1,marginBottom:3}}>{isLive?t.home.live:(t.home.next_fl||"NEXT")+" →"}</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#1E1B2E",lineHeight:1.2}}>{ch.emoji} {t.chs[ch.id-1]}</div>
-          {!isLive&&<div style={{fontSize:11,fontWeight:900,color:"#94A3B8",marginTop:4}}>⏰ {fmtCountdown(fs.next)}</div>}
-        </div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:isLive?28:20,color:isLive?"#FF6B00":"#94A3B8",flexShrink:0}}>{isLive?"▶":"⏳"}</div>
-      </div>
-      {isLive&&<div style={{height:4,background:"rgba(255,107,0,.12)",borderRadius:2,marginTop:12,overflow:"hidden"}}><div style={{height:"100%",width:`${(fs.secsRemaining/(FLASH_DURATION_MIN*60))*100}%`,background:"linear-gradient(90deg,#FF6B00,#C084FC)",borderRadius:2,transition:"width 1s linear"}}/></div>}
-    </div>
-  );
-}
-function FlashBar({t}){
-  const fs=useFlashState();
-  return(
-    <div style={{display:"flex",gap:8,padding:"12px 16px 0",overflowX:"auto"}}>
-      {FLASH_TIMES.map((ft,i)=>{
-        const now=new Date(),tm=now.getHours()*60+now.getMinutes();
-        const isDone=tm>=ft.h*60+ft.m+FLASH_DURATION_MIN;
-        const isActive=fs.status==="live"&&fs.index===i;
-        const timeStr=`${String(ft.h).padStart(2,"0")}:${String(ft.m).padStart(2,"0")}`;
-        return(<div key={i} style={{flexShrink:0,display:"flex",alignItems:"center",gap:10,background:isActive?"linear-gradient(135deg,#FF6B00,#C084FC)":"#fff",borderRadius:16,padding:"10px 14px",boxShadow:isActive?"0 4px 16px rgba(255,107,0,.3)":"0 2px 10px rgba(0,0,0,.06)",opacity:isDone?.55:1}}>
-          <span style={{fontSize:16}}>{isDone?"✅":isActive?"🔴":"⏰"}</span>
-          <div><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:isActive?"#fff":"#1E1B2E"}}>{timeStr}</div><div style={{fontSize:9,fontWeight:900,color:isActive?"rgba(255,255,255,.8)":"#94A3B8"}}>{isDone?(t.fl&&t.fl.done)||"Done":isActive?fmtCountdown(fs.secsRemaining):(t.fl&&t.fl.next)||"Soon"}</div></div>
-        </div>);
-      })}
-    </div>
-  );
-}
-function StreakModal({streak,t,onClose}){
-  const sk=t.sk||{title:"STREAK",days:"DAYS",keepGoing:"Keep it up!",r7:"7-day bonus: +50% XP!",r30:"30-day streak: Exclusive badge!"};
-  return(
-    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:900,display:"flex",alignItems:"center",justifyContent:"center",padding:24,backdropFilter:"blur(12px)"}} onClick={onClose}>
-      <div onClick={e=>e.stopPropagation()} style={{background:"linear-gradient(145deg,#FF6B00,#C084FC)",borderRadius:32,padding:"44px 28px",width:"100%",maxWidth:340,textAlign:"center",boxShadow:"0 28px 80px rgba(0,0,0,.4)",animation:"popIn .6s cubic-bezier(.2,0,.38,1.4)"}}>
-        <div style={{fontSize:72,marginBottom:4}}>🔥</div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:14,color:"rgba(255,255,255,.7)",letterSpacing:3,marginBottom:8}}>{sk.title}</div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:64,color:"#fff",lineHeight:1,marginBottom:8}}>{streak}</div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.8)",marginBottom:20}}>{sk.days}</div>
-        <div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,.75)",marginBottom:24}}>{streak>=7?sk.r7:sk.keepGoing}</div>
-        <button onClick={onClose} style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:999,width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:20,cursor:"pointer"}}>LET'S GO ⚡</button>
-      </div>
-    </div>
-  );
-}
-function LangSheet({lang,setLang,onClose}){
-  return(
-    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:850,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={onClose}>
-      <div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}>
-        <div style={{width:40,height:4,borderRadius:2,background:"rgba(0,0,0,.1)",margin:"0 auto 22px"}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}}>🌍 Language</div>
-        {Object.entries(LANGS).map(([code,l])=>(
-          <div key={code} onClick={()=>{SFX.tap();setLang(code);onClose();}} style={{display:"flex",alignItems:"center",gap:12,padding:"14px 16px",borderRadius:16,background:lang===code?"rgba(255,107,0,.08)":"transparent",cursor:"pointer",marginBottom:4}}>
-            <span style={{fontSize:28}}>{l.flag}</span><span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#1E1B2E"}}>{l.label}</span>{lang===code&&<span style={{marginLeft:"auto",color:"#FF6B00",fontSize:18}}>✓</span>}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-function Ticker(){
-  const msgs=["⚡ zara_flash just scored 9,200 pts!","🔥 drift.exe is on a 7-day streak!","👑 neon_leo reached BLAZE rank!","💥 sky.wav hit a rival with Freeze!","🏆 CHAOS CREW leads the weekly board!"];
-  const[i,setI]=useState(0);
-  useEffect(()=>{const id=setInterval(()=>setI(n=>(n+1)%msgs.length),3500);return()=>clearInterval(id);},[]);
-  return(<div style={{background:"#1E1B2E",padding:"7px 16px",overflow:"hidden",height:30,display:"flex",alignItems:"center"}}><div key={i} style={{fontFamily:"'Fredoka One',sans-serif",fontSize:11,color:"rgba(255,255,255,.6)",animation:"slideDown .4s ease-out",whiteSpace:"nowrap"}}>{msgs[i]}</div></div>);
-}
-function LeagueDetail({league,onBack,showNotif,setPT,t,userName}){
-  const[tab,setTab]=useState("ranking");const tl=t.ld||{back:"BACK",weeklyReset:"Prize in",prizes:"500 coins · 200 coins · Shield",ranking:"RANKING",challenges:"CHALLENGES",rules:"RULES",hit:"HIT",hitTitle:"HIT",hitSub:"Spend coins to wreck rival",cancel:"Cancel",coinsAdded:"coins added",thanks:"Let's go!"};
+
+function LeagueDetail({league,onBack,t}){
+  const[tab,setTab]=useState("ranking");const tl=t.ld||{};const M=React.createElement;
   const sorted=[...MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
-  const rules=t.rules||[{i:"⚡",t:"3 Daily Flashes",d:"8:30·17:30·21:00"},{i:"🗳️",t:"Vote Power",d:"Higher rank = more weight"},{i:"💰",t:"Weekly Prizes",d:"Top 3 earn coins"},{i:"🔥",t:"Streaks",d:"7 days = +50% XP"}];
-  return(
-    <div>
-      <div style={{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:"22px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <button onClick={()=>{SFX.tap();onBack();}} style={{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",border:"none",borderRadius:"999px",padding:"7px 14px",color:"#fff",fontSize:12,cursor:"pointer",fontWeight:900,marginBottom:14}}>← {tl.back}</button>
-        <div style={{fontSize:44,marginBottom:8}}>{league.badge}</div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff"}}>{league.name}</div>
-        <div style={{display:"flex",gap:8,marginTop:10,flexWrap:"wrap"}}>
-          {[`👥 ${league.members}`,`🏆 #${league.rank}`].map((txt,i)=>(
-            <div key={i} style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",borderRadius:"999px",padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}}>{txt}</div>
-          ))}
-        </div>
-      </div>
-      <div style={{display:"flex",borderBottom:"1px solid rgba(0,0,0,.07)",padding:"0 16px",gap:4}}>
-        {[["ranking",tl.ranking],["challenges",tl.challenges],["rules",tl.rules||"Rules"]].map(([id,label])=>(
-          <button key={id} onClick={()=>{SFX.tap();setTab(id);}} style={{flex:1,padding:"12px 4px",border:"none",background:"none",fontWeight:900,fontSize:12,cursor:"pointer",color:tab===id?"#FF6B00":"#94A3B8",borderBottom:tab===id?"2.5px solid #FF6B00":"2.5px solid transparent",transition:"all .15s",fontFamily:"'Nunito',sans-serif"}}>{label}</button>
-        ))}
-      </div>
-      {tab==="ranking"&&sorted.map((p,i)=>(
-        <div key={p.id} style={{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-          <AvatarSVG av={getAv(p.avId)} size={40}/>
-          <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{p.name} {p.flag}</div></div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:league.color}}>{p.xp.toLocaleString()}</div>
-          <button onClick={()=>{SFX.zap();setPT(p);}} style={{padding:"5px 10px",borderRadius:"999px",background:`${league.color}18`,color:league.color,fontSize:10,fontWeight:900,cursor:"pointer",border:`1.5px solid ${league.color}40`,fontFamily:"'Nunito',sans-serif"}}>{tl.hit}</button>
-        </div>
-      ))}
-      {tab==="challenges"&&CHALLENGES.map((ch,i)=>(
-        <div key={ch.id} style={{display:"flex",alignItems:"center",gap:12,padding:"13px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}}>
-          <span style={{fontSize:28}}>{ch.emoji}</span>
-          <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.chs[ch.id-1]}</div><div style={{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:2}}>{ch.timer}s · +{ch.xp} XP</div></div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}}>+{ch.xp}</div>
-        </div>
-      ))}
-      {tab==="rules"&&<div style={{padding:"14px 16px"}}>{rules.map((r,i)=>(
-        <div key={i} style={{display:"flex",gap:11,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)"}}>
-          <span style={{fontSize:20,flexShrink:0}}>{r.i}</span>
-          <div><div style={{fontWeight:900,fontSize:13}}>{r.t}</div><div style={{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:3}}>{r.d}</div></div>
-        </div>
-      ))}</div>}
-      <div style={{height:20}}/>
-    </div>
+  return M("div",null,
+    M("div",{style:{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:"22px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}},
+      M("button",{onClick:()=>{SFX.tap();onBack();},style:{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",border:"none",borderRadius:"999px",padding:"7px 14px",color:"#fff",fontSize:12,cursor:"pointer",fontWeight:900,marginBottom:14}},"← "+(tl.back||"BACK")),
+      M("div",{style:{fontSize:44,marginBottom:8}},league.badge),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff"}},league.name),
+      M("div",{style:{display:"flex",gap:8,marginTop:10,flexWrap:"wrap"}},
+        ...["👥 "+league.members,"🏆 #"+league.rank].map((txt,i)=>M("div",{key:i,style:{background:"rgba(255,255,255,.22)",borderRadius:"999px",padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}},txt))
+      )
+    ),
+    M("div",{style:{display:"flex",borderBottom:"1px solid rgba(0,0,0,.07)",padding:"0 16px",gap:4}},
+      ...[["ranking",tl.ranking||"RANKING"],["challenges",tl.challenges||"CHALLENGES"],["rules",tl.rules||"RULES"]].map(([id,label])=>
+        M("button",{key:id,onClick:()=>{SFX.tap();setTab(id);},style:{flex:1,padding:"12px 4px",border:"none",background:"none",fontWeight:900,fontSize:12,cursor:"pointer",color:tab===id?"#FF6B00":"#94A3B8",borderBottom:tab===id?"2.5px solid #FF6B00":"2.5px solid transparent",transition:"all .15s",fontFamily:"'Nunito',sans-serif"}},label)
+      )
+    ),
+    tab==="ranking"&&M("div",null,...sorted.map((p,i)=>M("div",{key:p.id,style:{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}},
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}},i===0?"🥇":i===1?"🥈":i===2?"🥉":"#"+(i+1)),
+      M(AvatarSVG,{av:getAv(p.avId),size:40}),
+      M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:13}},p.name+" "+p.flag)),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:league.color}},p.xp.toLocaleString())
+    ))),
+    tab==="challenges"&&M("div",null,...CHALLENGES.map((ch,i)=>M("div",{key:ch.id,style:{display:"flex",alignItems:"center",gap:12,padding:"13px 18px",borderBottom:"1px solid rgba(0,0,0,.05)"}},
+      M("span",{style:{fontSize:28}},ch.emoji),
+      M("div",{style:{flex:1}},M("div",{style:{fontWeight:900,fontSize:13}},t.chs[ch.id-1]||""),M("div",{style:{fontSize:10,fontWeight:800,color:"#94A3B8",marginTop:2}},ch.timer+"s · +"+ch.xp+" XP")),
+      M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"#FF6B00"}},"+"+ch.xp)
+    ))),
+    tab==="rules"&&M("div",{style:{padding:"14px 16px"}},
+      ...(t.rules||[]).map((r,i)=>M("div",{key:i,style:{display:"flex",gap:11,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)"}},
+        M("span",{style:{fontSize:20,flexShrink:0}},r.i),
+        M("div",null,M("div",{style:{fontWeight:900,fontSize:13}},r.t),M("div",{style:{fontSize:11,fontWeight:700,color:"#94A3B8",marginTop:3}},r.d))
+      ))
+    ),
+    M("div",{style:{height:20}})
   );
 }
-const PENALTIES=[{id:"s",emoji:"🤫",cost:150},{id:"sh",emoji:"👤",cost:200},{id:"e",emoji:"📢",cost:180},{id:"f",emoji:"🧊",cost:250},{id:"d",emoji:"📉",cost:300}];
-export default function App(){
-  const[lang,setLang]=useState(()=>LS.get("lang","en"));
+
+function App(){
+  const[lang,setLang]=useState(()=>LS.get("lang","fr"));
   const t=LANGS[lang];
   useEffect(()=>LS.set("lang",lang),[lang]);
   const[onboarded,setOnboarded]=useState(()=>!!LS.get("onboarded"));
@@ -851,85 +582,76 @@ export default function App(){
   const[sub,setSub]=useState(null);
   const[selLeague,setSelLeague]=useState(null);
   const[notif,setNotif]=useState(null);
-  const[penTarget,setPenTarget]=useState(null);
   const[showStreak,setShowStreak]=useState(false);
   const[showLang,setShowLang]=useState(false);
   const[confetti,setConfetti]=useState(0);
-  const[showShare,setShowShare]=useState(false);
-  const[shareData,setShareData]=useState({xp:120,score:8340,rank:4,chText:"Make your scariest face",chEmoji:"😱"});
-  const[showInvite,setShowInvite]=useState(false);
   const streak=9;
   const nTimer=useRef(null);
   const showNotif=useCallback((n)=>{setNotif(n);clearTimeout(nTimer.current);nTimer.current=setTimeout(()=>setNotif(null),3000);},[]);
-  const navItems=[{id:"home",icon:"🏠",badge:2},{id:"leagues",icon:"⚔️",badge:1},{id:"flash",icon:"⚡",badge:null},{id:"history",icon:"📊",badge:null},{id:"shop",icon:"🛒",badge:null}];
+  const navItems=[{id:"home",icon:"🏠",badge:2},{id:"leagues",icon:"⚔️",badge:1},{id:"flash",icon:"⚡",badge:null},{id:"global",icon:"🌍",badge:null},{id:"shop",icon:"🛒",badge:null}];
   const handleNav=(id)=>{if(id==="flash"){SFX.zap();setSub("challenge");setTab("flash");return;}SFX.tap();setTab(id);setSub(null);};
-  const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,history:t.nav.stats||"Stats",shop:t.nav.shop};
-  if(!onboarded)return(
-    <>
-      <Onboarding lang={lang} setLang={setLang} t={t} onComplete={({name,avId})=>{
-        const uname=name.toUpperCase()||"PLAYER";
-        setUserName(uname);setUserAvId(avId);
-        LS.set("username",uname);LS.set("avid",avId);LS.set("onboarded",true);
-        setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
-        setTimeout(()=>setShowStreak(true),900);
-      }}/>
-      <Particles trigger={confetti}/>
-    </>
+  const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,global:t.nav.stats||"Stats",shop:t.nav.shop};
+  const M=React.createElement;
+
+  if(!onboarded)return M(React.Fragment,null,
+    M("style",null,CSS),
+    M(Onboarding,{lang,setLang,t,onComplete:({name,avId})=>{
+      const uname=name.toUpperCase()||"PLAYER";
+      setUserName(uname);setUserAvId(avId);
+      LS.set("username",uname);LS.set("avid",avId);LS.set("onboarded",true);
+      setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
+      setTimeout(()=>setShowStreak(true),900);
+    }}),
+    M(Particles,{trigger:confetti})
   );
+
   const inCh=sub==="challenge";
-  return(
-    <>
-      <style>{CSS}</style>
-      <div className="app">
-        <Particles trigger={confetti}/>
-        <Notif notif={notif}/>
-        {showStreak&&<StreakModal streak={streak} t={t} onClose={()=>setShowStreak(false)}/>}
-        {showLang&&<LangSheet lang={lang} setLang={setLang} onClose={()=>setShowLang(false)}/>}
-        {showInvite&&<div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:850,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={()=>setShowInvite(false)}><div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}}>📤 Invite friends</div><button onClick={()=>setShowInvite(false)} style={{width:"100%",padding:14,borderRadius:999,background:"linear-gradient(135deg,#FF6B00,#C084FC)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",cursor:"pointer"}}>COPY LINK</button></div></div>}
-        {penTarget&&(
-          <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:860,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={()=>setPenTarget(null)}>
-            <div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"28px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:4}}>💥 HIT {penTarget.name.toUpperCase()}</div>
-              {PENALTIES.map((p,i)=>(
-                <div key={p.id} onClick={()=>{SFX.zap();showNotif({icon:p.emoji,text:`${["Silence","Shadow","Expose","Freeze","Demote"][i]} → ${penTarget.name}!`,color:"#FBBF24"});setPenTarget(null);}} style={{background:"rgba(0,0,0,.03)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:11,cursor:"pointer",marginBottom:8}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:"linear-gradient(135deg,#FF6B00,#C084FC)",display:"grid",placeItems:"center",fontSize:18}}>{p.emoji}</div>
-                  <div style={{flex:1,fontWeight:900,fontSize:13}}>🪙{p.cost}</div>
-                </div>
-              ))}
-              <button onClick={()=>setPenTarget(null)} style={{width:"100%",padding:12,background:"rgba(0,0,0,.06)",border:"none",borderRadius:999,fontSize:13,fontWeight:900,cursor:"pointer",fontFamily:"'Nunito',sans-serif",color:"#94A3B8"}}>Cancel</button>
-            </div>
-          </div>
-        )}
-        {!inCh&&<Ticker/>}
-        {inCh
-          ?<ChallengeFlow onDone={(data)=>{setSub(null);setTab("home");if(data){setShareData(data);setTimeout(()=>setShowShare(true),600);}}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName}/>
-          :sub==="create_league"
-            ?<div className="scroll" style={{flex:1}}><CreateLeague onBack={()=>setSub(null)} showNotif={showNotif} t={t}/></div>
-            :sub==="league_detail"
-              ?<div className="scroll" style={{flex:1}}><LeagueDetail league={selLeague} onBack={()=>setSub(null)} showNotif={showNotif} setPT={setPenTarget} t={t} userName={userName}/></div>
-              :<div className="scroll" style={{flex:1}}>
-                {tab==="home"&&<HomeScreen onStart={()=>{SFX.zap();setSub("challenge");}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
-                {tab==="leagues"&&<LeaguesScreen showNotif={showNotif} onDetail={l=>{setSelLeague(l);setSub("league_detail");}} onCreate={()=>setSub("create_league")} onInvite={()=>setShowInvite(true)} t={t}/>}
-                {tab==="flash"&&<HomeScreen onStart={()=>setSub("challenge")} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
-                {tab==="history"&&<GlobalScreen t={t} userName={userName}/>}
-                {tab==="shop"&&<ShopScreen showNotif={showNotif} t={t}/>}
-              </div>
-        }
-        {!inCh&&(
-          <nav className="nav">
-            {navItems.map(item=>(
-              <button key={item.id} className={`nb ${tab===item.id&&!sub?"active":""}`} onClick={()=>handleNav(item.id)} style={{position:"relative"}}>
-                {item.badge&&tab!==item.id&&<div className="nbadge">{item.badge}</div>}
-                <span className="ni" style={item.id==="flash"?{filter:"drop-shadow(0 0 6px #FBBF24)"}:{}}>{item.icon}</span>
-                <span className="nl" style={item.id==="flash"?{color:"#FBBF24"}:{}}>{navLabels[item.id]}</span>
-              </button>
-            ))}
-          </nav>
-        )}
-      </div>
-    </>
+  return M(React.Fragment,null,
+    M("style",null,CSS),
+    M("div",{className:"app"},
+      M(Particles,{trigger:confetti}),
+      M(Notif,{notif}),
+      showStreak&&M(StreakModal,{streak,t,onClose:()=>setShowStreak(false)}),
+      showLang&&M(LangSheet,{lang,setLang,onClose:()=>setShowLang(false)}),
+      !inCh&&M("div",{style:{background:"#1E1B2E",padding:"7px 16px",height:30,display:"flex",alignItems:"center"}},
+        M("div",{style:{fontFamily:"'Fredoka One',sans-serif",fontSize:11,color:"rgba(255,255,255,.6)",whiteSpace:"nowrap"}},"⚡ zara_flash scored 9,200 pts! 🔥 drift.exe on 7-day streak! 👑 neon_leo reached BLAZE!")
+      ),
+      inCh
+        ?M(ChallengeFlow,{onDone:(data)=>{setSub(null);setTab("home");},showNotif,t,userAvId,userName})
+        :sub==="create_league"
+          ?M("div",{className:"scroll",style:{flex:1}},M(CreateLeague,{onBack:()=>setSub(null),showNotif,t}))
+          :sub==="league_detail"
+            ?M("div",{className:"scroll",style:{flex:1}},M(LeagueDetail,{league:selLeague,onBack:()=>setSub(null),showNotif,t}))
+            :M("div",{className:"scroll",style:{flex:1}},
+              tab==="home"&&M(HomeScreen,{onStart:()=>{SFX.zap();setSub("challenge");},showNotif,t,userAvId,userName,streak,onStreakClick:()=>setShowStreak(true),showLS:()=>setShowLang(true)}),
+              tab==="leagues"&&M(LeaguesScreen,{showNotif,onDetail:l=>{setSelLeague(l);setSub("league_detail");},onCreate:()=>setSub("create_league"),t}),
+              tab==="flash"&&M(HomeScreen,{onStart:()=>setSub("challenge"),showNotif,t,userAvId,userName,streak,onStreakClick:()=>setShowStreak(true),showLS:()=>setShowLang(true)}),
+              tab==="global"&&M(GlobalScreen,{t,userName}),
+              tab==="shop"&&M(ShopScreen,{showNotif,t})
+            ),
+      !inCh&&M("nav",{className:"nav"},
+        ...navItems.map(item=>M("button",{key:item.id,className:"nb "+(tab===item.id&&!sub?"active":""),onClick:()=>handleNav(item.id),style:{position:"relative"}},
+          item.badge&&tab!==item.id&&M("div",{className:"nbadge"},item.badge),
+          M("span",{className:"ni",style:item.id==="flash"?{filter:"drop-shadow(0 0 6px #FBBF24)"}:{}},item.icon),
+          M("span",{className:"nl",style:item.id==="flash"?{color:"#FBBF24"}:{}},navLabels[item.id])
+        ))
+      )
+    )
   );
 }
+
+// Launch
+window.__stopProg();
+setTimeout(()=>{
+  try{
+    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+    window.hideSplash();
+  }catch(e){
+    const sub=document.getElementById("ss");
+    if(sub){sub.textContent=e.message.slice(0,80);sub.style.color="#FF6B6B";}
+    setTimeout(window.hideSplash,5000);
+  }
+},100);
 </script>
 </body>
 </html>
