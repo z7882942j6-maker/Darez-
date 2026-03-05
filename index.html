@@ -29,8 +29,8 @@ html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-we
 <script>
 window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
 window.__DAREZ={};
-const LS={get:(k,d=null)=>{try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){}}};
-window.__LS=LS;
+const _store={};const LS={get:(k,d=null)=>{try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return _store[k]!==undefined?_store[k]:d;}},set:(k,v)=>{try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){_store[k]=v;}}};
+
 const{useState,useEffect,useRef,useCallback}=React;
 window.__H={useState,useEffect,useRef,useCallback};
 
