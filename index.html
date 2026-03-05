@@ -1,1 +1,2489 @@
-Voir README
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
+  <meta name="theme-color" content="#FF6B00"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="DAREZ"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="description" content="Le Flash Challenge Mondial — joue avec tes amis en temps réel"/>
+  <title>DAREZ ⚡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-webkit-tap-highlight-color:transparent;touch-action:pan-y}
+    #root{width:100%;height:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden;
+           padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+    #splash{position:fixed;inset:0;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);
+             display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+    #splash.out{opacity:0;pointer-events:none}
+    #sl{font-family:"Fredoka One",sans-serif;font-size:80px;
+         background:linear-gradient(135deg,#FF6B00,#C084FC);
+         -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+         animation:sp .6s cubic-bezier(.2,0,.38,1.4) both}
+    #ss{font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;
+         color:rgba(255,255,255,.35);letter-spacing:3px;margin-top:8px;
+         animation:sp .6s .15s cubic-bezier(.2,0,.38,1.4) both}
+    #sbw{width:48px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:48px;overflow:hidden;animation:sp .6s .2s ease both}
+    #sb{height:100%;background:linear-gradient(90deg,#FF6B00,#C084FC);border-radius:2px;animation:lb 1.4s ease-out forwards}
+    @keyframes sp{from{opacity:0;transform:scale(.8) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    @keyframes lb{from{width:0}to{width:100%}}
+    #ib{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+         width:calc(100% - 32px);max-width:398px;
+         background:rgba(30,27,46,.96);backdrop-filter:blur(12px);
+         border:1px solid rgba(255,255,255,.12);border-radius:20px;
+         padding:14px 16px;display:none;align-items:center;gap:12px;
+         z-index:500;box-shadow:0 8px 32px rgba(0,0,0,.4);animation:isu .35s ease-out}
+    #ib.show{display:flex}
+    @keyframes isu{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    .ib-t{font-family:"Fredoka One",sans-serif;font-size:15px;color:#fff}
+    .ib-s{font-size:11px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px}
+    .ib-btn{font-family:"Fredoka One",sans-serif;font-size:13px;color:#fff;
+             background:linear-gradient(135deg,#FF6B00,#C084FC);border:none;
+             border-radius:999px;padding:8px 16px;cursor:pointer;flex-shrink:0}
+    .ib-x{background:none;border:none;color:rgba(255,255,255,.35);font-size:18px;cursor:pointer;padding:4px}
+
+```
+/* iOS Install Banner */
+#ios-banner{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(30,27,46,.97);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.12);
+  padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+  z-index:600;transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+  box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+          background:linear-gradient(135deg,#FF6B00,#C084FC);
+          display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:"Fredoka One",sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+          background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
+              background:linear-gradient(135deg,#FF6B00,#C084FC);
+              display:grid;place-items:center;font-family:"Fredoka One",sans-serif;
+              font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+           border:none;border-radius:999px;color:rgba(255,255,255,.5);
+           font-family:"Nunito",sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+  position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
+  width:0;height:0;
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-top:12px solid rgba(255,107,0,.8);
+  z-index:601;display:none;
+  filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+```
+
+  </style>
+</head>
+<body>
+<div id="splash">
+  <div id="sl">DAREZ</div>
+  <div id="ss">THE GLOBAL FLASH CHALLENGE</div>
+  <div id="sbw"><div id="sb"></div></div>
+</div>
+<div id="root"></div>
+
+<!-- iOS Install Banner -->
+
+<div id="ios-banner">
+  <div class="ios-row">
+    <div class="ios-icon">⚡</div>
+    <div>
+      <div class="ios-title">Installer DAREZ</div>
+      <div class="ios-sub">Accès direct depuis ton écran d'accueil</div>
+    </div>
+  </div>
+  <div class="ios-steps">
+    <div class="ios-step">
+      <div class="ios-step-num">1</div>
+      <div class="ios-step-txt">Appuie sur le bouton Partager</div>
+      <div class="ios-step-icon">⬆️</div>
+    </div>
+    <div class="ios-step">
+      <div class="ios-step-num">2</div>
+      <div class="ios-step-txt">Choisis "Sur l'écran d'accueil"</div>
+      <div class="ios-step-icon">📱</div>
+    </div>
+    <div class="ios-step">
+      <div class="ios-step-num">3</div>
+      <div class="ios-step-txt">Appuie sur "Ajouter" en haut à droite</div>
+      <div class="ios-step-icon">✅</div>
+    </div>
+  </div>
+  <button class="ios-close" id="ios-close">J'ai compris</button>
+</div>
+<div id="ib">
+  <div style="font-size:36px;flex-shrink:0">⚡</div>
+  <div style="flex:1"><div class="ib-t">Installer DAREZ</div><div class="ib-s">Accès direct · Notifs · Offline</div></div>
+  <button class="ib-btn" id="ib-i">INSTALLER</button>
+  <button class="ib-x" id="ib-c">✕</button>
+</div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script>
+// ── Manifest PWA inline ──────────────────────────────────────────
+const _m=document.createElement("link");_m.rel="manifest";
+_m.href=URL.createObjectURL(new Blob([JSON.stringify({
+  name:"DAREZ — Flash Challenge",short_name:"DAREZ",start_url:"/",
+  display:"standalone",orientation:"portrait",
+  background_color:"#1E1B2E",theme_color:"#FF6B00",
+  icons:[{src:"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="%231E1B2E"/><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-size="320" fill="%23FF6B00">⚡</text></svg>'),sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"}]
+})],{type:"application/json"})));
+document.head.appendChild(_m);
+
+// Service Worker — fonctionne sur Chrome/Android, skippé sur Safari iOS
+const _isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  navigator.serviceWorker.register(
+    URL.createObjectURL(new Blob(['\nconst VER="darez-v1";\nself.addEventListener("install",e=>{e.waitUntil(self.skipWaiting());});\nself.addEventListener("activate",e=>{e.waitUntil(self.clients.claim());});\nself.addEventListener("fetch",e=>{\n  if(e.request.url.includes("jsonbin.io")||e.request.url.includes("supabase.co")){\n    e.respondWith(fetch(e.request).catch(()=>new Response("{}",{headers:{"Content-Type":"application/json"}})));\n    return;\n  }\n  e.respondWith(caches.match(e.request).then(c=>c||fetch(e.request).catch(()=>new Response("",{status:503}))));\n});\nself.addEventListener("push",e=>{\n  let d={title:"DAREZ ⚡",body:"Flash en cours!",tag:"flash",url:"/?tab=flash"};\n  try{if(e.data)d={...d,...e.data.json()};}catch(err){}\n  e.waitUntil(self.registration.showNotification(d.title,{\n    body:d.body,tag:d.tag,vibrate:[200,100,200],data:{url:d.url},\n    actions:[{action:"play",title:"▶ JOUER"},{action:"dismiss",title:"Plus tard"}]\n  }));\n});\nself.addEventListener("notificationclick",e=>{\n  e.notification.close();\n  if(e.action==="dismiss")return;\n  const url=e.notification.data?.url||"/";\n  e.waitUntil(clients.matchAll({type:"window",includeUncontrolled:true}).then(cs=>{\n    const ex=cs.find(c=>c.url.includes(self.location.origin));\n    if(ex){ex.focus();ex.postMessage({type:"NAVIGATE",url});}else clients.openWindow(url);\n  }));\n});\n'],{type:"application/javascript"})),
+    {scope:"/"}
+  ).then(()=>console.log("[DAREZ] SW ok")).catch(e=>console.warn("[DAREZ] SW:",e));
+  navigator.serviceWorker.addEventListener("message",e=>{
+    if(e.data?.type==="NAVIGATE"&&window.__darezNav)window.__darezNav(e.data.url);
+  });
+}
+
+// ── Splash ────────────────────────────────────────────────────────
+window.hideSplash=()=>{const s=document.getElementById("splash");if(s){s.classList.add("out");setTimeout(()=>s.remove(),500);}};
+document.fonts.ready.then(()=>setTimeout(window.hideSplash,700));
+setTimeout(window.hideSplash,2500);
+
+
+// ── iOS Install Detection ─────────────────────────────────────────
+const _isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const _isStandalone = window.navigator.standalone === true;
+const _iosDismissed = localStorage.getItem("darez_ios_dismissed");
+
+if (_isIOS && !_isStandalone && !_iosDismissed) {
+  // Affiche le banner iOS après 4 secondes
+  setTimeout(() => {
+    const b = document.getElementById("ios-banner");
+    if (b) b.classList.add("show");
+  }, 4000);
+}
+
+document.getElementById("ios-close").onclick = () => {
+  document.getElementById("ios-banner").classList.remove("show");
+  localStorage.setItem("darez_ios_dismissed", "1");
+};
+
+// ── Install prompt (Android/Chrome) ─────────────────────────────────
+let _dp=null;const _ib=document.getElementById("ib");
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();_dp=e;setTimeout(()=>{if(_dp)_ib.classList.add("show");},8000);});
+document.getElementById("ib-i").onclick=async()=>{if(!_dp)return;_ib.classList.remove("show");_dp.prompt();await _dp.userChoice;_dp=null;};
+document.getElementById("ib-c").onclick=()=>_ib.classList.remove("show");
+window.addEventListener("appinstalled",()=>{_ib.classList.remove("show");_dp=null;});
+</script>
+
+<script type="text/babel" data-presets="react,env">
+const { useState, useEffect, useRef, useCallback } = React;
+
+
+// ═══════════════════════════════════════════════════════════════
+// DAREZ BACKEND — Multijoueur sans serveur
+// Stockage local + sync via JSONBin (zéro inscription)
+// ═══════════════════════════════════════════════════════════════
+
+const BIN_API = "https://api.jsonbin.io/v3/b";
+// Clé publique JSONBin demo — remplace par ta propre clé sur jsonbin.io (gratuit)
+const BIN_KEY = "$2a$10$WFMHbdDLRqUHMJMbRZ4TdeWbFKBb5FJRQGfKPDXpVm7tT7pQvFS8C";
+
+const LS = {
+  get:(k,d=null)=>{ try{const v=localStorage.getItem("dz_"+k);return v?JSON.parse(v):d;}catch(e){return d;} },
+  set:(k,v)=>{ try{localStorage.setItem("dz_"+k,JSON.stringify(v));}catch(e){} },
+};
+
+function getPlayerId(){ let id=LS.get("pid"); if(!id){id="p_"+Math.random().toString(36).slice(2,10);LS.set("pid",id);} return id; }
+
+function emptyState(){ return {v:1,created:Date.now(),players:{},feed:[],leaderboard:[],leagues:{},lastFlash:{date:null,scores:{},votes:{}}}; }
+
+async function binGet(id){
+  try{ const r=await fetch(`${BIN_API}/${id}/latest`,{headers:{"X-Master-Key":BIN_KEY,"X-Bin-Meta":"false"}}); return r.ok?await r.json():null; }catch(e){return null;}
+}
+async function binCreate(data){
+  try{ const r=await fetch(BIN_API,{method:"POST",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"darez"},body:JSON.stringify(data)}); const d=await r.json(); return d.metadata?.id||null; }catch(e){return null;}
+}
+async function binUpdate(id,data){
+  try{ const r=await fetch(`${BIN_API}/${id}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY},body:JSON.stringify(data)}); return r.ok; }catch(e){return false;}
+}
+
+const DB = {
+  binId: LS.get("bin_id"),
+  state: null,
+  listeners: [],
+  _poll: null,
+  _hash: "",
+
+  async init(joinCode=null){
+    if(joinCode){ this.binId=joinCode; LS.set("bin_id",joinCode); }
+    if(this.binId){
+      const data=await binGet(this.binId);
+      if(data){ this.state=data; this._notify(); this._startPoll(); return {ok:true,isNew:false,binId:this.binId}; }
+    }
+    const s=emptyState();
+    const id=await binCreate(s);
+    if(id){ this.binId=id; LS.set("bin_id",id); this.state=s; this._notify(); this._startPoll(); return {ok:true,isNew:true,binId:id}; }
+    this.state=LS.get("state")||emptyState(); this._notify(); return {ok:false,binId:null};
+  },
+
+  async save(){
+    LS.set("state",this.state);
+    if(this.binId) await binUpdate(this.binId,this.state);
+    this._notify();
+  },
+
+  _startPoll(){
+    if(this._poll)clearInterval(this._poll);
+    this._poll=setInterval(async()=>{
+      if(!this.binId)return;
+      const data=await binGet(this.binId);
+      if(!data)return;
+      const hash=JSON.stringify(data).length+"_"+(data.feed?.length||0);
+      if(hash!==this._hash){ this._hash=hash; this.state=data; this._notify(); }
+    },5000);
+  },
+
+  _notify(){ this.listeners.forEach(fn=>fn(this.state)); },
+  subscribe(fn){ this.listeners.push(fn); return ()=>{this.listeners=this.listeners.filter(l=>l!==fn);}; },
+
+  async upsertPlayer(id,data){
+    if(!this.state)return;
+    this.state.players[id]={...(this.state.players[id]||{}),...data,updatedAt:Date.now()};
+    this._rebuildLeaderboard();
+    await this.save();
+  },
+
+  _rebuildLeaderboard(){
+    this.state.leaderboard=Object.entries(this.state.players)
+      .map(([id,p])=>({...p,id}))
+      .sort((a,b)=>(b.xp||0)-(a.xp||0))
+      .slice(0,50);
+  },
+
+  async submitScore(pid,score,xp,coins,challengeText,challengeEmoji){
+    if(!this.state)return;
+    const p=this.state.players[pid]||{};
+    const today=new Date().toDateString();
+    const yest=new Date(Date.now()-86400000).toDateString();
+    const streak=p.lastPlayed===today?p.streak||1:p.lastPlayed===yest?(p.streak||0)+1:1;
+    this.state.players[pid]={...p,xp:(p.xp||0)+xp,coins:(p.coins||0)+coins,streak,lastPlayed:today};
+    if(!this.state.lastFlash.scores)this.state.lastFlash.scores={};
+    this.state.lastFlash.scores[pid]=score;
+    this.state.lastFlash.date=today;
+    this.state.feed=([{pid,score,xp,time:Date.now(),name:p.name||"Player",avId:p.avId||"sakura",flag:p.flag||"🌍",chText:challengeText,chEmoji:challengeEmoji},...(this.state.feed||[])]).slice(0,30);
+    this._rebuildLeaderboard();
+    await this.save();
+  },
+
+  async submitVote(voterId,targetId){
+    if(!this.state?.lastFlash)return;
+    if(!this.state.lastFlash.votes)this.state.lastFlash.votes={};
+    this.state.lastFlash.votes[voterId]=targetId;
+    await this.save();
+  },
+
+  async createLeague(pid,name,badge,color){
+    if(!this.state)return null;
+    const id="lg_"+Math.random().toString(36).slice(2,8);
+    this.state.leagues[id]={id,name,badge,color,ownerId:pid,members:[pid],weeklyXP:{[pid]:0},createdAt:Date.now()};
+    await this.save(); return id;
+  },
+
+  async joinLeague(pid,lgId){
+    if(!this.state?.leagues?.[lgId])return false;
+    const lg=this.state.leagues[lgId];
+    if(!lg.members.includes(pid))lg.members.push(pid);
+    lg.weeklyXP=lg.weeklyXP||{}; lg.weeklyXP[pid]=lg.weeklyXP[pid]||0;
+    await this.save(); return true;
+  },
+
+  getLeaderboard(){ return this.state?.leaderboard||[]; },
+  getLeagues(){ return Object.values(this.state?.leagues||{}); },
+  getFeed(){ return this.state?.feed||[]; },
+  getPlayer(id){ return this.state?.players?.[id]||null; },
+};
+
+function useDB(){
+  const [state,setState]=useState(()=>DB.state||emptyState());
+  const [binId,setBinId]=useState(()=>DB.binId);
+  const [ready,setReady]=useState(false);
+  useEffect(()=>{
+    const unsub=DB.subscribe(s=>{setState(s||emptyState());});
+    const urlParams=new URLSearchParams(window.location.search);
+    const joinCode=urlParams.get("join")||null;
+    if(!DB.state||joinCode){
+      DB.init(joinCode).then(({binId:id})=>{setBinId(id);setReady(true);});
+    } else { setReady(true); }
+    return unsub;
+  },[]);
+  return {state,binId,ready};
+}
+
+function getInviteLink(binId){
+  if(!binId)return window.location.href;
+  const url=new URL(window.location.href);
+  url.searchParams.set("join",binId);
+  return url.toString();
+}
+
+// ═══════════════════════ AUDIO JINGLES ═══════════════════════
+const SFX = {
+  _ctx: null,
+  ctx() { if (!this._ctx) this._ctx = new (window.AudioContext || window.webkitAudioContext)(); return this._ctx; },
+  n(f, t, d, v=0.28, type="sine") {
+    try {
+      const c=this.ctx(), o=c.createOscillator(), g=c.createGain();
+      o.connect(g); g.connect(c.destination);
+      o.type=type; o.frequency.value=f;
+      const s=c.currentTime+t;
+      g.gain.setValueAtTime(0,s); g.gain.linearRampToValueAtTime(v,s+0.015);
+      g.gain.setValueAtTime(v,s+d-0.04); g.gain.linearRampToValueAtTime(0,s+d);
+      o.start(s); o.stop(s+d+0.05);
+    } catch(e){}
+  },
+  tap()    { this.n(880,0,0.07,0.2); this.n(1100,0.05,0.06,0.12); },
+  boing()  { [780,560,480,680,920].forEach((f,i)=>this.n(f,i*0.045,0.08,0.18,"sine")); },
+  // 8-note ascending victory fanfare
+  victory(){ const ns=[523,659,784,1047,784,1047,1319,1568],ds=[.12,.1,.1,.2,.08,.08,.1,.38]; let t=0; ns.forEach((f,i)=>{this.n(f,t,ds[i]+.05,.3,"triangle");t+=ds[i];}); },
+  // Fire crescendo with harmonics
+  streakFire(){ [262,330,392,523,659,784,1047].forEach((f,i)=>{this.n(f,i*.07,.2,.2);this.n(f*1.5,i*.07,.18,.1);}); this.n(1568,.6,.45,.32,"triangle"); },
+  whoosh()  { try{ const c=this.ctx(),o=c.createOscillator(),g=c.createGain(),t=c.currentTime; o.connect(g);g.connect(c.destination);o.type="sine"; o.frequency.setValueAtTime(180,t);o.frequency.exponentialRampToValueAtTime(900,t+.15);o.frequency.exponentialRampToValueAtTime(140,t+.32); g.gain.setValueAtTime(.28,t);g.gain.linearRampToValueAtTime(0,t+.38); o.start(t);o.stop(t+.4); }catch(e){} },
+  // Arcade coin sparkle
+  coin()   { [880,1100,1320,1760].forEach((f,i)=>this.n(f,i*.055,.1,.22)); },
+  // Triumphant chord unlock
+  unlock() { [[523,659,784],[659,784,1047]].forEach(([a,b,c],t)=>{this.n(a,t*.22,.32,.22,"triangle");this.n(b,t*.22,.32,.18,"triangle");this.n(c,t*.22,.32,.14,"triangle");}); this.n(1047,.48,.42,.3,"triangle"); },
+  // Electric zap
+  zap()    { this.n(140,0,.05,.5,"sawtooth"); this.n(300,.035,.05,.38,"square"); this.n(600,.07,.09,.2,"sine"); },
+  // Sad trombone fail
+  fail()   { [466,415,370,311].forEach((f,i)=>this.n(f,i*.1,.15,.3,"sawtooth")); },
+  // Dun-dun-DUN vote lock
+  voteLock(){ this.n(392,0,.16,.32,"triangle"); this.n(392,.2,.16,.32,"triangle"); this.n(523,.42,.42,.42,"triangle"); },
+  // Countdown tick
+  tick(n)  { if(n>0){this.n(660,0,.09,.38,"square");this.n(880,.045,.06,.22,"sine");}else{[523,784,1047,1319].forEach((f,i)=>this.n(f,i*.07,.18,.32,"triangle"));} },
+  // Urgent danger beep
+  danger() { this.n(880,0,.06,.42,"square"); this.n(1100,.07,.05,.3,"square"); },
+};
+
+// ═══════════════════════ SVG AVATARS ═══════════════════════
+const AVS = [
+  {id:"ninja",   name:"Ninja",   bg:"#1A1A2E",skin:"#FFCBA4",hair:"#111",   ec:"#FF3366",mt:"smirk",ac:"mask"},
+  {id:"blaze",   name:"Blaze",   bg:"#FF5722",skin:"#FFCBA4",hair:"#FF2D00",ec:"#FFE600",mt:"grin", ac:"flames"},
+  {id:"crystal", name:"Crystal", bg:"#B2EBF2",skin:"#E8F4FF",hair:"#80D8FF",ec:"#0288D1",mt:"smile",ac:"ice"},
+  {id:"wolf",    name:"Wolf",    bg:"#4A4E69",skin:"#CFD0D4",hair:"#2D2D3A",ec:"#FFB300",mt:"sharp",ac:"ears"},
+  {id:"sakura",  name:"Sakura",  bg:"#FCE4EC",skin:"#FFE4E8",hair:"#F48FB1",ec:"#E91E63",mt:"cute", ac:"flowers"},
+  {id:"thunder", name:"Thunder", bg:"#FFF176",skin:"#FFCBA4",hair:"#FDD835",ec:"#1565C0",mt:"grin", ac:"bolt"},
+  {id:"shadow",  name:"Shadow",  bg:"#311B92",skin:"#B39DDB",hair:"#311B92",ec:"#CE93D8",mt:"smirk",ac:"stars"},
+  {id:"dragon",  name:"Dragon",  bg:"#00BFA5",skin:"#A7FFEB",hair:"#00695C",ec:"#FF6D00",mt:"roar", ac:"horns"},
+  {id:"panda",   name:"Panda",   bg:"#F5F5F5",skin:"#FFFFFF",hair:"#212121",ec:"#212121",mt:"cute", ac:"panda_ears"},
+  {id:"demon",   name:"Demon",   bg:"#7F0000",skin:"#FFCBA4",hair:"#B71C1C",ec:"#FF1744",mt:"evil", ac:"demon_horns"},
+  {id:"ocean",   name:"Ocean",   bg:"#0277BD",skin:"#B3E5FC",hair:"#01579B",ec:"#00E5FF",mt:"smile",ac:"waves"},
+  {id:"punk",    name:"Punk",    bg:"#212121",skin:"#FFCBA4",hair:"#E040FB",ec:"#76FF03",mt:"smirk",ac:"spikes"},
+  {id:"fox",     name:"Fox",     bg:"#E64A19",skin:"#FFD4A3",hair:"#BF360C",ec:"#FF6D00",mt:"grin", ac:"fox_ears"},
+  {id:"galaxy",  name:"Galaxy",  bg:"#0A0A2A",skin:"#CE93D8",hair:"#6A1B9A",ec:"#EA80FC",mt:"smile",ac:"galaxy"},
+  {id:"lion",    name:"Lion",    bg:"#F9A825",skin:"#FFECB3",hair:"#F57F17",ec:"#6D4C41",mt:"roar", ac:"mane"},
+  {id:"robot",   name:"Bot",     bg:"#546E7A",skin:"#CFD8DC",hair:"#37474F",ec:"#00E5FF",mt:"bot",  ac:"antenna"},
+  {id:"witch",   name:"Witch",   bg:"#4A148C",skin:"#EDE7F6",hair:"#1A0030",ec:"#AEEA00",mt:"smirk",ac:"hat"},
+  {id:"tiger",   name:"Tiger",   bg:"#E65100",skin:"#FFD4A3",hair:"#BF360C",ec:"#212121",mt:"sharp",ac:"stripes"},
+  {id:"angel",   name:"Angel",   bg:"#FFFDE7",skin:"#FFE4C4",hair:"#FFD54F",ec:"#81D4FA",mt:"cute", ac:"halo"},
+  {id:"reaper",  name:"Reaper",  bg:"#0A0A0A",skin:"#E0E0E0",hair:"#0A0A0A",ec:"#39FF14",mt:"evil", ac:"hood"},
+];
+
+function AvatarSVG({av, size=52}) {
+  const s=size, cx=s/2, eyeY=s*.43, eyeX=s*.16, eyeRx=s*.085, eyeRy=s*.105, pupR=s*.054;
+  const skinY=s*.5, skinRx=s*.26, skinRy=s*.28, hairY=s*.3;
+  const mouths = {
+    smile: <path d={`M${cx-s*.12} ${s*.63} Q${cx} ${s*.72} ${cx+s*.12} ${s*.63}`} stroke="#CC7755" strokeWidth={s*.027} fill="none" strokeLinecap="round"/>,
+    grin:  <path d={`M${cx-s*.15} ${s*.61} Q${cx} ${s*.75} ${cx+s*.15} ${s*.61}`} stroke="#CC7755" strokeWidth={s*.028} fill="none" strokeLinecap="round"/>,
+    smirk: <path d={`M${cx-s*.1} ${s*.64} Q${cx+s*.07} ${s*.69} ${cx+s*.14} ${s*.61}`} stroke="#CC7755" strokeWidth={s*.026} fill="none" strokeLinecap="round"/>,
+    cute:  <><path d={`M${cx-s*.1} ${s*.63} Q${cx} ${s*.71} ${cx+s*.1} ${s*.63}`} stroke="#F48FB1" strokeWidth={s*.025} fill="none" strokeLinecap="round"/><circle cx={cx-s*.14} cy={s*.66} r={s*.04} fill="#F48FB1" opacity=".65"/><circle cx={cx+s*.14} cy={s*.66} r={s*.04} fill="#F48FB1" opacity=".65"/></>,
+    sharp: <path d={`M${cx-s*.14} ${s*.63} L${cx-s*.06} ${s*.68} L${cx} ${s*.63} L${cx+s*.06} ${s*.68} L${cx+s*.14} ${s*.63}`} stroke="#CC7755" strokeWidth={s*.024} fill="none" strokeLinecap="round" strokeLinejoin="round"/>,
+    roar:  <ellipse cx={cx} cy={s*.65} rx={s*.11} ry={s*.075} fill="#B71C1C"/>,
+    evil:  <path d={`M${cx-s*.12} ${s*.64} Q${cx} ${s*.59} ${cx+s*.12} ${s*.64}`} stroke="#880E4F" strokeWidth={s*.028} fill="none" strokeLinecap="round"/>,
+    bot:   <rect x={cx-s*.1} y={s*.61} width={s*.2} height={s*.08} rx={s*.025} fill="#00E5FF" opacity=".9"/>,
+  };
+  const accs = {
+    mask:        <rect x={cx-s*.24} y={s*.49} width={s*.48} height={s*.17} rx={s*.07} fill="#111" opacity=".88"/>,
+    flames:      [s*.28,s*.42,s*.56].map((x,i)=><path key={i} d={`M${x} ${s*.22} C${x-s*.06} ${s*.1} ${x+s*.06} ${s*.06} ${x+s*.04} ${s*.14} C${x+s*.08} ${s*.04} ${x+s*.12} ${s*.1} ${x+s*.06} ${s*.18}`} fill="#FF6D00" opacity=".85"/>),
+    ice:         <><path d={`M${cx-s*.18} ${s*.16} L${cx} ${s*.05} L${cx+s*.18} ${s*.16}`} stroke="#80D8FF" strokeWidth={s*.025} fill="none"/><circle cx={cx} cy={s*.04} r={s*.04} fill="#80D8FF"/></>,
+    ears:        <><ellipse cx={cx-s*.27} cy={s*.18} rx={s*.1} ry={s*.13} fill="#4A4E69"/><ellipse cx={cx+s*.27} cy={s*.18} rx={s*.1} ry={s*.13} fill="#4A4E69"/><ellipse cx={cx-s*.27} cy={s*.18} rx={s*.06} ry={s*.08} fill="#CFD0D4" opacity=".5"/><ellipse cx={cx+s*.27} cy={s*.18} rx={s*.06} ry={s*.08} fill="#CFD0D4" opacity=".5"/></>,
+    flowers:     [cx-s*.18,cx,cx+s*.18].map((x,i)=><circle key={i} cx={x} cy={s*.1+i%2*s*.04} r={s*.055} fill={i===1?"#E91E63":"#F48FB1"}/>),
+    bolt:        <path d={`M${cx+s*.08} ${s*.06} L${cx-s*.04} ${s*.24} L${cx+s*.05} ${s*.24} L${cx-s*.08} ${s*.4} L${cx+s*.18} ${s*.2} L${cx+s*.06} ${s*.2} Z`} fill="#FDD835"/>,
+    stars:       [[cx-s*.28,s*.12],[cx+s*.28,s*.1],[cx,s*.04],[cx+s*.22,s*.22]].map(([x,y],i)=><polygon key={i} points={`${x},${y-s*.05} ${x+s*.03},${y} ${x+s*.06},${y} ${x+s*.03},${y+s*.03} ${x+s*.04},${y+s*.07} ${x},${y+s*.04} ${x-s*.04},${y+s*.07} ${x-s*.03},${y+s*.03} ${x-s*.06},${y} ${x-s*.03},${y}`} fill="#CE93D8"/>),
+    horns:       <><path d={`M${cx-s*.22} ${s*.22} L${cx-s*.28} ${s*.05} L${cx-s*.12} ${s*.18}`} fill="#00695C"/><path d={`M${cx+s*.22} ${s*.22} L${cx+s*.28} ${s*.05} L${cx+s*.12} ${s*.18}`} fill="#00695C"/></>,
+    panda_ears:  <><circle cx={cx-s*.28} cy={s*.18} r={s*.1} fill="#212121"/><circle cx={cx+s*.28} cy={s*.18} r={s*.1} fill="#212121"/></>,
+    demon_horns: <><path d={`M${cx-s*.22} ${s*.22} L${cx-s*.26} ${s*.04} L${cx-s*.1} ${s*.19}`} fill="#FF1744"/><path d={`M${cx+s*.22} ${s*.22} L${cx+s*.26} ${s*.04} L${cx+s*.1} ${s*.19}`} fill="#FF1744"/></>,
+    waves:       <path d={`M${cx-s*.28} ${s*.25} Q${cx-s*.14} ${s*.16} ${cx} ${s*.25} Q${cx+s*.14} ${s*.34} ${cx+s*.28} ${s*.25}`} stroke="#00E5FF" strokeWidth={s*.025} fill="none" strokeLinecap="round"/>,
+    spikes:      [cx-s*.2,cx-s*.06,cx+s*.06,cx+s*.2].map((x,i)=><path key={i} d={`M${x} ${s*.23} L${x+s*.05} ${s*.05} L${x+s*.1} ${s*.23}`} fill="#E040FB"/>),
+    fox_ears:    <><path d={`M${cx-s*.26} ${s*.22} L${cx-s*.32} ${s*.04} L${cx-s*.14} ${s*.18}`} fill="#BF360C"/><path d={`M${cx+s*.26} ${s*.22} L${cx+s*.32} ${s*.04} L${cx+s*.14} ${s*.18}`} fill="#BF360C"/><path d={`M${cx-s*.26} ${s*.21} L${cx-s*.3} ${s*.09} L${cx-s*.16} ${s*.18}`} fill="#FFD4A3"/><path d={`M${cx+s*.26} ${s*.21} L${cx+s*.3} ${s*.09} L${cx+s*.16} ${s*.18}`} fill="#FFD4A3"/></>,
+    galaxy:      [...Array(6)].map((_,i)=><circle key={i} cx={cx-s*.25+i*s*.1} cy={s*.09+Math.sin(i*1.2)*s*.06} r={s*.025} fill={["#EA80FC","#80D8FF","#FFD740","#FF6D6D","#80FF80","#CE93D8"][i]}/>),
+    mane:        <ellipse cx={cx} cy={s*.42} rx={s*.34} ry={s*.31} fill="#F57F17" opacity=".75"/>,
+    antenna:     <><line x1={cx} y1={s*.06} x2={cx} y2={s*.18} stroke="#37474F" strokeWidth={s*.04}/><circle cx={cx} cy={s*.04} r={s*.06} fill="#00E5FF"/></>,
+    hat:         <><path d={`M${cx-s*.28} ${s*.28} L${cx-s*.14} ${s*.06} L${cx+s*.14} ${s*.06} L${cx+s*.28} ${s*.28}`} fill="#4A148C"/><rect x={cx-s*.3} y={s*.26} width={s*.6} height={s*.08} rx={s*.04} fill="#6A1B9A"/></>,
+    halo:        <ellipse cx={cx} cy={s*.09} rx={s*.17} ry={s*.045} fill="none" stroke="#FFD54F" strokeWidth={s*.038}/>,
+    hood:        <path d={`M${cx-s*.36} ${s*.28} Q${cx-s*.2} ${s*.03} ${cx} ${s*.05} Q${cx+s*.2} ${s*.03} ${cx+s*.36} ${s*.28}`} fill="#0A0A0A" opacity=".94"/>,
+    stripes:     null,
+  };
+  const acc = accs[av.ac];
+  return (
+    <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{display:"block",borderRadius:"50%",flexShrink:0}}>
+      <circle cx={cx} cy={cx} r={cx} fill={av.bg}/>
+      {av.ac==="mane" && acc}
+      <ellipse cx={cx} cy={hairY} rx={s*.28} ry={s*.25} fill={av.hair}/>
+      <ellipse cx={cx} cy={skinY} rx={skinRx} ry={skinRy} fill={av.skin}/>
+      <ellipse cx={cx-eyeX} cy={eyeY} rx={eyeRx} ry={eyeRy} fill="#fff"/>
+      <ellipse cx={cx+eyeX} cy={eyeY} rx={eyeRx} ry={eyeRy} fill="#fff"/>
+      <circle cx={cx-eyeX} cy={eyeY} r={pupR} fill={av.ec}/>
+      <circle cx={cx+eyeX} cy={eyeY} r={pupR} fill={av.ec}/>
+      <circle cx={cx-eyeX+pupR*.5} cy={eyeY-pupR*.5} r={pupR*.36} fill="#fff" opacity=".92"/>
+      <circle cx={cx+eyeX+pupR*.5} cy={eyeY-pupR*.5} r={pupR*.36} fill="#fff" opacity=".92"/>
+      {mouths[av.mt]||null}
+      {av.ac!=="mane" && acc}
+    </svg>
+  );
+}
+const LANGS = {
+  en:{flag:"🇬🇧",label:"English",
+    nav:{feed:"Home",stats:"Stats",leagues:"Leagues",flash:"Flash",global:"Global",shop:"Shop"},
+    home:{live:"FLASH IS LIVE",players:"players",myLeagues:"MY LEAGUES",seeAll:"See all",feed:"FEED",xpTo:"XP to next rank",ago:"ago",done_fl:"DONE",next_fl:"NEXT"},
+    ch:{getReady:"GET READY",done:"DONE ✓",playersNow:"players going wild"},
+    vote:{q:"Who absolutely KILLED IT?",hint:"Vote for the best · Your vote matters",lock:"LOCK IN"},
+    res:{title:"GLOBAL RANKING",xp:"XP EARNED",rank:"YOUR RANK",coins:"COINS",share:"SHARE MY SCORE",back:"BACK TO HOME",top:"TOP PLAYERS",shared:"Score shared!",sharedSub:"Your crew sees it"},
+    lg:{title:"LEAGUES & CREWS",sub:"Compete privately · Climb global ranks",create:"CREATE MY LEAGUE",invite:"Invite friends",inviteSub:"50 coins per recruit",inviteBtn:"INVITE",mine:"MY LEAGUES",disc:"DISCOVER",join:"JOIN",member:"MEMBER",invCopied:"Link copied!",invCopiedSub:"Share with your crew",joined:"Joined! +100 coins",joinedSub:"Welcome to the crew",members:"members"},
+    ld:{back:"BACK",weeklyReset:"Prize resets in",prizes:"500 coins · 200 coins · Shield",ranking:"RANKING",challenges:"CHALLENGES",rules:"RULES",hit:"HIT",hitTitle:"HIT",hitSub:"Spend coins to wreck your rival",cancel:"Cancel",coinsAdded:"coins added",thanks:"Let's go!!",penalized:"Got hit!",penalizedSub:"Coins spent"},
+    sh:{title:"ARSENAL",sub:"Coins · Powers · Chaos",coins:"COINS",pnames:["Silence","Shadow","Expose","Freeze","Demote"],pdescs:["Can't vote for 24h","Hidden from leaderboard 12h","Worst score broadcasted","XP frozen for 24h","Lose 10% weekly XP"],hits:"HITS — wreck rivals",packs:"COIN PACKS",notEnough:"Not enough coins!",needMore:"coins short",activated:"activated!",enjoy:"Enjoy your power",bestDeal:"BEST DEAL",hot:"HOT",whale:"WHALE"},
+    pr:{streak:"Streak",coins:"Coins",best:"Best",league:"League",powers:"RANK POWERS",noPowers:"No powers yet — keep going! 💪",journey:"RANK JOURNEY",current:"NOW",xp:"XP",active:"ON",base:"Base"},
+    cl:{back:"BACK",title:"CREATE YOUR",word:"LEAGUE",nameLbl:"League Name",namePh:"e.g. CHAOS CREW",badgeLbl:"Badge",colorLbl:"Color",launch:"LAUNCH LEAGUE",enterName:"Give it a name first!",maxChars:"Max 20 characters"},
+    ob:{tagline:"The Global Flash Challenge",chooseLang:"Choose your language",next:"NEXT",start:"LET'S GO",namePh:"Your username",nameLbl:"Pick your username",avLbl:"Pick your character",lgLbl:"Join a starter league",skip:"Skip"},
+    sk:{title:"STREAK",days:"DAYS",keepGoing:"Keep it up!",almostLost:"Play today or lose your streak!",r7:"7-day bonus: +50% XP this week!",r30:"30-day streak: Exclusive badge!"},
+    feed:{fire:"POW",comment:"Reply",share:"Share",reacted:"POW!",r5:"+5 coins",soon:"Coming soon",shared:"Shared!"},
+    gl:{players:"players",updated:"Live"},
+    fl:{done:"Done",live:"Live",next:"Next"},
+    times:["8:30 AM","5:30 PM","9:00 PM"],
+    filters:{all:"ALL",weekly:"WEEK",friends:"FRIENDS",country:"COUNTRY"},
+    chs:["Make your scariest face RIGHT NOW","Strike a superhero landing pose","Find something red in 20 seconds","Beatbox for 15 seconds straight","Show your signature dance move","Explain quantum physics in 10 seconds","Cry like you just lost the World Cup"],
+    cats:["FACE OFF","BODY","HUNT","VOCAL","DANCE","BIG BRAIN","ACTING"],
+    go:"GO!",
+    rules:[{i:"⚡",t:"3 Daily Flashes",d:"8:30 AM · 5:30 PM · 9:00 PM. Miss 3 = −10% XP."},{i:"🗳️",t:"Vote Power",d:"Higher rank = more weight. GOD = 5×."},{i:"💰",t:"Weekly Prizes",d:"Top 3 earn coins. Top 1 gets bonus."},{i:"💥",t:"Hits",d:"Spend coins to hit rivals. Shields block."},{i:"🔥",t:"Streaks",d:"7 days = +50% XP. 30 days = badge."},{i:"👑",t:"Promotion",d:"Top 3 per league promote next season."},{i:"📉",t:"Relegation",d:"Bottom 2 drop down next season."}],
+  },
+  fr:{flag:"🇫🇷",label:"Français",
+    nav:{feed:"Accueil",stats:"Stats",leagues:"Ligues",flash:"Flash",global:"Global",shop:"Boutique"},
+    home:{live:"FLASH EN DIRECT",players:"joueurs",myLeagues:"MES LIGUES",seeAll:"Voir tout",feed:"FIL D'ACTU",xpTo:"XP pour le rang suivant",ago:"",done_fl:"FAIT",next_fl:"PROCHAIN"},
+    ch:{getReady:"PRÉPARE-TOI",done:"TERMINÉ ✓",playersNow:"joueurs en feu"},
+    vote:{q:"Qui a vraiment TOUT DÉCHIRÉ ?",hint:"Vote pour le meilleur · Ton vote compte",lock:"VALIDER"},
+    res:{title:"CLASSEMENT MONDIAL",xp:"XP GAGNÉ",rank:"TON RANG",coins:"PIÈCES",share:"PARTAGER MON SCORE",back:"RETOUR À L'ACCUEIL",top:"TOP JOUEURS",shared:"Score partagé !",sharedSub:"Ta crew le voit"},
+    lg:{title:"LIGUES & ÉQUIPES",sub:"Joue en privé · Monte dans les classements",create:"CRÉER MA LIGUE",invite:"Invite des amis",inviteSub:"50 pièces par recrue",inviteBtn:"INVITER",mine:"MES LIGUES",disc:"DÉCOUVRIR",join:"REJOINDRE",member:"MEMBRE",invCopied:"Lien copié !",invCopiedSub:"Partage avec ta crew",joined:"Rejoint ! +100 pièces",joinedSub:"Bienvenue dans la crew",members:"membres"},
+    ld:{back:"RETOUR",weeklyReset:"Prix remis dans",prizes:"500 pièces · 200 pièces · Bouclier",ranking:"CLASSEMENT",challenges:"DÉFIS",rules:"RÈGLES",hit:"FRAPPER",hitTitle:"FRAPPER",hitSub:"Dépense des pièces pour défoncer ton rival",cancel:"Annuler",coinsAdded:"pièces ajoutées",thanks:"On y va !!",penalized:"Touché !",penalizedSub:"Pièces dépensées"},
+    sh:{title:"ARSENAL",sub:"Pièces · Pouvoirs · Chaos",coins:"PIÈCES",pnames:["Silence","Ombre","Exposer","Geler","Rétrograder"],pdescs:["Ne peut pas voter 24h","Caché du classement 12h","Pire score diffusé","XP gelé 24h","Perd 10% XP hebdo"],hits:"COUPS — défonce tes rivaux",packs:"PACKS DE PIÈCES",notEnough:"Pas assez de pièces !",needMore:"pièces manquantes",activated:"activé !",enjoy:"Profite de ton pouvoir",bestDeal:"MEILLEURE OFFRE",hot:"CHAUD",whale:"BALEINE"},
+    pr:{streak:"Série",coins:"Pièces",best:"Meilleur",league:"Ligue",powers:"POUVOIRS DE RANG",noPowers:"Aucun pouvoir encore — continue ! 💪",journey:"PROGRESSION",current:"ACTUEL",xp:"XP",active:"ON",base:"Base"},
+    cl:{back:"RETOUR",title:"CRÉER TA",word:"LIGUE",nameLbl:"Nom de la ligue",namePh:"ex: CHAOS CREW",badgeLbl:"Badge",colorLbl:"Couleur",launch:"LANCER LA LIGUE",enterName:"Donne-lui un nom !",maxChars:"Max 20 caractères"},
+    ob:{tagline:"Le Défi Flash Mondial",chooseLang:"Choisis ta langue",next:"SUIVANT",start:"C'EST PARTI",namePh:"Ton pseudo",nameLbl:"Choisis ton pseudo",avLbl:"Choisis ton personnage",lgLbl:"Rejoins une ligue de départ",skip:"Passer"},
+    sk:{title:"SÉRIE",days:"JOURS",keepGoing:"Continue comme ça !",almostLost:"Joue aujourd'hui sinon ta série est perdue !",r7:"Bonus 7 jours : +50 % XP !",r30:"30 jours : Badge exclusif débloqué !"},
+    feed:{fire:"POW",comment:"Répondre",share:"Partager",reacted:"POW !",r5:"+5 pièces",soon:"Bientôt",shared:"Partagé !"},
+    gl:{players:"joueurs",updated:"En direct"},
+    fl:{done:"Fait",live:"En direct",next:"Bientôt"},
+    times:["8h30","17h30","21h00"],
+    filters:{all:"TOUT",weekly:"SEMAINE",friends:"AMIS",country:"PAYS"},
+    chs:["Fais ta tête la plus terrifiante MAINTENANT","Prends la pose d'un super-héros qui atterrit","Trouve quelque chose de rouge en 20 secondes","Beatboxe pendant 15 secondes","Montre ton mouvement de danse signature","Explique la physique quantique en 10 secondes","Pleure comme si tu venais de perdre la Coupe du Monde"],
+    cats:["DUEL DE TÊTE","CORPS","CHASSE","VOCAL","DANSE","GROS CERVEAU","ACTING"],
+    go:"C'EST PARTI!",
+    rules:[{i:"⚡",t:"3 Flashs par jour",d:"8h30 · 17h30 · 21h00. Manquer 3 = −10 % XP."},{i:"🗳️",t:"Pouvoir de vote",d:"Plus ton rang est élevé, plus ton vote pèse. GOD = ×5."},{i:"💰",t:"Prix hebdomadaires",d:"Top 3 gagnent des pièces."},{i:"💥",t:"Coups",d:"Dépense des pièces pour frapper tes rivaux."},{i:"🔥",t:"Séries",d:"7 jours = +50 % XP. 30 jours = badge exclusif."},{i:"👑",t:"Promotion",d:"Top 3 de chaque ligue montent."},{i:"📉",t:"Relégation",d:"Les 2 derniers descendent."}],
+  },
+  es:{flag:"🇪🇸",label:"Español",
+    nav:{feed:"Inicio",stats:"Stats",leagues:"Ligas",flash:"Flash",global:"Global",shop:"Tienda"},
+    home:{live:"FLASH EN VIVO",players:"jugadores",myLeagues:"MIS LIGAS",seeAll:"Ver todo",feed:"FEED",xpTo:"XP al siguiente rango",ago:"hace",done_fl:"HECHO",next_fl:"PRÓXIMO"},
+    ch:{getReady:"PREPÁRATE",done:"LISTO ✓",playersNow:"jugadores en llamas"},
+    vote:{q:"¿Quién absolutamente LO REVENTÓ?",hint:"Vota por el mejor · Tu voto importa",lock:"CONFIRMAR"},
+    res:{title:"RANKING MUNDIAL",xp:"XP GANADO",rank:"TU RANGO",coins:"MONEDAS",share:"COMPARTIR MI PUNTUACIÓN",back:"VOLVER AL INICIO",top:"TOP JUGADORES",shared:"¡Puntuación compartida!",sharedSub:"Tu crew lo ve"},
+    lg:{title:"LIGAS & EQUIPOS",sub:"Compite en privado · Sube en rankings",create:"CREAR MI LIGA",invite:"Invita amigos",inviteSub:"50 monedas por recluta",inviteBtn:"INVITAR",mine:"MIS LIGAS",disc:"DESCUBRIR",join:"UNIRSE",member:"MIEMBRO",invCopied:"¡Enlace copiado!",invCopiedSub:"Compártelo con tu equipo",joined:"¡Unido! +100 monedas",joinedSub:"Bienvenido al equipo",members:"miembros"},
+    ld:{back:"VOLVER",weeklyReset:"Premio en",prizes:"500 monedas · 200 monedas · Escudo",ranking:"RANKING",challenges:"RETOS",rules:"REGLAS",hit:"GOLPEAR",hitTitle:"GOLPEAR",hitSub:"Gasta monedas para destrozar a tu rival",cancel:"Cancelar",coinsAdded:"monedas añadidas",thanks:"¡Vamos!!",penalized:"¡Golpeado!",penalizedSub:"Monedas gastadas"},
+    sh:{title:"ARSENAL",sub:"Monedas · Poderes · Caos",coins:"MONEDAS",pnames:["Silencio","Sombra","Exponer","Congelar","Degradar"],pdescs:["No puede votar 24h","Oculto del ranking 12h","Peor puntuación difundida","XP congelado 24h","Pierde 10% XP semanal"],hits:"GOLPES — destruye rivales",packs:"PACKS DE MONEDAS",notEnough:"¡No hay suficientes monedas!",needMore:"monedas cortas",activated:"¡activado!",enjoy:"Disfruta tu poder",bestDeal:"MEJOR OFERTA",hot:"CALIENTE",whale:"BALLENA"},
+    pr:{streak:"Racha",coins:"Monedas",best:"Mejor",league:"Liga",powers:"PODERES DE RANGO",noPowers:"Sin poderes aún — ¡sigue! 💪",journey:"PROGRESIÓN",current:"ACTUAL",xp:"XP",active:"ON",base:"Base"},
+    cl:{back:"VOLVER",title:"CREAR TU",word:"LIGA",nameLbl:"Nombre de liga",namePh:"ej: CHAOS CREW",badgeLbl:"Distintivo",colorLbl:"Color",launch:"LANZAR LIGA",enterName:"¡Dale un nombre!",maxChars:"Máx 20 caracteres"},
+    ob:{tagline:"El Reto Flash Global",chooseLang:"Elige tu idioma",next:"SIGUIENTE",start:"VAMOS",namePh:"Tu nombre",nameLbl:"Elige tu nombre",avLbl:"Elige tu personaje",lgLbl:"Únete a una liga",skip:"Omitir"},
+    sk:{title:"RACHA",days:"DÍAS",keepGoing:"¡Sigue así!",almostLost:"¡Juega hoy o pierdes tu racha!",r7:"Bonus 7 días: +50% XP.",r30:"30 días: Badge exclusivo."},
+    feed:{fire:"POW",comment:"Responder",share:"Compartir",reacted:"¡POW!",r5:"+5 monedas",soon:"Próximamente",shared:"¡Compartido!"},
+    gl:{players:"jugadores",updated:"En vivo"},
+    fl:{done:"Hecho",live:"En vivo",next:"Próximo"},
+    times:["8:30","17:30","21:00"],
+    filters:{all:"TODO",weekly:"SEMANA",friends:"AMIGOS",country:"PAÍS"},
+    chs:["Pon tu cara más aterradora AHORA","Adopta la pose de aterrizaje de un superhéroe","Encuentra algo rojo en 20 segundos","Haz beatbox durante 15 segundos","Muestra tu movimiento de baile","Explica la física cuántica en 10 segundos","Llora como si acabaras de perder el Mundial"],
+    cats:["CARA A CARA","CUERPO","CAZA","VOCAL","BAILE","CEREBRO","ACTUACIÓN"],
+    go:"¡VAMOS!",
+    rules:[{i:"⚡",t:"3 Flashes al día",d:"8:30·17:30·21:00. Fallar 3=−10% XP."},{i:"🗳️",t:"Poder de voto",d:"Mayor rango=más peso. GOD=×5."},{i:"💰",t:"Premios semanales",d:"Top 3 ganan monedas."},{i:"💥",t:"Golpes",d:"Gasta monedas para golpear rivales."},{i:"🔥",t:"Rachas",d:"7 días=+50% XP. 30=badge."},{i:"👑",t:"Ascenso",d:"Top 3 ascienden."},{i:"📉",t:"Descenso",d:"Los 2 últimos bajan."}],
+  },
+  pt:{flag:"🇧🇷",label:"Português",
+    nav:{feed:"Início",stats:"Stats",leagues:"Ligas",flash:"Flash",global:"Global",shop:"Loja"},
+    home:{live:"FLASH AO VIVO",players:"jogadores",myLeagues:"MINHAS LIGAS",seeAll:"Ver tudo",feed:"FEED",xpTo:"XP ao próximo rank",ago:"atrás",done_fl:"FEITO",next_fl:"PRÓXIMO"},
+    ch:{getReady:"PREPARE-SE",done:"PRONTO ✓",playersNow:"jogadores em chamas"},
+    vote:{q:"Quem absolutamente ARRASOU?",hint:"Vote no melhor · Seu voto importa",lock:"CONFIRMAR"},
+    res:{title:"RANKING MUNDIAL",xp:"XP GANHO",rank:"SEU RANK",coins:"MOEDAS",share:"COMPARTILHAR PONTUAÇÃO",back:"VOLTAR AO INÍCIO",top:"TOP JOGADORES",shared:"Pontuação compartilhada!",sharedSub:"Sua crew vê"},
+    lg:{title:"LIGAS & EQUIPES",sub:"Compita em privado · Suba nos rankings",create:"CRIAR MINHA LIGA",invite:"Convide amigos",inviteSub:"50 moedas por recruta",inviteBtn:"CONVIDAR",mine:"MINHAS LIGAS",disc:"DESCOBRIR",join:"ENTRAR",member:"MEMBRO",invCopied:"Link copiado!",invCopiedSub:"Compartilhe com seu grupo",joined:"Entrou! +100 moedas",joinedSub:"Bem-vindo ao grupo",members:"membros"},
+    ld:{back:"VOLTAR",weeklyReset:"Prêmio em",prizes:"500 moedas · 200 moedas · Escudo",ranking:"RANKING",challenges:"DESAFIOS",rules:"REGRAS",hit:"ATACAR",hitTitle:"ATACAR",hitSub:"Gaste moedas para destruir seu rival",cancel:"Cancelar",coinsAdded:"moedas adicionadas",thanks:"Vamos lá!!",penalized:"Atacado!",penalizedSub:"Moedas gastas"},
+    sh:{title:"ARSENAL",sub:"Moedas · Poderes · Caos",coins:"MOEDAS",pnames:["Silêncio","Sombra","Expor","Congelar","Rebaixar"],pdescs:["Não pode votar 24h","Oculto do ranking 12h","Pior pontuação divulgada","XP congelado 24h","Perde 10% XP semanal"],hits:"ATAQUES — destrua rivales",packs:"PACOTES DE MOEDAS",notEnough:"Moedas insuficientes!",needMore:"moedas faltando",activated:"ativado!",enjoy:"Aproveite seu poder",bestDeal:"MELHOR OFERTA",hot:"QUENTE",whale:"BALEIA"},
+    pr:{streak:"Sequência",coins:"Moedas",best:"Melhor",league:"Liga",powers:"PODERES DE RANK",noPowers:"Sem poderes ainda — continue! 💪",journey:"PROGRESSÃO",current:"ATUAL",xp:"XP",active:"ON",base:"Base"},
+    cl:{back:"VOLTAR",title:"CRIAR SUA",word:"LIGA",nameLbl:"Nome da liga",namePh:"ex: CHAOS CREW",badgeLbl:"Distintivo",colorLbl:"Cor",launch:"LANÇAR LIGA",enterName:"Dê um nome!",maxChars:"Máx 20 caracteres"},
+    ob:{tagline:"O Desafio Flash Global",chooseLang:"Escolha seu idioma",next:"PRÓXIMO",start:"VAMOS LÁ",namePh:"Seu nome",nameLbl:"Escolha seu nome",avLbl:"Escolha seu personagem",lgLbl:"Entre em uma liga",skip:"Pular"},
+    sk:{title:"SEQUÊNCIA",days:"DIAS",keepGoing:"Continue assim!",almostLost:"Jogue hoje ou perde sua sequência!",r7:"Bônus 7 dias: +50% XP.",r30:"30 dias: Badge exclusivo."},
+    feed:{fire:"POW",comment:"Responder",share:"Compartilhar",reacted:"POW!",r5:"+5 moedas",soon:"Em breve",shared:"Compartilhado!"},
+    gl:{players:"jogadores",updated:"Ao vivo"},
+    fl:{done:"Feito",live:"Ao vivo",next:"Em breve"},
+    times:["8:30","17:30","21:00"],
+    filters:{all:"TUDO",weekly:"SEMANA",friends:"AMIGOS",country:"PAÍS"},
+    chs:["Faça sua cara mais assustadora AGORA","Pose como um super-herói pousando","Encontre algo vermelho em 20 segundos","Faça beatbox por 15 segundos","Mostre seu movimento de dança","Explique física quântica em 10 segundos","Chore como se tivesse perdido a Copa do Mundo"],
+    cats:["DUELO","CORPO","CAÇA","VOCAL","DANÇA","CÉREBRO","ATUAÇÃO"],
+    go:"VAMOS LÁ!",
+    rules:[
+      {i:“⚡”,t:“3 Flashes por dia”,d:“8:30·17:30·21:00. Falhar 3=−10% XP.”},{i:“🗳️”,t:“Poder de voto”,d:“Rank maior=mais peso. GOD=×5.”},{i:“💰”,t:“Prêmios semanais”,d:“Top 3 ganham moedas.”},{i:“💥”,t:“Ataques”,d:“Gaste moedas para atacar rivais.”},{i:“🔥”,t:“Sequências”,d:“7 dias=+50% XP. 30=badge.”},{i:“👑”,t:“Promoção”,d:“Top 3 sobem.”},{i:“📉”,t:“Rebaixamento”,d:“Os 2 últimos descem.”}],
+},
+it:{flag:“🇮🇹”,label:“Italiano”,
+nav:{feed:“Home”,stats:“Stats”,leagues:“Leghe”,flash:“Flash”,global:“Globale”,shop:“Negozio”},
+home:{live:“FLASH IN DIRETTA”,players:“giocatori”,myLeagues:“LE MIE LEGHE”,seeAll:“Vedi tutto”,feed:“FEED”,xpTo:“XP al prossimo grado”,ago:“fa”,done_fl:“FATTO”,next_fl:“PROSSIMO”},
+ch:{getReady:“PREPARATI”,done:“FATTO ✓”,playersNow:“giocatori in fiamme”},
+vote:{q:“Chi ha assolutamente DOMINATO?”,hint:“Vota il migliore · Il tuo voto conta”,lock:“CONFERMA”},
+res:{title:“CLASSIFICA GLOBALE”,xp:“XP GUADAGNATO”,rank:“IL TUO GRADO”,coins:“MONETE”,share:“CONDIVIDI PUNTEGGIO”,back:“TORNA ALLA HOME”,top:“TOP GIOCATORI”,shared:“Punteggio condiviso!”,sharedSub:“La tua crew lo vede”},
+lg:{title:“LEGHE & SQUADRE”,sub:“Garegcia in privato · Scala le classifiche”,create:“CREA LA MIA LEGA”,invite:“Invita amici”,inviteSub:“50 monete per recluta”,inviteBtn:“INVITA”,mine:“LE MIE LEGHE”,disc:“SCOPRI”,join:“UNISCITI”,member:“MEMBRO”,invCopied:“Link copiato!”,invCopiedSub:“Condividi con la tua crew”,joined:“Entrato! +100 monete”,joinedSub:“Benvenuto nel gruppo”,members:“membri”},
+ld:{back:“INDIETRO”,weeklyReset:“Premio tra”,prizes:“500 monete · 200 monete · Scudo”,ranking:“CLASSIFICA”,challenges:“SFIDE”,rules:“REGOLE”,hit:“COLPISCI”,hitTitle:“COLPISCI”,hitSub:“Spendi monete per distruggere il tuo rivale”,cancel:“Annulla”,coinsAdded:“monete aggiunte”,thanks:“Andiamo!!”,penalized:“Colpito!”,penalizedSub:“Monete spese”},
+sh:{title:“ARSENALE”,sub:“Monete · Poteri · Caos”,coins:“MONETE”,pnames:[“Silenzio”,“Ombra”,“Esporre”,“Congelare”,“Retrocedere”],pdescs:[“Non può votare 24h”,“Nascosto dalla classifica 12h”,“Peggior punteggio trasmesso”,“XP congelato 24h”,“Perde 10% XP settimanale”],hits:“COLPI — distruggi i rivali”,packs:“PACCHETTI MONETE”,notEnough:“Monete insufficienti!”,needMore:“monete mancanti”,activated:“attivato!”,enjoy:“Goditi il tuo potere”,bestDeal:“MIGLIOR OFFERTA”,hot:“POPOLARE”,whale:“BALENA”},
+pr:{streak:“Serie”,coins:“Monete”,best:“Migliore”,league:“Lega”,powers:“POTERI DI GRADO”,noPowers:“Nessun potere ancora — continua! 💪”,journey:“PROGRESSIONE”,current:“ATTUALE”,xp:“XP”,active:“ON”,base:“Base”},
+cl:{back:“INDIETRO”,title:“CREA LA TUA”,word:“LEGA”,nameLbl:“Nome della lega”,namePh:“es: CHAOS CREW”,badgeLbl:“Distintivo”,colorLbl:“Colore”,launch:“LANCIA LA LEGA”,enterName:“Dagli un nome!”,maxChars:“Max 20 caratteri”},
+ob:{tagline:“La Sfida Flash Globale”,chooseLang:“Scegli la tua lingua”,next:“AVANTI”,start:“INIZIAMO”,namePh:“Il tuo username”,nameLbl:“Scegli il tuo username”,avLbl:“Scegli il tuo personaggio”,lgLbl:“Entra in una lega”,skip:“Salta”},
+sk:{title:“SERIE”,days:“GIORNI”,keepGoing:“Continua così!”,almostLost:“Gioca oggi o perdi la serie!”,r7:“Bonus 7 giorni: +50% XP.”,r30:“30 giorni: Badge esclusivo.”},
+feed:{fire:“POW”,comment:“Rispondi”,share:“Condividi”,reacted:“POW!”,r5:”+5 monete”,soon:“Presto”,shared:“Condiviso!”},
+gl:{players:“giocatori”,updated:“In diretta”},
+fl:{done:“Fatto”,live:“In diretta”,next:“Presto”},
+times:[“8:30”,“17:30”,“21:00”],
+filters:{all:“TUTTO”,weekly:“SETTIMANA”,friends:“AMICI”,country:“PAESE”},
+chs:[“Fai la tua faccia più spaventosa ORA”,“Assumi la posa di atterraggio di un supereroe”,“Trova qualcosa di rosso in 20 secondi”,“Fai beatbox per 15 secondi”,“Mostra la tua mossa di danza”,“Spiega la fisica quantistica in 10 secondi”,“Piangi come se avessi appena perso i Mondiali”],
+cats:[“SFIDA FACCE”,“CORPO”,“CACCIA”,“VOCAL”,“BALLO”,“CERVELLONE”,“RECITAZIONE”],
+go:“FORZA!”,
+rules:[{i:“⚡”,t:“3 Flash al giorno”,d:“8:30·17:30·21:00. Mancare 3=−10% XP.”},{i:“🗳️”,t:“Potere di voto”,d:“Grado più alto=più peso. GOD=×5.”},{i:“💰”,t:“Premi settimanali”,d:“Top 3 guadagnano monete.”},{i:“💥”,t:“Colpi”,d:“Spendi monete per colpire i rivali.”},{i:“🔥”,t:“Serie”,d:“7 giorni=+50% XP. 30=badge.”},{i:“👑”,t:“Promozione”,d:“Top 3 salgono.”},{i:“📉”,t:“Retrocessione”,d:“Gli ultimi 2 scendono.”}],
+},
+de:{flag:“🇩🇪”,label:“Deutsch”,
+nav:{feed:“Home”,stats:“Stats”,leagues:“Ligen”,flash:“Flash”,global:“Global”,shop:“Shop”},
+home:{live:“FLASH LIVE”,players:“Spieler”,myLeagues:“MEINE LIGEN”,seeAll:“Alle sehen”,feed:“FEED”,xpTo:“XP bis nächsten Rang”,ago:“vor”,done_fl:“ERLEDIGT”,next_fl:“NÄCHSTER”},
+ch:{getReady:“BEREIT MACHEN”,done:“FERTIG ✓”,playersNow:“Spieler brennen gerade”},
+vote:{q:“Wer hat es absolut ZERSTÖRT?”,hint:“Stimme für den besten · Deine Stimme zählt”,lock:“ABSTIMMEN”},
+res:{title:“GLOBALES RANKING”,xp:“XP VERDIENT”,rank:“DEIN RANG”,coins:“MÜNZEN”,share:“SCORE TEILEN”,back:“ZURÜCK ZUR HOME”,top:“TOP SPIELER”,shared:“Score geteilt!”,sharedSub:“Deine Crew sieht es”},
+lg:{title:“LIGEN & CREWS”,sub:“Konkurriere privat · Steige im Ranking auf”,create:“MEINE LIGA ERSTELLEN”,invite:“Freunde einladen”,inviteSub:“50 Münzen pro Rekrut”,inviteBtn:“EINLADEN”,mine:“MEINE LIGEN”,disc:“ENTDECKEN”,join:“BEITRETEN”,member:“MITGLIED”,invCopied:“Link kopiert!”,invCopiedSub:“Mit deiner Crew teilen”,joined:“Beigetreten! +100 Münzen”,joinedSub:“Willkommen in der Crew”,members:“Mitglieder”},
+ld:{back:“ZURÜCK”,weeklyReset:“Preis in”,prizes:“500 Münzen · 200 Münzen · Schild”,ranking:“RANGLISTE”,challenges:“CHALLENGES”,rules:“REGELN”,hit:“TREFFEN”,hitTitle:“TREFFEN”,hitSub:“Münzen ausgeben um deinen Rivalen zu zerstören”,cancel:“Abbrechen”,coinsAdded:“Münzen hinzugefügt”,thanks:“Los geht’s!!”,penalized:“Getroffen!”,penalizedSub:“Münzen ausgegeben”},
+sh:{title:“ARSENAL”,sub:“Münzen · Kräfte · Chaos”,coins:“MÜNZEN”,pnames:[“Stille”,“Schatten”,“Enthüllen”,“Einfrieren”,“Degradieren”],pdescs:[“Kann 24h nicht abstimmen”,“12h in Rangliste versteckt”,“Schlechtester Score gesendet”,“XP 24h eingefroren”,“Verliert 10% wöchentliches XP”],hits:“TREFFER — vernichte Rivalen”,packs:“MÜNZPAKETE”,notEnough:“Nicht genug Münzen!”,needMore:“Münzen fehlen”,activated:“aktiviert!”,enjoy:“Genieße deine Kraft”,bestDeal:“BESTES ANGEBOT”,hot:“HEISS”,whale:“WAL”},
+pr:{streak:“Serie”,coins:“Münzen”,best:“Bester”,league:“Liga”,powers:“RANG-KRÄFTE”,noPowers:“Noch keine Kräfte — weiter! 💪”,journey:“RANG-REISE”,current:“AKTUELL”,xp:“XP”,active:“AN”,base:“Basis”},
+cl:{back:“ZURÜCK”,title:“DEINE LIGA”,word:“ERSTELLEN”,nameLbl:“Liga-Name”,namePh:“z.B. CHAOS CREW”,badgeLbl:“Abzeichen”,colorLbl:“Farbe”,launch:“LIGA STARTEN”,enterName:“Gib ihr einen Namen!”,maxChars:“Max 20 Zeichen”},
+ob:{tagline:“Die Globale Flash Challenge”,chooseLang:“Sprache wählen”,next:“WEITER”,start:“LOS GEHT’S”,namePh:“Dein Benutzername”,nameLbl:“Wähle deinen Namen”,avLbl:“Wähle deinen Charakter”,lgLbl:“Einer Liga beitreten”,skip:“Überspringen”},
+sk:{title:“SERIE”,days:“TAGE”,keepGoing:“Weiter so!”,almostLost:“Heute spielen oder Serie verlieren!”,r7:“7-Tage-Bonus: +50% XP.”,r30:“30 Tage: Badge freigeschaltet.”},
+feed:{fire:“POW”,comment:“Antworten”,share:“Teilen”,reacted:“POW!”,r5:”+5 Münzen”,soon:“Kommt bald”,shared:“Geteilt!”},
+gl:{players:“Spieler”,updated:“Live”},
+fl:{done:“Erledigt”,live:“Live”,next:“Bald”},
+times:[“8:30”,“17:30”,“21:00”],
+filters:{all:“ALLES”,weekly:“WOCHE”,friends:“FREUNDE”,country:“LAND”},
+chs:[“Mach dein gruseligstes Gesicht JETZT”,“Nimm die Landungspose eines Superhelden ein”,“Finde etwas Rotes in 20 Sekunden”,“Mach 15 Sekunden Beatbox”,“Zeige deine Signature-Dance-Move”,“Erkläre Quantenphysik in 10 Sekunden”,“Weine als hättest du gerade die WM verloren”],
+cats:[“GESICHTSDUEL”,“KÖRPER”,“JAGD”,“VOKAL”,“TANZ”,“GROSSHIRN”,“ACTING”],
+go:“LOS!”,
+rules:[{i:“⚡”,t:“3 Tages-Flashs”,d:“8:30·17:30·21:00. 3 verpasst=−10% XP.”},{i:“🗳️”,t:“Stimmkraft”,d:“Höherer Rang=mehr Gewicht. GOD=×5.”},{i:“💰”,t:“Wöchentliche Preise”,d:“Top 3 verdienen Münzen.”},{i:“💥”,t:“Treffer”,d:“Münzen ausgeben um Rivalen zu treffen.”},{i:“🔥”,t:“Serien”,d:“7 Tage=+50% XP. 30=Badge.”},{i:“👑”,t:“Aufstieg”,d:“Top 3 steigen auf.”},{i:“📉”,t:“Abstieg”,d:“Die letzten 2 steigen ab.”}],
+},
+ko:{flag:“🇰🇷”,label:“한국어”,
+nav:{feed:“홈”,stats:“통계”,leagues:“리그”,flash:“플래시”,global:“글로벌”,shop:“상점”},
+home:{live:“플래시 라이브”,players:“명”,myLeagues:“내 리그”,seeAll:“전체보기”,feed:“피드”,xpTo:“다음 등급까지 XP”,ago:“전”,done_fl:“완료”,next_fl:“다음”},
+ch:{getReady:“준비하세요”,done:“완료 ✓”,playersNow:“명이 불타고 있어요”},
+vote:{q:“누가 완전히 작살냈나요?”,hint:“최고의 플래시에 투표하세요”,lock:“투표하기”},
+res:{title:“글로벌 랭킹”,xp:“획득 XP”,rank:“내 순위”,coins:“코인”,share:“점수 공유”,back:“홈으로”,top:“TOP 플레이어”,shared:“점수 공유됨!”,sharedSub:“크루가 볼 수 있어요”},
+lg:{title:“리그 & 크루”,sub:“비공개로 경쟁하세요”,create:“내 리그 만들기”,invite:“친구 초대”,inviteSub:“초대당 50코인”,inviteBtn:“초대”,mine:“내 리그”,disc:“발견”,join:“참가”,member:“멤버”,invCopied:“링크 복사됨!”,invCopiedSub:“크루와 공유하세요”,joined:“참가! +100코인”,joinedSub:“크루에 오신 걸 환영해요”,members:“명”},
+ld:{back:“뒤로”,weeklyReset:“상품 초기화까지”,prizes:“500코인 · 200코인 · 방어막”,ranking:“랭킹”,challenges:“챌린지”,rules:“규칙”,hit:“공격”,hitTitle:“공격”,hitSub:“코인으로 라이벌을 공격하세요”,cancel:“취소”,coinsAdded:“코인 추가됨”,thanks:“가자!!”,penalized:“공격당함!”,penalizedSub:“코인 사용됨”},
+sh:{title:“무기고”,sub:“코인 · 파워 · 카오스”,coins:“코인”,pnames:[“침묵”,“그림자”,“폭로”,“동결”,“강등”],pdescs:[“24시간 투표 불가”,“12시간 순위 숨김”,“최저 점수 공개”,“24시간 XP 동결”,“주간 XP 10% 감소”],hits:“공격 — 라이벌 격파”,packs:“코인 팩”,notEnough:“코인 부족!”,needMore:“코인 더 필요”,activated:“활성화!”,enjoy:“파워를 즐기세요”,bestDeal:“최고 혜택”,hot:“인기”,whale:“고래”},
+pr:{streak:“연속”,coins:“코인”,best:“최고”,league:“리그”,powers:“등급 파워”,noPowers:“아직 파워 없음 — 계속! 💪”,journey:“등급 여정”,current:“현재”,xp:“XP”,active:“ON”,base:“기본”},
+cl:{back:“뒤로”,title:“리그”,word:“만들기”,nameLbl:“리그 이름”,namePh:“예: CHAOS CREW”,badgeLbl:“뱃지”,colorLbl:“색상”,launch:“리그 시작”,enterName:“이름을 입력하세요!”,maxChars:“최대 20자”},
+ob:{tagline:“글로벌 플래시 챌린지”,chooseLang:“언어 선택”,next:“다음”,start:“시작”,namePh:“닉네임”,nameLbl:“닉네임 선택”,avLbl:“캐릭터 선택”,lgLbl:“리그 참가”,skip:“건너뛰기”},
+sk:{title:“연속”,days:“일”,keepGoing:“계속!”,almostLost:“오늘 안 하면 연속 끊겨요!”,r7:“7일 보너스: XP +50%.”,r30:“30일: 전용 뱃지 해제.”},
+feed:{fire:“POW”,comment:“댓글”,share:“공유”,reacted:“POW!”,r5:”+5 코인”,soon:“곧 출시”,shared:“공유됨!”},
+gl:{players:“명”,updated:“실시간”},
+fl:{done:“완료”,live:“라이브”,next:“곧”},
+times:[“8:30”,“17:30”,“21:00”],
+filters:{all:“전체”,weekly:“주간”,friends:“친구”,country:“국가”},
+chs:[“지금 당장 가장 무서운 표정을 지어보세요”,“슈퍼히어로 착지 포즈를 취하세요”,“20초 안에 빨간 것을 찾으세요”,“15초 동안 비트박스 하세요”,“시그니처 댄스 무브를 보여주세요”,“양자물리학을 10초 안에 설명하세요”,“월드컵을 막 진 것처럼 울어보세요”],
+cats:[“얼굴대결”,“몸”,“사냥”,“보컬”,“댄스”,“두뇌”,“연기”],
+go:“가자!”,
+rules:[{i:“⚡”,t:“하루 3 플래시”,d:“8:30·17:30·21:00. 3번 연속 미참가=XP −10%.”},{i:“🗳️”,t:“투표 파워”,d:“등급 높을수록 투표 가중치 증가. GOD=×5.”},{i:“💰”,t:“주간 상품”,d:“Top 3 코인 획득.”},{i:“💥”,t:“공격”,d:“코인으로 라이벌 공격.”},{i:“🔥”,t:“연속”,d:“7일=+50% XP. 30일=전용 뱃지.”},{i:“👑”,t:“승격”,d:“Top 3 승격.”},{i:“📉”,t:“강등”,d:“하위 2명 강등.”}],
+},
+ja:{flag:“🇯🇵”,label:“日本語”,
+nav:{feed:“ホーム”,stats:“記録”,leagues:“リーグ”,flash:“フラッシュ”,global:“グローバル”,shop:“ショップ”},
+home:{live:“フラッシュ配信中”,players:“人”,myLeagues:“マイリーグ”,seeAll:“全て見る”,feed:“フィード”,xpTo:“次のランクまでXP”,ago:“前”,done_fl:“完了”,next_fl:“次”},
+ch:{getReady:“準備して”,done:“完了 ✓”,playersNow:“人が燃えています”},
+vote:{q:“誰が完全にやり切った?”,hint:“最高のフラッシュに投票を”,lock:“投票する”},
+res:{title:“グローバルランキング”,xp:“獲得XP”,rank:“あなたのランク”,coins:“コイン”,share:“スコアをシェア”,back:“ホームへ”,top:“TOPプレイヤー”,shared:“シェアしました!”,sharedSub:“クルーが見られます”},
+lg:{title:“リーグ & クルー”,sub:“プライベートで競い合おう”,create:“リーグを作る”,invite:“友達を招待”,inviteSub:“招待ごと50コイン”,inviteBtn:“招待”,mine:“マイリーグ”,disc:“探す”,join:“参加”,member:“メンバー”,invCopied:“リンクコピー!”,invCopiedSub:“クルーにシェアしよう”,joined:“参加! +100コイン”,joinedSub:“クルーへようこそ”,members:“人”},
+ld:{back:“戻る”,weeklyReset:“賞品リセットまで”,prizes:“500コイン · 200コイン · シールド”,ranking:“ランキング”,challenges:“チャレンジ”,rules:“ルール”,hit:“攻撃”,hitTitle:“攻撃”,hitSub:“コインを使ってライバルを攻撃”,cancel:“キャンセル”,coinsAdded:“コイン追加”,thanks:“行くぞ!!”,penalized:“攻撃された!”,penalizedSub:“コイン使用”},
+sh:{title:“武器庫”,sub:“コイン · パワー · カオス”,coins:“コイン”,pnames:[“沈黙”,“シャドウ”,“暴露”,“フリーズ”,“降格”],pdescs:[“24時間投票不可”,“12時間ランク非表示”,“最低スコア公開”,“24時間XP停止”,“週間XP10%減少”],hits:“攻撃 — ライバルを倒す”,packs:“コインパック”,notEnough:“コイン不足!”,needMore:“コイン不足”,activated:“発動!”,enjoy:“パワーを楽しんで”,bestDeal:“お得”,hot:“人気”,whale:“クジラ”},
+pr:{streak:“連続”,coins:“コイン”,best:“最高”,league:“リーグ”,powers:“ランクパワー”,noPowers:“まだパワーなし — 頑張れ! 💪”,journey:“ランク旅”,current:“現在”,xp:“XP”,active:“ON”,base:“基本”},
+cl:{back:“戻る”,title:“リーグを”,word:“作る”,nameLbl:“リーグ名”,namePh:“例: CHAOS CREW”,badgeLbl:“バッジ”,colorLbl:“カラー”,launch:“リーグ開始”,enterName:“名前を入力!”,maxChars:“最大20文字”},
+ob:{tagline:“グローバルフラッシュチャレンジ”,chooseLang:“言語を選択”,next:“次へ”,start:“始めよう”,namePh:“ユーザー名”,nameLbl:“名前を選択”,avLbl:“キャラを選択”,lgLbl:“リーグに参加”,skip:“スキップ”},
+sk:{title:“連続”,days:“日”,keepGoing:“続けて!”,almostLost:“今日やらないと連続終わり!”,r7:“7日ボーナス: XP +50%.”,r30:“30日: 限定バッジ解除.”},
+feed:{fire:“POW”,comment:“返信”,share:“シェア”,reacted:“POW!”,r5:”+5コイン”,soon:“近日公開”,shared:“シェア!”},
+gl:{players:“人”,updated:“ライブ”},
+fl:{done:“完了”,live:“配信中”,next:“近日”},
+times:[“8:30”,“17:30”,“21:00”],
+filters:{all:“全て”,weekly:“週間”,friends:“友達”,country:“国”},
+chs:[“今すぐ一番怖い顔をしてください”,“スーパーヒーローの着地ポーズを決めて”,“20秒で赤いものを見つけて”,“15秒間ビートボックスして”,“あなたのシグネチャーダンスを見せて”,“量子物理学を10秒で説明して”,“ワールドカップで負けたように泣いて”],
+cats:[“顔対決”,“ボディ”,“ハント”,“ボーカル”,“ダンス”,“大頭脳”,“演技”],
+go:“ゴー!”,
+rules:[{i:“⚡”,t:“1日3フラッシュ”,d:“8:30·17:30·21:00. 3回連続不参加=XP −10%.”},{i:“🗳️”,t:“投票パワー”,d:“ランク高いほど重み増加。GOD=×5.”},{i:“💰”,t:“週間賞品”,d:“Top3がコイン獲得.”},{i:“💥”,t:“攻撃”,d:“コインでライバルを攻撃.”},{i:“🔥”,t:“連続”,d:“7日=+50% XP. 30日=限定バッジ.”},{i:“👑”,t:“昇格”,d:“Top3が昇格.”},{i:“📉”,t:“降格”,d:“下位2人が降格.”}],
+},
+};
+// ═══════════════════════ GAME DATA ═══════════════════════
+const RANKS=[
+{id:“rookie”,  label:“Rookie”,    min:0,     max:999,   color:”#94A3B8”,g1:”#CBD5E1”,g2:”#94A3B8”,icon:“🥉”,perks:[]},
+{id:“riser”,   label:“Riser”,     min:1000,  max:2999,  color:”#34D399”,g1:”#6EE7B7”,g2:”#34D399”,icon:“⬆️”,perks:[“Custom border”]},
+{id:“spark”,   label:“Spark”,     min:3000,  max:6999,  color:”#38BDF8”,g1:”#7DD3FC”,g2:”#38BDF8”,icon:“⚡”,perks:[“Spark trail”,“Vote 2× weight”]},
+{id:“blaze”,   label:“Blaze”,     min:7000,  max:14999, color:”#FB923C”,g1:”#FCD34D”,g2:”#FB923C”,icon:“🔥”,perks:[“Blaze badge”,“Penalty shield”,“Bonus flash”]},
+{id:“phantom”, label:“Phantom”,   min:15000, max:29999, color:”#C084FC”,g1:”#E879F9”,g2:”#C084FC”,icon:“👻”,perks:[“Ghost mode”,“Double XP weekends”,“League creation”]},
+{id:“god”,     label:“DAREZ GOD”, min:30000, max:Infinity,color:”#FF6B00”,g1:”#FB7185”,g2:”#FF6B00”,icon:“👑”,perks:[“God crown”,“Penalty ×2”,“Custom challenge”,“Revenue share”]},
+];
+const PENALTIES=[
+{id:“mute”,   emoji:“🔇”,label:“Silence”,  cost:200, desc:“Can’t vote for 24h”},
+{id:“shadow”, emoji:“🌑”,label:“Shadow”,   cost:350, desc:“Hidden from leaderboard 12h”},
+{id:“expose”, emoji:“📢”,label:“Expose”,   cost:500, desc:“Worst score broadcasted”},
+{id:“freeze”, emoji:“🧊”,label:“Freeze”,   cost:800, desc:“XP frozen for 24h”},
+{id:“demote”, emoji:“📉”,label:“Demote”,   cost:1500,desc:“Lose 10% weekly XP”},
+];
+const CHALLENGES=[
+{id:1,emoji:“😱”,text:“Make your scariest face RIGHT NOW”,      cat:“FACE OFF”,  timer:45,xp:120,diff:“easy”},
+{id:2,emoji:“⚡”,text:“Strike a superhero landing pose”,         cat:“BODY”,      timer:30,xp:150,diff:“medium”},
+{id:3,emoji:“🔴”,text:“Find something red in 20 seconds”,        cat:“HUNT”,      timer:25,xp:100,diff:“easy”},
+{id:4,emoji:“🎤”,text:“Beatbox for 15 seconds straight”,         cat:“VOCAL”,     timer:20,xp:180,diff:“hard”},
+{id:5,emoji:“🕺”,text:“Show your signature dance move”,          cat:“DANCE”,     timer:30,xp:160,diff:“medium”},
+{id:6,emoji:“🤯”,text:“Explain quantum physics in 10 seconds”,   cat:“BIG BRAIN”, timer:12,xp:250,diff:“hard”},
+{id:7,emoji:“🎭”,text:“Cry like you just lost the World Cup”,    cat:“ACTING”,    timer:30,xp:200,diff:“medium”},
+];
+const MOCK_PLAYERS=[
+{id:“p1”,name:“zara_flash”,  flag:“🇧🇷”,score:9847,xp:28400,rankId:“phantom”,avId:“blaze”,  streak:14,coins:1240},
+{id:“p2”,name:“drift.exe”,   flag:“🇯🇵”,score:9203,xp:31200,rankId:“god”,    avId:“ninja”,  streak:22,coins:3400},
+{id:“p3”,name:“neon_leo”,    flag:“🇫🇷”,score:8891,xp:18900,rankId:“phantom”,avId:“fox”,    streak:7, coins:890},
+{id:“p4”,name:“kira_drop”,   flag:“🇰🇷”,score:7654,xp:12400,rankId:“blaze”,  avId:“dragon”, streak:5, coins:440},
+{id:“p5”,name:“maxvibe”,     flag:“🇩🇪”,score:7120,xp:9800, rankId:“blaze”,  avId:“thunder”,streak:3, coins:220},
+{id:“me”,name:“YOU”,         flag:“🌍”, score:8340,xp:15800,rankId:“phantom”,avId:“sakura”, streak:9, coins:680,isUser:true},
+];
+const MOCK_LEAGUES=[
+{id:“l1”,name:“CHAOS CREW”,    members:8,  rank:1,points:24500,badge:“💀”,color:”#FF6B00”,joined:true, isOwner:true},
+{id:“l2”,name:“VIBE TRIBE”,    members:12, rank:2,points:19200,badge:“🌊”,color:”#38BDF8”,joined:true, isOwner:false},
+{id:“l3”,name:“FIRE SQUAD”,    members:6,  rank:5,points:8900, badge:“🔥”,color:”#FB923C”,joined:false,isOwner:false},
+{id:“l4”,name:“SILENT GODS”,   members:4,  rank:3,points:15600,badge:“👻”,color:”#C084FC”,joined:false,isOwner:false},
+{id:“l5”,name:“CLOUT CHASERS”, members:20, rank:7,points:6200, badge:“💫”,color:”#FBBF24”,joined:false,isOwner:false},
+];
+const ME=MOCK_PLAYERS.find(p=>p.isUser);
+const getMyRank=()=>RANKS.find(r=>ME.xp>=r.min&&ME.xp<r.max)||RANKS[0];
+const getAv=id=>AVS.find(a=>a.id===id)||AVS[0];
+
+// ═══════════════════════ CSS ═══════════════════════
+const CSS=`
+@import url(‘https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap’);
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{–pk:#FF6B00;–yw:#FBBF24;–bl:#38BDF8;–gn:#34D399;–pu:#C084FC;–or:#FB923C;–ink:#1E1B2E;–mu:#94A3B8;–bg:#FFF8F0;–white:#FFFFFF;}
+
+@keyframes rankPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.15)}}
+@keyframes cardReveal{from{opacity:0;transform:scale(.88) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* FLASH ALERT */
+.flash-alert{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:800;}
+/* HISTORY */
+@keyframes flameWave{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.18) rotate(3deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(0.4);opacity:0}65%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+@keyframes wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg) scale(1.05)}75%{transform:rotate(5deg) scale(1.05)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes tickIn{0%{transform:scale(1.8);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes barFill{from{width:0%}}
+@keyframes xpFill{from{width:0%}}
+@keyframes notifIn{from{transform:translateY(-60px) scale(0.88);opacity:0}60%{transform:translateY(5px) scale(1.02)}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes flameWave{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.18) rotate(3deg)}}
+body{background:var(–bg);overflow:hidden;}
+.app{font-family:‘Nunito’,sans-serif;background:var(–bg);color:var(–ink);max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
+/* NOTIF */
+.notif{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;background:#fff;border-radius:22px;padding:12px 20px 12px 14px;min-width:250px;max-width:330px;animation:notifIn .38s cubic-bezier(.2,0,.38,1.35);box-shadow:0 10px 36px rgba(0,0,0,.13);display:flex;align-items:center;gap:12px;}
+/* TICKER */
+.ticker{background:var(–ink);height:30px;display:flex;align-items:center;overflow:hidden;flex-shrink:0;}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 34s linear infinite;}
+.ticker-txt{font-size:11px;color:var(–yw);font-weight:800;padding:0 30px;font-family:‘Fredoka One’,sans-serif;letter-spacing:.4px;}
+/* NAV */
+.nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.06);flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0);box-shadow:0 -6px 24px rgba(0,0,0,.06);}
+.nb{flex:1;padding:10px 4px 12px;border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s;}
+.nb:active{transform:scale(.88);}
+.ni{font-size:22px;transition:transform .18s;}
+.nl{font-size:9px;color:var(–mu);font-weight:900;text-transform:uppercase;letter-spacing:.5px;}
+.nb.active .ni{transform:scale(1.28);}
+.nb.active .nl{color:var(–pk);}
+.nbadge{position:absolute;top:7px;right:calc(50% - 19px);background:var(–pk);color:#fff;font-size:8px;font-weight:900;width:15px;height:15px;border-radius:50%;display:grid;place-items:center;border:2px solid #fff;}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;}.scroll::-webkit-scrollbar{width:0;}
+/* CARDS */
+.card{background:#fff;border-radius:24px;box-shadow:0 4px 22px rgba(0,0,0,.07);}
+/* LANG */
+.lo{position:fixed;inset:0;background:rgba(30,27,46,.6);z-index:800;display:flex;align-items:flex-end;backdrop-filter:blur(5px);}
+.ls{background:#fff;border-radius:28px 28px 0 0;padding:28px 20px 48px;width:100%;max-width:430px;margin:0 auto;animation:slideUp .33s ease-out;box-shadow:0 -8px 44px rgba(0,0,0,.12);}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lopt{background:var(–bg);border-radius:16px;padding:13px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:transform .12s;}
+.lopt:active{transform:scale(.95);}
+.lopt.on{background:linear-gradient(135deg,var(–pk),var(–pu));color:#fff;}
+/* ONBOARD */
+.ob{position:fixed;inset:0;z-index:700;background:var(–bg);display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
+.obs{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px 24px;animation:fadeUp .38s ease-out;}
+.obnext{background:linear-gradient(135deg,var(–pk),var(–pu));color:#fff;border:none;border-radius:999px;width:100%;padding:16px;font-family:‘Fredoka One’,sans-serif;font-size:20px;letter-spacing:1px;cursor:pointer;box-shadow:0 6px 24px rgba(255,107,0,.33);transition:transform .12s;margin-top:auto;}
+.obnext:active{transform:scale(.96);}
+.obskip{background:none;border:none;font-size:12px;cursor:pointer;margin-top:10px;padding:8px 16px;font-weight:900;color:var(–mu);font-family:‘Nunito’,sans-serif;}
+.obinput{width:100%;background:#fff;border:2px solid rgba(0,0,0,.09);border-radius:16px;padding:14px 16px;font-size:16px;font-family:‘Fredoka One’,sans-serif;outline:none;text-align:center;margin-bottom:8px;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.obinput:focus{border-color:var(–pk);box-shadow:0 0 0 3px rgba(255,107,0,.14);}
+.dots{display:flex;gap:8px;margin-bottom:24px;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.1);transition:all .3s;}
+.dot.on{background:var(–pk);width:24px;border-radius:4px;}
+/* AVATAR GRID */
+.avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-height:340px;overflow-y:auto;margin-bottom:16px;}
+.avgrid::-webkit-scrollbar{width:0;}
+.avitem{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .12s;}
+.avitem:active{transform:scale(.9);}
+.avitem.on svg{filter:drop-shadow(0 0 8px var(–pk));outline:3px solid var(–pk);outline-offset:2px;border-radius:50%;}
+.avname{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(–mu);}
+/* STREAK MODAL */
+.skov{position:fixed;inset:0;background:rgba(30,27,46,.72);z-index:600;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(7px);}
+.skcard{background:#fff;border-radius:32px;padding:40px 28px;width:100%;max-width:340px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.18);animation:popIn .5s cubic-bezier(.2,0,.38,1.4);}
+.skflame{font-size:64px;display:block;margin-bottom:8px;animation:flameWave 1.2s ease-in-out infinite;}
+.sknum{font-family:‘Fredoka One’,sans-serif;font-size:100px;line-height:1;background:linear-gradient(135deg,var(–or),var(–pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* SHARE CARD */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.shimmer{background:linear-gradient(90deg,transparent 25%,rgba(255,255,255,.3) 50%,transparent 75%);background-size:200% 100%;animation:shimmer 2s infinite;}
+/* INVITE MODAL */
+/* SEASON BADGE */
+.sbadge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(–yw),var(–or));border-radius:999px;padding:4px 12px;font-size:11px;font-weight:900;color:#1E1B2E;}
+
+/* CHALLENGE */
+.chfull{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:48px 32px 56px;}
+.chtimer{font-family:‘Fredoka One’,sans-serif;font-size:148px;line-height:1;color:#fff;text-shadow:0 8px 48px rgba(0,0,0,.28);animation:pulse 1s ease-in-out infinite;}
+.chtimer.urg{animation:wobble .24s ease-in-out infinite;color:#FFE600;}
+.chtext{font-family:‘Fredoka One’,sans-serif;font-size:27px;text-align:center;line-height:1.25;color:#fff;margin-top:22px;text-shadow:0 2px 18px rgba(0,0,0,.25);}
+.cddone{margin-top:auto;background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.5);border-radius:999px;padding:14px 40px;font-family:‘Fredoka One’,sans-serif;font-size:18px;color:#fff;cursor:pointer;letter-spacing:1px;backdrop-filter:blur(4px);transition:background .14s;}
+.cddone:active{background:rgba(255,255,255,.38);}
+.cdnum{font-family:‘Fredoka One’,sans-serif;font-size:180px;line-height:1;color:#fff;text-shadow:0 8px 64px rgba(0,0,0,.4);animation:tickIn .55s cubic-bezier(.2,0,.38,1.4);}
+/* VOTE */
+.vcard{background:#fff;border-radius:18px;padding:14px;cursor:pointer;display:flex;align-items:center;gap:13px;box-shadow:0 3px 14px rgba(0,0,0,.07);transition:transform .12s;animation:fadeUp .28s ease-out both;}
+.vcard:active{transform:scale(.97);}
+.vcard.on{box-shadow:0 0 0 2.5px var(–pk),0 6px 24px rgba(255,107,0,.18);}
+.vchk{width:28px;height:28px;border-radius:50%;border:2px solid rgba(0,0,0,.1);display:grid;place-items:center;font-size:14px;font-weight:900;flex-shrink:0;}
+.vcard.on .vchk{background:var(–pk);border-color:var(–pk);color:#fff;}
+/* RESULTS */
+.xpstrip{display:flex;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.07);}
+.xpcell{flex:1;padding:16px 8px;text-align:center;}
+.xpcell:not(:last-child){border-right:1px solid rgba(0,0,0,.06);}
+.lbrow{display:flex;align-items:center;gap:11px;background:#fff;border-radius:16px;padding:11px 13px;box-shadow:0 2px 10px rgba(0,0,0,.05);animation:fadeUp .28s ease-out both;}
+.lbrow.me{background:linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.05));}
+/* LEAGUES */
+.lhero{padding:24px 18px 20px;border-radius:0 0 32px 32px;position:relative;overflow:hidden;}
+.ltab{flex:1;padding:10px;border:none;border-radius:14px;background:transparent;color:var(–mu);font-size:11px;font-weight:900;cursor:pointer;transition:all .15s;letter-spacing:.5px;font-family:‘Nunito’,sans-serif;}
+.ltab.on{background:linear-gradient(135deg,var(–pk),var(–pu));color:#fff;box-shadow:0 3px 12px rgba(255,107,0,.28);}
+.lgcard{margin:0 16px 10px;background:#fff;border-radius:18px;padding:13px;display:flex;align-items:center;gap:12px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:transform .12s;animation:fadeUp .28s ease-out both;}
+.lgcard:active{transform:scale(.97);}
+.joinbtn{padding:7px 14px;border-radius:999px;background:linear-gradient(135deg,var(–pk),var(–pu));color:#fff;font-size:10px;font-weight:900;cursor:pointer;border:none;box-shadow:0 3px 10px rgba(255,107,0,.28);font-family:‘Nunito’,sans-serif;flex-shrink:0;}
+/* GLOBAL */
+.gfilter{padding:7px 14px;border-radius:999px;border:none;background:rgba(0,0,0,.06);font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;font-family:‘Nunito’,sans-serif;color:var(–mu);}
+.gfilter.on{background:linear-gradient(135deg,var(–bl),var(–pu));color:#fff;}
+/* PROFILE */
+.phero{padding:32px 18px 20px;border-radius:0 0 32px 32px;text-align:center;position:relative;overflow:hidden;}
+.pstat{flex:1;padding:14px;text-align:center;cursor:pointer;position:relative;}
+.pstat:not(:last-child)::after{content:’’;position:absolute;right:0;top:22%;bottom:22%;width:1px;background:rgba(0,0,0,.07);}
+/* SHOP */
+.shopcard{background:#fff;border-radius:18px;padding:14px;display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:transform .12s;margin-bottom:10px;}
+.shopcard:active{transform:scale(.97);}
+.packcard{background:#fff;border-radius:18px;padding:16px;cursor:pointer;text-align:center;position:relative;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.08);transition:transform .12s;}
+.packcard:active{transform:scale(.96);}
+/* CREATE */
+.finput{background:#fff;border:2px solid rgba(0,0,0,.08);border-radius:16px;padding:13px 16px;font-size:14px;font-family:‘Nunito’,sans-serif;font-weight:800;outline:none;width:100%;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+.finput:focus{border-color:var(–pk);}
+.bdgopt{aspect-ratio:1;border-radius:14px;background:rgba(0,0,0,.04);display:grid;place-items:center;font-size:22px;cursor:pointer;transition:transform .12s;}
+.bdgopt:active{transform:scale(.9);}
+.bdgopt.on{background:linear-gradient(135deg,rgba(255,107,0,.12),rgba(192,132,252,.1));outline:2.5px solid var(–pk);}
+.cdot{width:34px;height:34px;border-radius:50%;cursor:pointer;transition:transform .14s;}
+.cdot.on{transform:scale(1.28);outline:3px solid rgba(0,0,0,.3);outline-offset:2px;}
+/* PENALTY MODAL */
+.pmov{position:fixed;inset:0;background:rgba(30,27,46,.66);z-index:500;display:flex;align-items:flex-end;backdrop-filter:blur(5px);}
+.pmsh{background:#fff;border-radius:28px 28px 0 0;padding:28px 18px 48px;width:100%;max-width:430px;margin:0 auto;animation:slideUp .3s ease-out;box-shadow:0 -8px 44px rgba(0,0,0,.12);}
+/* HERO ORB */
+.orb{position:absolute;border-radius:50%;filter:blur(44px);pointer-events:none;}
+`;
+
+// ═══ PARTICLES ═══
+function Particles({trigger}) {
+const ref=useRef(null);
+useEffect(()=>{
+if(!trigger)return;
+const canvas=ref.current;if(!canvas)return;
+const ctx=canvas.getContext(“2d”);
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+const cols=[”#FF6B00”,”#FBBF24”,”#38BDF8”,”#34D399”,”#C084FC”,”#FB923C”];
+let P=Array.from({length:90},()=>({
+x:canvas.width/2+(Math.random()-.5)*280,y:canvas.height*.38,
+vx:(Math.random()-.5)*15,vy:Math.random()*-14-5,
+c:cols[Math.floor(Math.random()*cols.length)],
+sz:Math.random()*9+4,rot:Math.random()*360,rs:(Math.random()-.5)*12,
+a:1,g:.5,sh:[“c”,“s”,“r”][Math.floor(Math.random()*3)],
+}));
+let raf;
+const draw=()=>{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+P=P.filter(p=>p.a>.015);
+P.forEach(p=>{
+p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.vx*=.97;p.rot+=p.rs;p.a-=.016;
+ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+ctx.globalAlpha=p.a;ctx.fillStyle=p.c;
+if(p.sh===“c”){ctx.beginPath();ctx.arc(0,0,p.sz/2,0,Math.PI*2);ctx.fill();}
+else if(p.sh===“s”){ctx.beginPath();for(let i=0;i<5;i++){const a=(i*4*Math.PI/5)-Math.PI/2;const r=i%2===0?p.sz/2:p.sz/4;i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.closePath();ctx.fill();}
+else{ctx.fillRect(-p.sz/2,-p.sz/4,p.sz,p.sz/2);}
+ctx.restore();
+});
+if(P.length>0)raf=requestAnimationFrame(draw);
+};
+raf=requestAnimationFrame(draw);
+return()=>cancelAnimationFrame(raf);
+},[trigger]);
+return <canvas ref={ref} style={{position:“fixed”,inset:0,pointerEvents:“none”,zIndex:200,width:“100%”,height:“100%”}}/>;
+}
+
+function Notif({n}) {
+if(!n)return null;
+return(
+<div className=“notif” style={{borderLeft:`4px solid ${n.color||"var(--pk)"}`}}>
+<span style={{fontSize:26,flexShrink:0}}>{n.icon}</span>
+<div>
+<div style={{fontWeight:900,fontSize:13,lineHeight:1.2}}>{n.text}</div>
+{n.sub&&<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{n.sub}</div>}
+</div>
+</div>
+);
+}
+function Ticker() {
+const msg=“⚡ drift.exe SCORED 9203 — DANCE MODE · 👑 zara_flash IS NOW DAREZ GOD · 🔥 maxvibe — 22 DAY STREAK · 48,291 PLAYERS ONLINE · 💀 CHAOS CREW ARE #1 · “;
+return(<div className="ticker"><div className="ticker-inner"><span className="ticker-txt">{msg}</span><span className="ticker-txt">{msg}</span></div></div>);
+}
+function LangSheet({lang,setLang,onClose}) {
+return(
+<div className="lo" onClick={onClose}>
+<div className=“ls” onClick={e=>e.stopPropagation()}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,color:“var(–ink)”,marginBottom:16}}>🌍 Language</div>
+<div className="lg">
+{Object.entries(LANGS).map(([code,l])=>(
+<div key={code} className={`lopt ${lang===code?"on":""}`} onClick={()=>{SFX.boing();setLang(code);onClose();}}>
+<span style={{fontSize:22}}>{l.flag}</span>
+<span style={{fontWeight:800,fontSize:14,color:lang===code?”#fff”:“var(–ink)”}}>{l.label}</span>
+</div>
+))}
+</div>
+</div>
+</div>
+);
+}
+function StreakModal({streak,onClose,t}) {
+const s=t.sk;
+const msg=streak>=30?s.r30:streak>=7?s.r7:streak>=3?s.keepGoing:s.almostLost;
+return(
+<div className="skov" onClick={onClose}>
+<div className=“skcard” onClick={e=>e.stopPropagation()}>
+<span className="skflame">🔥</span>
+<div className="sknum">{streak}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,color:“var(–mu)”,marginBottom:12}}>{s.days} {s.title}</div>
+<div style={{fontSize:14,fontWeight:900,color:“var(–ink)”,marginBottom:28,lineHeight:1.4}}>{msg}</div>
+<button style={{background:“linear-gradient(135deg,var(–or),var(–pk))”,color:”#fff”,border:“none”,borderRadius:“999px”,width:“100%”,padding:15,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,cursor:“pointer”,boxShadow:“0 6px 24px rgba(255,107,0,.33)”,letterSpacing:1}} onClick={()=>{SFX.streakFire();onClose();}}>{t.ob.start} ⚡</button>
+</div>
+</div>
+);
+}
+
+// ═══════════════════════ FLASH ENGINE ═══════════════════════
+// Flash times: 08:30, 17:30, 21:00 — duration 5 min each
+const FLASH_TIMES = [{h:8,m:30},{h:17,m:30},{h:21,m:0}];
+const FLASH_DURATION_MIN = 5;
+
+function getFlashState() {
+const now = new Date();
+const todayMins = now.getHours()*60 + now.getMinutes();
+const secs = now.getSeconds();
+
+for (let i = 0; i < FLASH_TIMES.length; i++) {
+const ft = FLASH_TIMES[i];
+const startMin = ft.h*60 + ft.m;
+const endMin = startMin + FLASH_DURATION_MIN;
+if (todayMins >= startMin && todayMins < endMin) {
+const secsRemaining = (endMin - todayMins)*60 - secs;
+return { status:“live”, index:i, secsRemaining, next:null };
+}
+}
+// Find next flash
+for (let i = 0; i < FLASH_TIMES.length; i++) {
+const ft = FLASH_TIMES[i];
+const startMin = ft.h*60 + ft.m;
+if (todayMins < startMin) {
+const secsUntil = (startMin - todayMins)*60 - secs;
+return { status:“waiting”, index:i, secsRemaining:null, next:secsUntil };
+}
+}
+// Next is tomorrow 08:30
+const midnight = 24*60 - todayMins;
+const secsUntil = midnight*60 - secs + 8*3600 + 30*60;
+return { status:“waiting”, index:0, secsRemaining:null, next:secsUntil };
+}
+
+function fmtCountdown(secs) {
+if (secs === null || secs === undefined) return “–:–”;
+const h = Math.floor(secs/3600);
+const m = Math.floor((secs%3600)/60);
+const s = secs%60;
+if (h > 0) return `${h}h${String(m).padStart(2,"0")}`;
+return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function useFlashState() {
+const [fs, setFs] = useState(getFlashState);
+useEffect(() => {
+const id = setInterval(() => setFs(getFlashState()), 1000);
+return () => clearInterval(id);
+}, []);
+return fs;
+}
+
+// ═══════════════════════ SHARE CARD ═══════════════════════
+function ShareCard({userName,avId,xp,score,streak,rank,chText,chEmoji,visible,onClose,t}) {
+const canvasRef = useRef(null);
+const av = getAv(avId);
+const [copied,setCopied] = useState(false);
+
+const shareText = `${chEmoji} ${score.toLocaleString()} pts · #${rank} · ${streak}🔥 — DAREZ`;
+
+const handleShare = async () => {
+SFX.coin();
+try {
+if (navigator.share) {
+await navigator.share({ title:“DAREZ”, text:shareText, url:“https://darez.app/join” });
+} else {
+await navigator.clipboard.writeText(`${shareText}\nhttps://darez.app/join`);
+setCopied(true);
+setTimeout(()=>setCopied(false),2500);
+}
+} catch(e) {
+await navigator.clipboard.writeText(`${shareText}\nhttps://darez.app/join`).catch(()=>{});
+setCopied(true);
+setTimeout(()=>setCopied(false),2500);
+}
+};
+
+if (!visible) return null;
+const rk = RANKS.find(r=>xp>=r.min&&xp<r.max)||RANKS[0];
+
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.88)”,zIndex:900,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,padding:20,backdropFilter:“blur(10px)”}}
+onClick={onClose}>
+<div onClick={e=>e.stopPropagation()} style={{width:“100%”,maxWidth:360,animation:“popIn .45s cubic-bezier(.2,0,.38,1.4)”}}>
+{/* THE CARD */}
+<div style={{background:`linear-gradient(145deg,${rk.g1},${rk.g2})`,borderRadius:28,padding:“28px 24px 24px”,position:“relative”,overflow:“hidden”,boxShadow:`0 24px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.15)`}}>
+{/* Orb deco */}
+<div style={{position:“absolute”,width:180,height:180,borderRadius:“50%”,background:“rgba(255,255,255,.12)”,top:-60,right:-40,filter:“blur(30px)”}}/>
+<div style={{position:“absolute”,width:100,height:100,borderRadius:“50%”,background:“rgba(0,0,0,.15)”,bottom:-20,left:-20,filter:“blur(20px)”}}/>
+
+```
+      {/* Header */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:18,position:"relative",zIndex:1}}>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",letterSpacing:1}}>DAREZ</div>
+        <div style={{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",borderRadius:999,padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}}>{rk.icon} {rk.label}</div>
+      </div>
+
+      {/* Avatar + name */}
+      <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:20,position:"relative",zIndex:1}}>
+        <div style={{borderRadius:"50%",boxShadow:"0 0 0 3px rgba(255,255,255,.4), 0 8px 24px rgba(0,0,0,.3)"}}>
+          <AvatarSVG av={av} size={68}/>
+        </div>
+        <div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff",lineHeight:1}}>{userName}</div>
+          <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.7)",marginTop:4}}>🔥 {streak} day streak</div>
+        </div>
+      </div>
+
+      {/* Challenge */}
+      <div style={{background:"rgba(0,0,0,.2)",backdropFilter:"blur(4px)",borderRadius:16,padding:"12px 14px",marginBottom:16,position:"relative",zIndex:1}}>
+        <div style={{fontSize:10,fontWeight:900,color:"rgba(255,255,255,.6)",letterSpacing:1,marginBottom:4}}>⚡ FLASH CHALLENGE</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"#fff",lineHeight:1.3}}>{chEmoji} {chText}</div>
+      </div>
+
+      {/* Stats row */}
+      <div style={{display:"flex",gap:8,marginBottom:18,position:"relative",zIndex:1}}>
+        {[
+          {v:score.toLocaleString(),l:"SCORE",c:"#fff"},
+          {v:`+${xp}`,l:"XP",c:"#FFE600"},
+          {v:`#${rank}`,l:"RANK",c:"#7FFFD4"},
+        ].map((s,i)=>(
+          <div key={i} style={{flex:1,background:"rgba(255,255,255,.15)",backdropFilter:"blur(4px)",borderRadius:14,padding:"10px 8px",textAlign:"center"}}>
+            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:s.c,lineHeight:1}}>{s.v}</div>
+            <div style={{fontSize:8,fontWeight:900,color:"rgba(255,255,255,.6)",marginTop:3,letterSpacing:.5}}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div style={{background:"rgba(255,255,255,.15)",borderRadius:14,padding:"10px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"relative",zIndex:1}}>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"rgba(255,255,255,.8)"}}>darez.app/join</div>
+        <div style={{fontSize:10,fontWeight:900,color:"#fff",background:"rgba(255,255,255,.2)",borderRadius:999,padding:"4px 10px"}}>JOIN NOW →</div>
+      </div>
+    </div>
+
+    {/* Action buttons */}
+    <div style={{display:"flex",gap:10,marginTop:14}}>
+      <button onClick={handleShare} style={{flex:1,padding:16,borderRadius:20,background:copied?"var(--gn)":"var(--pk)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",cursor:"pointer",boxShadow:`0 6px 24px rgba(255,107,0,.4)`,transition:"background .2s",letterSpacing:1}}>
+        {copied?"✓ COPIED!":"📤 SHARE"}
+      </button>
+      <button onClick={onClose} style={{width:54,height:54,borderRadius:16,background:"rgba(255,255,255,.12)",border:"none",fontSize:20,cursor:"pointer",color:"#fff",backdropFilter:"blur(4px)"}}>✕</button>
+    </div>
+  </div>
+</div>
+```
+
+);
+}
+
+// ═══════════════════════ INVITE MODAL ═══════════════════════
+function InviteModal({visible,onClose,userName,avId,t,showNotif}) {
+const [copied,setCopied] = useState(false);
+const link = getInviteLink(DB.binId) || `https://darez.app/join?ref=${encodeURIComponent(userName)}`;
+
+const copy = async () => {
+SFX.coin();
+try { await navigator.clipboard.writeText(link); } catch(e) {}
+setCopied(true);
+showNotif({icon:“🔗”,text:t.lg.invCopied,sub:t.lg.invCopiedSub,color:“var(–pu)”});
+setTimeout(()=>setCopied(false),2500);
+};
+
+const share = async () => {
+SFX.unlock();
+try {
+await navigator.share({
+title:“DAREZ — Flash Challenge”,
+text:`${userName} t'invite sur DAREZ ⚡ — Le défi flash quotidien`,
+url: link
+});
+} catch(e) { copy(); }
+};
+
+if (!visible) return null;
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.85)”,zIndex:850,display:“flex”,alignItems:“flex-end”,backdropFilter:“blur(8px)”}} onClick={onClose}>
+<div onClick={e=>e.stopPropagation()} style={{background:”#fff”,borderRadius:“28px 28px 0 0”,padding:“28px 20px 48px”,width:“100%”,maxWidth:430,margin:“0 auto”,animation:“slideUp .32s ease-out”,boxShadow:“0 -12px 48px rgba(0,0,0,.18)”}}>
+<div style={{width:40,height:4,borderRadius:2,background:“rgba(0,0,0,.1)”,margin:“0 auto 22px”}}/>
+<div style={{textAlign:“center”,marginBottom:20}}>
+<div style={{fontSize:44,marginBottom:6}}>🚀</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,color:“var(–ink)”}}>Invite ta crew</div>
+{DB.binId&&<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2,textAlign:“center”}}>Code partie : <span style={{color:“var(–pk)”,fontWeight:900}}>{DB.binId.slice(-6).toUpperCase()}</span></div>}
+<div style={{fontSize:13,fontWeight:800,color:“var(–mu)”,marginTop:4}}>+50 🪙 par ami recruté</div>
+</div>
+
+```
+    {/* Link preview */}
+    <div style={{background:"var(--bg)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:10,marginBottom:14,cursor:"pointer"}} onClick={copy}>
+      <div style={{flex:1,fontSize:12,fontWeight:800,color:"var(--mu)",overflo
+```
+  w:“hidden”,textOverflow:“ellipsis”,whiteSpace:“nowrap”}}>{link}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:12,color:“var(–pk)”,flexShrink:0}}>{copied?“✓”:“COPY”}</div>
+</div>
+
+```
+    {/* Share button */}
+    <button onClick={share} style={{width:"100%",padding:16,borderRadius:999,background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"#fff",cursor:"pointer",boxShadow:"0 6px 24px rgba(255,107,0,.33)",letterSpacing:1,marginBottom:10}}>
+      📤 PARTAGER LE LIEN
+    </button>
+    <button onClick={onClose} style={{width:"100%",padding:13,borderRadius:999,background:"rgba(0,0,0,.05)",border:"none",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:14,cursor:"pointer",color:"var(--mu)"}}>
+      {t.ld.cancel}
+    </button>
+  </div>
+</div>
+```
+
+);
+}
+
+// ═══════════════════════ FLASH WIDGET ═══════════════════════
+function FlashWidget({t, onStart, showNotif}) {
+const fs = useFlashState();
+const isLive = fs.status === “live”;
+const pct = isLive ? (fs.secsRemaining/(FLASH_DURATION_MIN*60))*100 : 0;
+const ch = CHALLENGES[fs.index % CHALLENGES.length];
+
+return (
+<div onClick={()=>{ if(isLive){SFX.zap();onStart();} else SFX.tap(); }}
+style={{background:”#fff”,borderRadius:24,margin:“12px 16px 0”,padding:16,cursor:“pointer”,
+boxShadow:isLive?“0 6px 28px rgba(255,107,0,.22)”:“0 4px 18px rgba(0,0,0,.07)”,
+border:isLive?“2px solid rgba(255,107,0,.3)”:“2px solid transparent”,
+transition:“all .2s”,position:“relative”,overflow:“hidden”}}>
+{isLive && <div style={{position:“absolute”,inset:0,background:“linear-gradient(135deg,rgba(255,107,0,.04),rgba(192,132,252,.03))”}}/>}
+
+```
+  <div style={{display:"flex",alignItems:"center",gap:14,position:"relative",zIndex:1}}>
+    {/* Status dot */}
+    <div style={{width:12,height:12,borderRadius:"50%",
+                 background:isLive?"var(--pk)":"var(--mu)",
+                 boxShadow:isLive?"0 0 10px var(--pk)":"none",
+                 animation:isLive?"pulse 1.2s infinite":"none",flexShrink:0}}/>
+    <div style={{flex:1}}>
+      <div style={{fontSize:10,fontWeight:900,color:isLive?"var(--pk)":"var(--mu)",letterSpacing:1,marginBottom:3}}>
+        {isLive ? t.home.live : t.home.next_fl+" →"}
+      </div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:19,color:"var(--ink)",lineHeight:1.2}}>
+        {ch.emoji} {t.chs[ch.id-1]}
+      </div>
+      {!isLive && (
+        <div style={{fontSize:11,fontWeight:900,color:"var(--mu)",marginTop:4}}>
+          ⏰ {fmtCountdown(fs.next)}
+        </div>
+      )}
+    </div>
+    <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:isLive?28:20,
+                 color:isLive?"var(--pk)":"var(--mu)",flexShrink:0}}>
+      {isLive?"▶":"⏳"}
+    </div>
+  </div>
+
+  {/* Live progress bar */}
+  {isLive && (
+    <div style={{height:4,background:"rgba(255,107,0,.12)",borderRadius:2,marginTop:12,overflow:"hidden",position:"relative",zIndex:1}}>
+      <div style={{height:"100%",width:`${pct}%`,background:"linear-gradient(90deg,var(--pk),var(--pu))",borderRadius:2,transition:"width 1s linear"}}/>
+    </div>
+  )}
+
+  {isLive && (
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:6,position:"relative",zIndex:1}}>
+      <div style={{fontSize:10,fontWeight:800,color:"var(--mu)"}}>48,291 {t.home.players}</div>
+      <div style={{fontSize:10,fontWeight:900,color:"var(--pk)"}}>{fmtCountdown(fs.secsRemaining)} {t.fl.live}</div>
+    </div>
+  )}
+</div>
+```
+
+);
+}
+
+// ═══════════════════════ FLASH BAR ═══════════════════════
+function FlashBar({t}) {
+const fs = useFlashState();
+return (
+<div style={{display:“flex”,gap:8,padding:“12px 16px 0”,overflowX:“auto”}}>
+{FLASH_TIMES.map((ft,i)=>{
+const isActive = fs.status===“live” && fs.index===i;
+const isDone = (() => {
+const now=new Date(), tm=now.getHours()*60+now.getMinutes();
+return tm >= ft.h*60+ft.m+FLASH_DURATION_MIN;
+})();
+const isNext = !isActive && !isDone && fs.index===i;
+const timeStr = `${String(ft.h).padStart(2,"0")}:${String(ft.m).padStart(2,"0")}`;
+return (
+<div key={i} style={{flexShrink:0,display:“flex”,alignItems:“center”,gap:10,
+background:isActive?“linear-gradient(135deg,var(–pk),var(–pu))”:”#fff”,
+borderRadius:16,padding:“10px 14px”,
+boxShadow:isActive?“0 4px 16px rgba(255,107,0,.3)”:“0 2px 10px rgba(0,0,0,.06)”,
+border:isNext?“2px solid rgba(255,107,0,.3)”:“2px solid transparent”,
+opacity:isDone?.55:1}}>
+<span style={{fontSize:16}}>{isDone?“✅”:isActive?“🔴”:“⏰”}</span>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:isActive?”#fff”:“var(–ink)”}}>{timeStr}</div>
+<div style={{fontSize:9,fontWeight:900,color:isActive?“rgba(255,255,255,.8)”:“var(–mu)”}}>
+{isDone?t.fl.done:isActive?`${fmtCountdown(fs.secsRemaining)}`:isNext?fmtCountdown(fs.next):t.fl.next}
+</div>
+</div>
+</div>
+);
+})}
+</div>
+);
+}
+
+// ═══════════════════════ RANK UP ═══════════════════════
+function RankUpModal({rank, onClose}) {
+useEffect(()=>{ SFX.victory(); },[]);
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.9)”,zIndex:920,display:“flex”,alignItems:“center”,justifyContent:“center”,padding:24,backdropFilter:“blur(12px)”}}>
+<div style={{background:`linear-gradient(145deg,${rank.g1},${rank.g2})`,borderRadius:32,padding:“44px 28px”,width:“100%”,maxWidth:340,textAlign:“center”,boxShadow:`0 28px 80px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.15)`,animation:“popIn .6s cubic-bezier(.2,0,.38,1.4)”}}>
+<div style={{fontSize:72,marginBottom:4,animation:“bounce 1.2s infinite”}}>{rank.icon}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:“rgba(255,255,255,.7)”,letterSpacing:3,marginBottom:8}}>RANK UP</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:44,color:”#fff”,lineHeight:1,marginBottom:8}}>{rank.label}</div>
+<div style={{fontSize:13,fontWeight:800,color:“rgba(255,255,255,.75)”,marginBottom:28,lineHeight:1.5}}>
+{rank.perks.length>0?rank.perks.join(” · “):“New rank unlocked!”}
+</div>
+<button onClick={onClose} style={{background:“rgba(255,255,255,.22)”,backdropFilter:“blur(4px)”,color:”#fff”,border:“2px solid rgba(255,255,255,.4)”,borderRadius:999,width:“100%”,padding:16,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,cursor:“pointer”,letterSpacing:1}}>
+LET’S GO ⚡
+</button>
+</div>
+</div>
+);
+}
+
+// ═══════════════════════ SEASON BANNER ═══════════════════════
+function SeasonBanner({t}) {
+const [secs, setSecs] = useState(()=>{
+const now = new Date();
+// Season ends next Sunday 23:59
+const day = now.getDay();
+const daysUntilSunday = (7 - day) % 7 || 7;
+const sunday = new Date(now);
+sunday.setDate(now.getDate() + daysUntilSunday);
+sunday.setHours(23,59,0,0);
+return Math.floor((sunday - now) / 1000);
+});
+useEffect(()=>{
+const id = setInterval(()=>setSecs(s=>Math.max(0,s-1)),1000);
+return ()=>clearInterval(id);
+},[]);
+const d=Math.floor(secs/86400), h=Math.floor((secs%86400)/3600), m=Math.floor((secs%3600)/60);
+return (
+<div style={{margin:“12px 16px 0”,background:“linear-gradient(135deg,#0F172A,#1E1B4B)”,borderRadius:20,padding:“13px 16px”,display:“flex”,alignItems:“center”,gap:12}}>
+<div style={{fontSize:26,flexShrink:0}}>🏆</div>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:”#fff”}}>SEASON 1 — ENDS IN</div>
+<div style={{fontSize:11,fontWeight:800,color:“rgba(255,255,255,.5)”,marginTop:2}}>Top 3 per league promote</div>
+</div>
+<div style={{textAlign:“right”,flexShrink:0}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“var(–yw)”}}>{d}d {h}h {m}m</div>
+<div style={{fontSize:9,fontWeight:900,color:“rgba(255,255,255,.4)”,letterSpacing:.5}}>SEASON END</div>
+</div>
+</div>
+);
+}
+
+function Onboarding({lang,setLang,t,onComplete}) {
+const [step,setStep]=useState(0);
+const [name,setName]=useState(””);
+const [avId,setAvId]=useState(“sakura”);
+const [league,setLeague]=useState(null);
+const ob=t.ob; const TOTAL=4;
+const next=()=>{SFX.tap();if(step<TOTAL-1)setStep(s=>s+1);else{SFX.victory();onComplete({name:name||“PLAYER”,avId,league});}};
+const skip=()=>{SFX.whoosh();onComplete({name:“PLAYER”,avId:“sakura”,league:null});};
+return(
+<div className="ob">
+<style>{CSS}
+/* iOS Install Banner */
+#ios-banner{
+position:fixed;bottom:0;left:0;right:0;
+background:rgba(30,27,46,.97);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+border-top:1px solid rgba(255,255,255,.12);
+padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+z-index:600;transform:translateY(100%);
+transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:“Fredoka One”,sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-family:“Fredoka One”,sans-serif;
+font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+border:none;border-radius:999px;color:rgba(255,255,255,.5);
+font-family:“Nunito”,sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+left:50%;transform:translateX(-50%);
+width:0;height:0;
+border-left:10px solid transparent;border-right:10px solid transparent;
+border-top:12px solid rgba(255,107,0,.8);
+z-index:601;display:none;
+filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+</style>
+<div style={{padding:“22px 22px 0”,display:“flex”,justifyContent:“space-between”,alignItems:“center”}}>
+<div className="dots">{Array.from({length:TOTAL}).map((_,i)=><div key={i} className={`dot ${i===step?"on":""}`}/>)}</div>
+{step>0&&<button className="obskip" onClick={skip}>{ob.skip}</button>}
+</div>
+{step===0&&(
+<div className="obs">
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:68,background:“linear-gradient(135deg,var(–pk),var(–pu))”,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,backgroundClip:“text”,lineHeight:1,marginBottom:6}}>DAREZ</div>
+<div style={{fontSize:13,fontWeight:800,color:“var(–mu)”,letterSpacing:2,textTransform:“uppercase”,marginBottom:32,textAlign:“center”}}>{ob.tagline}</div>
+<p style={{fontSize:13,fontWeight:800,color:“var(–mu)”,marginBottom:14,textAlign:“center”}}>{ob.chooseLang}</p>
+<div className=“lg” style={{width:“100%”,marginBottom:28}}>
+{Object.entries(LANGS).map(([code,l])=>(
+<div key={code} className={`lopt ${lang===code?"on":""}`} onClick={()=>{SFX.tap();setLang(code);}}>
+<span style={{fontSize:22}}>{l.flag}</span>
+<span style={{fontWeight:800,fontSize:14,color:lang===code?”#fff”:“var(–ink)”}}>{l.label}</span>
+</div>
+))}
+</div>
+<button className="obnext" onClick={next}>{ob.next} →</button>
+</div>
+)}
+{step===1&&(
+<div className="obs">
+<div style={{fontSize:64,marginBottom:14,animation:“bounce 2s infinite”}}>👤</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,marginBottom:20,textAlign:“center”}}>{ob.nameLbl}</div>
+<input className=“obinput” placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus/>
+<p style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginBottom:20}}>{t.cl.maxChars}</p>
+<button className="obnext" onClick={next}>{ob.next} →</button>
+<button className="obskip" onClick={skip}>{ob.skip}</button>
+</div>
+)}
+{step===2&&(
+<div className="obs">
+<div style={{marginBottom:12,animation:“bounce 2s infinite”}}><AvatarSVG av={getAv(avId)} size={74}/></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,marginBottom:16,textAlign:“center”}}>{ob.avLbl}</div>
+<div className="avgrid">
+{AVS.map(av=>(
+<div key={av.id} className={`avitem ${avId===av.id?"on":""}`} onClick={()=>{SFX.boing();setAvId(av.id);}}>
+<AvatarSVG av={av} size={62}/>
+<span className="avname">{av.name}</span>
+</div>
+))}
+</div>
+<button className="obnext" onClick={next}>{ob.next} →</button>
+</div>
+)}
+{step===3&&(
+<div className="obs">
+<div style={{fontSize:52,marginBottom:10}}>⚔️</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,marginBottom:16,textAlign:“center”}}>{ob.lgLbl}</div>
+{MOCK_LEAGUES.slice(0,3).map(l=>(
+<div key={l.id} onClick={()=>{SFX.tap();setLeague(l.id);}} style={{background:”#fff”,borderRadius:16,padding:13,display:“flex”,alignItems:“center”,gap:12,cursor:“pointer”,boxShadow:league===l.id?`0 0 0 2.5px ${l.color},0 4px 20px rgba(0,0,0,.1)`:“0 2px 10px rgba(0,0,0,.07)”,marginBottom:8,width:“100%”,transition:“box-shadow .14s”}}>
+<div style={{width:46,height:46,borderRadius:14,background:`${l.color}22`,display:“grid”,placeItems:“center”,fontSize:22,flexShrink:0}}>{l.badge}</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17}}>{l.name}</div>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{l.members} {t.lg.members}</div>
+</div>
+{league===l.id&&<span style={{marginLeft:“auto”,fontSize:18}}>✅</span>}
+</div>
+))}
+<button className="obnext" style={{marginTop:12}} onClick={next}>{ob.start} ⚡</button>
+<button className="obskip" onClick={skip}>{ob.skip}</button>
+</div>
+)}
+</div>
+);
+}
+const GRADS=[“linear-gradient(160deg,#FF6B00,#7C3AED)”,“linear-gradient(160deg,#FB923C,#FF6B00)”,“linear-gradient(160deg,#38BDF8,#3B82F6)”,“linear-gradient(160deg,#34D399,#0EA5E9)”,“linear-gradient(160deg,#C084FC,#FF6B00)”,“linear-gradient(160deg,#FBBF24,#FB923C)”];
+
+function ChallengeFlow({onDone,showNotif,t,userAvId,userName}) {
+const [phase,setPhase]=useState(“cd”);
+const [cdN,setCdN]=useState(3);
+const [ch]=useState(()=>CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)]);
+const [tLeft,setTLeft]=useState(0);
+const [voted,setVoted]=useState(null);
+const [confetti,setConfetti]=useState(0);
+const [grad]=useState(()=>GRADS[Math.floor(Math.random()*GRADS.length)]);
+const tRef=useRef(null);
+const tc=t.ch;const tv=t.vote;const tr=t.res;
+useEffect(()=>{
+if(phase!==“cd”)return;
+if(cdN===0){SFX.tick(0);setTimeout(()=>setPhase(“ch”),550);return;}
+SFX.tick(cdN);const tm=setTimeout(()=>setCdN(n=>n-1),1000);return()=>clearTimeout(tm);
+},[phase,cdN]);
+useEffect(()=>{
+if(phase!==“ch”)return;
+setTLeft(ch.timer);let e=0;
+tRef.current=setInterval(()=>{e++;const l=ch.timer-e;setTLeft(l);if(l<=5&&l>0)SFX.danger();if(l<=0){clearInterval(tRef.current);SFX.zap();setPhase(“vote”);}},1000);
+return()=>clearInterval(tRef.current);
+},[phase]);
+const submit=async()=>{
+if(!voted)return;
+SFX.voteLock();setConfetti(c=>c+1);
+showNotif({icon:“⚡”,text:`+${ch.xp} XP!`,sub:t.ch.done,color:“var(–yw)”});
+// Submit to Supabase (if real user + live session)
+// submitScore(userId, liveSession?.id, ME.score, ch.xp, Math.round(ch.xp*.3));
+setTimeout(()=>setPhase(“res”),700);
+};
+const sorted=[…MOCK_PLAYERS].sort((a,b)=>b.score-a.score);
+const maxS=sorted[0].score;
+return(
+<div style={{flex:1,display:“flex”,flexDirection:“column”,position:“relative”}}>
+<Particles trigger={confetti}/>
+{phase===“cd”&&(
+<div style={{position:“absolute”,inset:0,background:grad,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“rgba(255,255,255,.7)”,letterSpacing:4,marginBottom:12}}>{tc.getReady}</div>
+<div className="cdnum" key={cdN}>{cdN===0?t.go:cdN}</div>
+</div>
+)}
+{phase===“ch”&&(
+<div className=“chfull” style={{position:“absolute”,inset:0,background:grad}}>
+<div className={`chtimer ${tLeft<=5?"urg":""}`}>{tLeft}</div>
+<div className="chtext">{ch.emoji} {t.chs[ch.id-1]}</div>
+<button className=“cddone” style={{marginTop:“auto”}} onClick={()=>{clearInterval(tRef.current);SFX.zap();setPhase(“vote”);}}>{tc.done}</button>
+</div>
+)}
+{phase===“vote”&&(
+<div style={{padding:“24px 18px”,display:“flex”,flexDirection:“column”,gap:13,flex:1,overflow:“auto”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–ink)”,lineHeight:1.2}}>{tv.q}</div>
+<p style={{fontSize:12,fontWeight:800,color:“var(–mu)”,marginTop:-6}}>{tv.hint}</p>
+{[{id:“a”,avId:“blaze”,name:“zara_flash 🇧🇷”},{id:“b”,avId:“ninja”,name:“drift.exe 🇯🇵”},{id:“c”,avId:“fox”,name:“neon_leo 🇫🇷”}].map((o,i)=>(
+<div key={o.id} className={`vcard ${voted===o.id?"on":""}`} onClick={()=>{SFX.tap();setVoted(o.id);}} style={{animationDelay:`${i*.08}s`}}>
+<AvatarSVG av={getAv(o.avId)} size={46}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:14}}>{o.name}</div>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>#{i+1}</div>
+</div>
+<div className="vchk">{voted===o.id?“✓”:””}</div>
+</div>
+))}
+<button onClick={submit} style={{padding:16,borderRadius:“999px”,background:voted?“linear-gradient(135deg,var(–pk),var(–pu))”:“rgba(0,0,0,.07)”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:voted?”#fff”:“var(–mu)”,cursor:“pointer”,transition:“all .2s”,boxShadow:voted?“0 6px 24px rgba(255,107,0,.33)”:“none”,letterSpacing:1,marginTop:“auto”}}>
+{tv.lock} {voted?“→”:””}
+</button>
+</div>
+)}
+{phase===“res”&&(
+<div style={{padding:“20px 18px”,display:“flex”,flexDirection:“column”,gap:13,overflow:“auto”,flex:1}}>
+<div style={{textAlign:“center”,animation:“popIn .5s cubic-bezier(.2,0,.38,1.4)”}}>
+<div style={{fontSize:52}}>🏆</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–ink)”}}>{tr.title}</div>
+</div>
+<div className="xpstrip">
+{[{n:`+${ch.xp}`,l:tr.xp,c:“var(–pk)”},{n:`+${Math.round(ch.xp*.3)}`,l:tr.coins,c:“var(–yw)”},{n:`#${MOCK_PLAYERS.findIndex(p=>p.isUser)+1}`,l:tr.rank,c:“var(–gn)”}].map((item,i)=>(
+<div key={i} className="xpcell">
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:32,color:item.c,lineHeight:1}}>{item.n}</div>
+<div style={{fontSize:9,fontWeight:900,color:“var(–mu)”,marginTop:4,letterSpacing:.5}}>{item.l}</div>
+</div>
+))}
+</div>
+<p style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,letterSpacing:1}}>{tr.top}</p>
+{sorted.map((p,i)=>(
+<div key={p.id} className={`lbrow ${p.isUser?"me":""}`} style={{animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,width:28,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.isUser?userAvId:p.avId)} size={36}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
+<div style={{height:4,background:“rgba(0,0,0,.06)”,borderRadius:2,marginTop:4}}>
+<div style={{height:“100%”,width:`${(p.score/maxS)*100}%`,background:“linear-gradient(90deg,var(–pk),var(–pu))”,borderRadius:2,animation:“barFill .6s ease-out”}}/>
+</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>{p.score.toLocaleString()}</div>
+</div>
+))}
+<button onClick={()=>{SFX.coin();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:14,borderRadius:“999px”,background:“linear-gradient(135deg,var(–pk),var(–pu))”,border:“none”,color:”#fff”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,cursor:“pointer”,boxShadow:“0 6px 24px rgba(255,107,0,.3)”,letterSpacing:1}}>📤 {tr.share}</button>
+<button onClick={()=>{SFX.whoosh();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:15,borderRadius:“999px”,background:“linear-gradient(135deg,var(–ink),#2D1B5E)”,color:”#fff”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,cursor:“pointer”,boxShadow:“0 6px 24px rgba(30,27,46,.28)”,letterSpacing:1}}>⚡ {tr.back}</button>
+</div>
+)}
+</div>
+);
+}
+
+function HomeScreen({onStart,showNotif,t,userAvId,userName,streak,onStreakClick,lang,showLS}) {
+const th=t.home;const rank=getMyRank();
+const nri=RANKS.indexOf(rank)+1;const nr=RANKS[nri];
+const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
+const dbFeed=DB.getFeed();
+const feed=dbFeed.length>0
+? dbFeed.slice(0,5).map((f,i)=>({p:{name:f.name,avId:f.avId,flag:f.flag,isUser:f.pid===getPlayerId()},ch:{id:1,emoji:f.chEmoji||“⚡”,text:f.chText||””},time:Math.floor((Date.now()-f.time)/60000)+“m”,score:f.score}))
+: [{p:MOCK_PLAYERS[0],ch:CHALLENGES[4],time:“2m”},{p:MOCK_PLAYERS[1],ch:CHALLENGES[6],time:“8m”},{p:MOCK_PLAYERS[2],ch:CHALLENGES[3],time:“15m”}];
+return(
+<div>
+{/* HERO */}
+<div style={{padding:“20px 18px 18px”,background:“linear-gradient(160deg,#1E1B2E,#2D1B5E)”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:200,height:200,background:“rgba(255,107,0,.22)”,top:-70,right:-50}}/>
+<div className=“orb” style={{width:130,height:130,background:“rgba(192,132,252,.18)”,bottom:-40,left:10}}/>
+<div style={{display:“flex”,alignItems:“center”,gap:13,position:“relative”,zIndex:2,marginBottom:14}}>
+<div style={{cursor:“pointer”}} onClick={showLS}><AvatarSVG av={getAv(userAvId)} size={52}/></div>
+<div style={{flex:1}}>
+<div style={{display:“flex”,alignItems:“center”,gap:8,justifyContent:“space-between”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:”#fff”}}>{userName}</div>
+<button onClick={showLS} style={{background:“rgba(255,255,255,.15)”,border:“none”,borderRadius:“999px”,padding:“5px 12px”,fontSize:13,cursor:“pointer”,color:”#fff”,fontWeight:800,display:“flex”,alignItems:“center”,gap:5,backdropFilter:“blur(4px)”}}>{LANGS[lang].flag}</button>
+</div>
+<div style={{display:“flex”,alignItems:“center”,gap:8,marginTop:6,flexWrap:“wrap”}}>
+<div style={{padding:“4px 12px”,borderRadius:“999px”,fontSize:10,fontWeight:900,background:`rgba(255,255,255,.12)`,color:rank.color,border:`1.5px solid ${rank.color}44`}}>{rank.icon} {rank.label}</div>
+<div onClick={onStreakClick} style={{display:“flex”,alignItems:“center”,gap:4,padding:“4px 10px”,borderRadius:“999px”,background:“rgba(251,191,36,.15)”,border:“1.5px solid rgba(251,191,36,.3)”,fontSize:11,fontWeight:900,color:“var(–yw)”,cursor:“pointer”}}>🔥 {streak}d</div>
+<div style={{fontSize:11,fontWeight:900,color:“var(–yw)”,background:“rgba(251,191,36,.12)”,padding:“4px 10px”,borderRadius:“999px”}}>🪙 {ME.coins}</div>
+</div>
+</div>
+</div>
+<div style={{position:“relative”,zIndex:2}}>
+<div style={{display:“flex”,justifyContent:“space-between”,fontSize:10,color:“rgba(255,255,255,.5)”,fontWeight:800,marginBottom:6}}>
+<span>{rank.icon} {rank.label}</span>
+{nr&&<span>{(nr.min-ME.xp).toLocaleString()} {th.xpTo}</span>}
+</div>
+<div style={{height:10,background:“rgba(255,255,255,.1)”,borderRadius:5,overflow:“hidden”}}>
+<div style={{height:“100%”,width:`${pct}%`,background:`linear-gradient(90deg,${rank.g1},${rank.g2})`,borderRadius:5,animation:“xpFill .9s ease-out”}}/>
+</div>
+</div>
+</div>
+{/* FLASH BAR — TEMPS RÉEL */}
+<FlashBar t={t}/>
+{/* FLASH WIDGET — TEMPS RÉEL */}
+<FlashWidget t={t} onStart={onStart} showNotif={showNotif}/>
+{/* SEASON COUNTDOWN */}
+<SeasonBanner t={t}/>
+{/* MY LEAGUES */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“var(–ink)”,padding:“16px 18px 8px”,display:“flex”,alignItems:“center”,justifyContent:“space-between”}}>
+{th.myLeagues}<button onClick={()=>SFX.tap()} style={{fontSize:11,fontWeight:800,color:“var(–pk)”,cursor:“pointer”,background:“none”,border:“none”}}>{th.seeAll}</button>
+</div>
+<div style={{display:“flex”,gap:10,padding:“0 16px 4px”,overflowX:“auto”}}>
+{MOCK_LEAGUES.filter(l=>l.joined).map(l=>(
+<div key={l.id} style={{flexShrink:0,background:”#fff”,borderRadius:18,padding:“12px 14px”,minWidth:118,cursor:“pointer”,boxShadow:“0 4px 16px rgba(0,0,0,.07)”}}>
+<div style={{fontSize:24,marginBottom:5}}>{l.badge}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:l.color}}>{l.name}</div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2}}>#{l.rank} · {l.members}p</div>
+</div>
+))}
+</div>
+{/* FEED */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“var(–ink)”,padding:“16px 18px 8px”}}>{th.feed}</div>
+{feed.map((item,i)=>(
+<div key={i} className=“card” style={{margin:“0 16px 12px”,overflow:“hidden”,animation:“fadeUp .35s ease-out both”,animationDelay:`${i*.1}s`}}>
+<div style={{display:“flex”,alignItems:“center”,gap:10,padding:“13px 14px 8px”}}>
+<AvatarSVG av={getAv(item.p.avId)} size={38}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{item.p.name} {item.p.flag}</div>
+<div style={{fontSize:10,fontWeight:700,color:“var(–mu)”,marginTop:1}}>{t.cats[item.ch.id-1]} · {item.time} {th.ago}</div>
+</div>
+<div style={{fontSize:14}}>{RANKS.find(r=>item.p.xp>=r.min&&item.p.xp<r.max)?.icon}</div>
+</div>
+<div style={{padding:“0 14px 10px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–ink)”}}>{item.ch.emoji} {t.chs[item.ch.id-1]}</div>
+<div style={{height:140,background:“linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.07))”,margin:“0 14px”,borderRadius:16,display:“grid”,placeItems:“center”}}><AvatarSVG av={getAv(item.p.avId)} size={60}/></div>
+<div style={{display:“flex”,borderTop:“1px solid rgba(0,0,0,.06)”}}>
+{[[`🔥 ${t.feed.fire}`,()=>{SFX.coin();showNotif({icon:“🔥”,text:t.feed.reacted,sub:t.feed.r5,color:“var(–or)”});}],[t.feed.comment,()=>{SFX.tap();showNotif({icon:“💬”,text:t.feed.soon,color:“var(–bl)”});}],[`📤 ${t.feed.share}`,()=>{SFX.coin();showNotif({icon:“📤”,text:t.feed.shared,color:“var(–pu)”});}]].map(([label,fn],j)=>(
+<button key={j} onClick={fn} style={{flex:1,padding:“11px 4px”,border:“none”,background:“none”,fontSize:11,fontWeight:900,cursor:“pointer”,color:“var(–mu)”,display:“flex”,alignItems:“center”,justifyContent:“center”,gap:5,borderRight:j<2?“1px solid rgba(0,0,0,.06)”:“none”,transition:“background .12s”,fontFamily:”‘Nunito’,sans-serif”}}>{label}</button>
+))}
+</div>
+</div>
+))}
+<div style={{height:20}}/>
+</div>
+);
+}
+
+function LeaguesScreen({showNotif,onDetail,onCreate,onInvite,t}) {
+const [tab,setTab]=useState(“mine”);
+const tl=t.lg;
+const shown=tab===“mine”?MOCK_LEAGUES.filter(l=>l.joined):MOCK_LEAGUES.filter(l=>!l.joined);
+return(
+<div>
+<div className=“lhero” style={{background:“linear-gradient(160deg,var(–pk),#9333EA)”}}>
+<div className=“orb” style={{width:150,height:150,background:“rgba(255,255,255,.1)”,top:-50,right:-30}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:30,color:”#fff”,position:“relative”,zIndex:1}}>{tl.title}</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.72)”,marginTop:4,position:“relative”,zIndex:1}}>{tl.sub}</div>
+<div style={{display:“flex”,gap:10,marginTop:14,position:“relative”,zIndex:1}}>
+<button onClick={()=>{SFX.unlock();onCreate();}} style={{flex:1,background:“rgba(255,255,255,.22)”,backdropFilter:“blur(8px)”,color:”#fff”,border:“2px solid rgba(255,255,255,.4)”,borderRadius:“999px”,padding:“14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:“pointer”,letterSpacing:1}}>⚡ {tl.create}</button>
+<button onClick={()=>{SFX.tap();onInvite();}} style={{flex:1,background:“rgba(255,255,255,.88)”,color:“var(–pk)”,border:“none”,borderRadius:“999px”,padding:“14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:“pointer”,letterSpacing:1}}>📤 {tl.inviteBtn}</button>
+</div>
+</div>
+<div onClick={()=>{SFX.tap();onInvite();}} style={{margin:“12px 16px”,background:”#fff”,borderRadius:18,padding:14,display:“flex”,alignItems:“center”,gap:12,cursor:“pointer”,boxShadow:“0 4px 16px rgba(0,0,0,.07)”}}>
+<div style={{width:44,height:44,borderRadius:14,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>📨</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{tl.invite}</div><div style={{fontSize:11,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{tl.inviteSub}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:“var(–pk)”}}>{tl.inviteBtn}</div>
+</div>
+<div style={{display:“flex”,gap:6,padding:“4px 16px 10px”,background:“rgba(0,0,0,.03)”,margin:“0 16px”,borderRadius:14}}>
+{[“mine”,“disc”].map(tb=>(
+<button key={tb} className={`ltab ${tab===tb?"on":""}`} onClick={()=>{SFX.tap();setTab(tb);}}>{tb===“mine”?tl.mine:tl.disc}</button>
+))}
+</div>
+<div style={{height:6}}/>
+{shown.map((l,i)=>(
+<div key={l.id} className=“lgcard” style={{animationDelay:`${i*.07}s`}} onClick={()=>{SFX.whoosh();onDetail(l);}}>
+<div style={{width:50,height:50,borderRadius:14,background:`${l.color}22`,display:“grid”,placeItems:“center”,fontSize:24,flexShrink:0}}>{l.badge}</div>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17}}>{l.name}</div>
+<div style={{fontSize:11,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{l.members} {tl.members} · #{l.rank} · {l.points.toLocaleString()} pts</div>
+</div>
+{!l.joined?<button className=“joinbtn” onClick={e=>{e.stopPropagation();SFX.unlock();showNotif({icon:“🎉”,text:tl.joined,sub:tl.joinedSub,color:“var(–yw)”});}}>{tl.join}</button>
+:<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:12,color:“var(–gn)”}}>{tl.member}</div>}
+</div>
+))}
+<div style={{height:20}}/>
+</div>
+);
+}
+
+function GlobalScreen({t, userName=“YOU”, liveBoard=[], onRefresh}) {
+const [filter,setFilter]=useState(“all”);
+// Use live board if available, otherwise fall back to mock
+const sorted = liveBoard.length > 0
+? liveBoard.map(p=>({…p, isUser: p.username===userName, avId: p.avatar_id||“sakura”, score: p.today_score||p.xp}))
+: […MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
+const f=t.filters;
+return(
+<div>
+<div style={{background:“linear-gradient(160deg,#0F172A,#1E3A5F)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:140,height:140,background:“rgba(56,189,248,.15)”,top:-40,right:-20}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{t.res.title}</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.5)”,marginTop:4,position:“relative”,zIndex:1,display:“flex”,alignItems:“center”,gap:8}}><LiveCount/> {t.gl.players} · {t.gl.updated} <button onClick={onRefresh} style={{background:“rgba(255,255,255,.12)”,border:“none”,borderRadius:999,padding:“2px 8px”,color:“rgba(255,255,255,.6)”,fontSize:10,cursor:“pointer”,fontWeight:900}}>↻</button></div>
+</div>
+<div style={{display:“flex”,gap:8,padding:“12px 16px 8px”,overflowX:“auto”}}>
+{Object.entries(f).map(([k,v])=>(
+<button key={k} className={`gfilter ${filter===k?"on":""}`} onClick={()=>{SFX.tap();setFilter(k);}}>{v}</button>
+))}
+</div>
+{sorted.map((p,i)=>{
+const rank=RANKS.find(r=>p.xp>=r.min&&p.xp<r.max)||RANKS[0];
+return(
+<div key={p.id} style={{display:“flex”,alignItems:“center”,gap:11,padding:“11px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,background:p.isUser?“rgba(255,107,0,.04)”:””,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,width:30,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.avId)} size={42}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13,display:“flex”,alignItems:“center”,gap:6}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag} <span style={{color:rank.color}}>{rank.icon}</span></div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:1}}>{rank.label} · 🔥{p.streak}</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>{p.score.toLocaleString()}</div>
+</div>
+);
+})}
+<div style={{height:20}}/>
+</div>
+);
+}
+
+function ProfileScreen({t,userAvId,userName,streak,onStreakClick,lang,showLS,onHistory}) {
+const rank=getMyRank();const tp=t.pr;
+const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
+return(
+<div>
+<div className=“phero” style={{background:`linear-gradient(160deg,${rank.g1},${rank.g2})`}}>
+<div className=“orb” style={{width:160,height:160,background:“rgba(255,255,255,.12)”,top:-50,right:-30}}/>
+<div style={{position:“absolute”,top:16,right:16,zIndex:2}}>
+<button onClick={showLS} style={{background:“rgba(255,255,255,.25)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:“999px”,padding:“6px 12px”,fontSize:13,cursor:“pointer”,color:”#fff”,fontWeight:800}}>{LANGS[lang].flag} {LANGS[lang].label}</button>
+</div>
+<div style={{position:“relative”,zIndex:1,display:“inline-block”,marginBottom:10}}><AvatarSVG av={getAv(userAvId)} size={86}/></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{userName}</div>
+<div style={{display:“flex”,justifyContent:“center”,marginTop:8,position:“relative”,zIndex:1}}>
+<div style={{background:“rgba(255,255,255,.22)”,backdropFilter:“blur(4px)”,borderRadius:“999px”,padding:“5px 16px”,fontWeight:900,fontSize:13,color:”#fff”}}>{rank.icon} {rank.label}</div>
+</div>
+<div style={{marginTop:14,position:“relative”,zIndex:1}}>
+<div style={{height:10,background:“rgba(255,255,255,.18)”,borderRadius:5,overflow:“hidden”}}>
+<div style={{height:“100%”,width:`${pct}%`,background:“rgba(255,255,255,.8)”,borderRadius:5,animation:“xpFill .9s ease-out”}}/>
+</div>
+<div style={{fontSize:10,fontWeight:800,color:“rgba(255,255,255,.6)”,marginTop:4}}>{ME.xp.toLocaleString()} {tp.xp}</div>
+</div>
+</div>
+<div style={{display:“flex”,margin:“14px 16px”,background:”#fff”,borderRadius:20,boxShadow:“0 4px 20px rgba(0,0,0,.07)”,overflow:“hidden”}}>
+{[[streak+“🔥”,tp.streak,onStreakClick],[ME.coins+“🪙”,tp.coins,null],[ME.score,tp.best,null],[3,tp.league,null]].map(([val,label,cb],i)=>(
+<div key={i} className="pstat" onClick={cb||undefined}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:“var(–pk)”}}>{typeof val===“number”?val.toLocaleString():val}</div>
+<div style={{fontSize:9,fontWeight:900,color:“var(–mu)”,letterSpacing:.5,textTransform:“uppercase”}}>{label}</div>
+</div>
+))}
+</div>
+<div style={{padding:“0 16px”}}>
+<button onClick={onHistory} style={{width:“100%”,padding:13,borderRadius:16,background:“linear-gradient(135deg,#1E1B2E,#2D1B5E)”,border:“none”,display:“flex”,alignItems:“center”,justifyContent:“space-between”,cursor:“pointer”,marginBottom:12,paddingLeft:16,paddingRight:16}}>
+<div style={{display:“flex”,alignItems:“center”,gap:10}}>
+<span style={{fontSize:20}}>📊</span>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:”#fff”}}>MY HISTORY</div>
+</div>
+<span style={{color:“rgba(255,255,255,.5)”,fontSize:18}}>›</span>
+</button>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:“var(–mu)”,marginBottom:10}}>{tp.powers}</div>
+{rank.perks.length===0
+?<div style={{textAlign:“center”,padding:24,color:“var(–mu)”,fontWeight:800,fontSize:13}}>{tp.noPowers}</div>
+:rank.perks.map((perk,i)=>(
+<div key={i} style={{display:“flex”,alignItems:“center”,gap:12,background:”#fff”,borderRadius:16,padding:13,marginBottom:8,boxShadow:“0 2px 10px rgba(0,0,0,.06)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.1}s`}}>
+<div style={{width:36,height:36,borderRadius:12,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:16,flexShrink:0}}>✨</div>
+<div style={{flex:1,fontWeight:900,fontSize:13}}>{perk}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:11,color:“var(–gn)”}}>{tp.active}</div>
+</div>
+))
+}
+</div>
+<div style={{padding:“8px 16px”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:“var(–mu)”,marginBottom:10}}>{tp.journey}</div>
+{RANKS.map((r,i)=>{
+const unlocked=ME.xp>=r.min;const curr=r.id===getMyRank().id;
+return(
+<div key={r.id} style={{display:“flex”,gap:12,alignItems:“center”,marginBottom:8,opacity:unlocked?1:.3}}>
+<div style={{width:40,height:40,borderRadius:12,background:unlocked?`linear-gradient(135deg,${r.g1},${r.g2})`:”#eee”,display:“grid”,placeItems:“center”,fontSize:18,flexShrink:0,boxShadow:curr?`0 4px 14px ${r.color}55`:“none”}}>{r.icon}</div>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,display:“flex”,alignItems:“center”,gap:8}}>{r.label}{curr&&<span style={{fontSize:10,background:`${r.color}22`,color:r.color,borderRadius:“999px”,padding:“2px 8px”,fontFamily:”‘Nunito’,sans-serif”,fontWeight:900}}>{tp.current}</span>}</div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:1}}>{r.min.toLocaleString()}+ {tp.xp} · {r.perks.join(”, “)||tp.base}</div>
+</div>
+{unlocked&&<span style={{color:r.color,fontSize:16}}>✓</span>}
+</div>
+);
+})}
+</div>
+<div style={{height:20}}/>
+</div>
+);
+}
+
+function ShopScreen({showNotif,t}) {
+const [coins,setCoins]=useState(ME.coins);
+const ts=t.sh;
+const buy=(p)=>{
+if(p.cost>coins){SFX.fail();showNotif({icon:“💸”,text:ts.notEnough,sub:`${p.cost-coins} ${ts.needMore}`,color:“var(–pk)”});return;}
+SFX.unlock();setCoins(c=>c-p.cost);showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} ${ts.activated}`,sub:ts.enjoy,color:“var(–gn)”});
+};
+return(
+<div>
+<div style={{background:“linear-gradient(160deg,#4C1D95,#7C3AED)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:130,height:130,background:“rgba(192,132,252,.2)”,top:-30,right:-20}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>DAREZ <span style={{color:“var(–yw)”}}>{ts.title}</span></div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.6)”,marginTop:4,position:“relative”,zIndex:1}}>{ts.sub}</div>
+<div style={{display:“inline-flex”,alignItems:“center”,gap:8,marginTop:14,background:“rgba(251,191,36,.2)”,borderRadius:“999px”,padding:“8px 16px”,position:“relative”,zIndex:1}}>
+<span style={{fontSize:20}}>🪙</span>
+<span style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–yw)”}}>{coins.toLocaleString()}</span>
+<span style={{fontSize:11,fontWeight:900,color:“rgba(255,255,255,.6)”}}>{ts.coins}</span>
+</div>
+</div>
+<div style={{padding:“14px 16px 0”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.hits}</div>
+{PENALTIES.map((p,i)=>(
+<div key={p.id} className=“shopcard” style={{animationDelay:`${i*.07}s`}} onClick={()=>buy(p)}>
+<div style={{width:46,height:46,borderRadius:14,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>{p.emoji}</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:14}}>{t.sh.pnames[i]}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{t.sh.pdescs[i]}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:“var(–pk)”}}>🪙{p.cost}</div>
+</div>
+))}
+</div>
+<div style={{padding:“12px 16px 0”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</div>
+<div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:10}}>
+{[{coins:500,price:“€2.99”,bonus:””},{coins:1500,price:“€7.99”,bonus:ts.bestDeal},{coins:3500,price:“€14.99”,bonus:ts.hot},{coins:10000,price:“€39.99”,bonus:ts.whale}].map((pack,i)=>(
+<div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.
+thanks,color:“var(–yw)”});}}>
+{pack.bonus&&<div style={{position:“absolute”,top:0,right:0,background:“linear-gradient(135deg,var(–pk),var(–pu))”,color:”#fff”,fontSize:8,fontWeight:900,padding:“4px 10px”,borderRadius:“0 18px 0 18px”}}>{pack.bonus}</div>}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,marginTop:4}}>{pack.price}</div>
+</div>
+))}
+</div>
+</div>
+<div style={{height:30}}/>
+</div>
+);
+}
+
+function CreateLeague({onBack,showNotif,t}) {
+const [name,setName]=useState(””);const [badge,setBadge]=useState(“💀”);const [color,setColor]=useState(”#FF6B00”);
+const tc=t.cl;
+const badges=[“💀”,“🔥”,“⚡”,“🌊”,“👻”,“🐉”,“🦊”,“🤖”,“😈”,“🐺”,“🦁”,“💎”,“🌸”,“⭐”,“🎯”];
+const colors=[”#FF6B00”,”#FB923C”,”#FBBF24”,”#34D399”,”#38BDF8”,”#C084FC”,”#1E1B2E”,”#EC4899”];
+const launch=()=>{
+if(!name.trim()){SFX.fail();showNotif({icon:“⚠️”,text:tc.enterName,color:“var(–pk)”});return;}
+SFX.unlock();showNotif({icon:“🎉”,text:`${badge} ${name}!`,sub:`+100 ${t.lg.inviteSub.split(" ")[1]||"coins"}`,color:“var(–yw)”});onBack();
+};
+return(
+<div style={{padding:“22px 18px”,display:“flex”,flexDirection:“column”,gap:16,minHeight:“100%”}}>
+<button onClick={()=>{SFX.tap();onBack();}} style={{display:“flex”,alignItems:“center”,gap:6,background:“none”,border:“none”,fontSize:13,cursor:“pointer”,fontWeight:900,color:“var(–mu)”}}>← {tc.back}</button>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–ink)”}}>{tc.title} <span style={{color}}>{tc.word}</span></div>
+<div style={{background:”#fff”,borderRadius:20,padding:16,display:“flex”,alignItems:“center”,gap:14,boxShadow:“0 4px 20px rgba(0,0,0,.08)”}}>
+<div style={{width:56,height:56,borderRadius:16,background:`${color}22`,display:“grid”,placeItems:“center”,fontSize:26,border:`2px solid ${color}44`,flexShrink:0}}>{badge}</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color}}>{name||tc.word}</div>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>1 {t.lg.members}</div>
+</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.nameLbl}</div>
+<input className=“finput” placeholder={tc.namePh} value={name} onChange={e=>setName(e.target.value.toUpperCase())} maxLength={20}/>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:6}}>{tc.maxChars}</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.badgeLbl}</div>
+<div style={{display:“grid”,gridTemplateColumns:“repeat(5,1fr)”,gap:8}}>
+{badges.map(b=><div key={b} className={`bdgopt ${badge===b?"on":""}`} onClick={()=>{SFX.tap();setBadge(b);}}>{b}</div>)}
+</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.colorLbl}</div>
+<div style={{display:“flex”,gap:10,flexWrap:“wrap”}}>{colors.map(c=><div key={c} className={`cdot ${color===c?"on":""}`} style={{background:c}} onClick={()=>{SFX.tap();setColor(c);}}/>)}</div>
+</div>
+<button onClick={launch} style={{background:`linear-gradient(135deg,${color},${color}CC)`,color:color===”#FBBF24”?”#1E1B2E”:”#fff”,border:“none”,borderRadius:“999px”,width:“100%”,padding:16,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,cursor:“pointer”,boxShadow:`0 6px 24px ${color}55`,letterSpacing:1,marginTop:“auto”}}>⚡ {tc.launch}</button>
+</div>
+);
+}
+
+function LeagueDetail({league,onBack,showNotif,setPT,t,userName=“YOU”}) {
+const [tab,setTab]=useState(“ranking”);
+const tl=t.ld;
+// Use live board if available, otherwise fall back to mock
+const sorted = liveBoard.length > 0
+? liveBoard.map(p=>({…p, isUser: p.username===userName, avId: p.avatar_id||“sakura”, score: p.today_score||p.xp}))
+: […MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
+return(
+<div>
+<div style={{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:“22px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:140,height:140,background:“rgba(255,255,255,.12)”,top:-40,right:-20}}/>
+<button onClick={()=>{SFX.tap();onBack();}} style={{background:“rgba(255,255,255,.2)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:“999px”,padding:“7px 14px”,color:”#fff”,fontSize:12,cursor:“pointer”,fontWeight:900,marginBottom:14}}>← {tl.back}</button>
+<div style={{fontSize:44,marginBottom:8}}>{league.badge}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{league.name}</div>
+<div style={{display:“flex”,gap:8,marginTop:10,flexWrap:“wrap”,position:“relative”,zIndex:1}}>
+{[`👥 ${league.members}`,`🏆 #${league.rank}`,`⚡ ${league.points.toLocaleString()}`].map((txt,i)=>(
+<div key={i} style={{background:“rgba(255,255,255,.22)”,backdropFilter:“blur(4px)”,borderRadius:“999px”,padding:“4px 12px”,fontSize:11,fontWeight:900,color:”#fff”}}>{txt}</div>
+))}
+</div>
+</div>
+<div style={{margin:“12px 16px”,background:”#fff”,borderRadius:16,padding:13,display:“flex”,gap:11,alignItems:“center”,boxShadow:`0 4px 16px ${league.color}28`}}>
+<div style={{width:40,height:40,borderRadius:12,background:“linear-gradient(135deg,var(–yw),var(–or))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>🏆</div>
+<div><div style={{fontWeight:900,fontSize:12}}>{tl.weeklyReset} 3d 14h</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{tl.prizes}</div></div>
+</div>
+<div style={{display:“flex”,borderBottom:“1px solid rgba(0,0,0,.07)”,padding:“0 16px”,gap:4}}>
+{[[“ranking”,tl.ranking],[“challenges”,tl.challenges],[“rules”,tl.rules]].map(([id,label])=>(
+<button key={id} onClick={()=>{SFX.tap();setTab(id);}} style={{flex:1,padding:“12px 4px”,border:“none”,background:“none”,fontWeight:900,fontSize:12,cursor:“pointer”,color:tab===id?“var(–pk)”:“var(–mu)”,borderBottom:tab===id?“2.5px solid var(–pk)”:“2.5px solid transparent”,transition:“all .15s”,letterSpacing:.5,fontFamily:”‘Nunito’,sans-serif”}}>{label}</button>
+))}
+</div>
+{tab===“ranking”&&sorted.map((p,i)=>(
+<div key={p.id} style={{display:“flex”,alignItems:“center”,gap:11,padding:“11px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,background:p.isUser?“rgba(255,107,0,.04)”:””,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,width:28,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.avId)} size={40}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
+<div style={{height:4,background:“rgba(0,0,0,.06)”,borderRadius:2,marginTop:4}}>
+<div style={{height:“100%”,width:`${(p.xp/sorted[0].xp)*100}%`,background:`linear-gradient(90deg,${league.color},${league.color}88)`,borderRadius:2,animation:“barFill .6s ease-out”}}/>
+</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:league.color,marginRight:4}}>{p.score.toLocaleString()}</div>
+{!p.isUser&&<button onClick={()=>{SFX.zap();setPT(p);}} style={{padding:“5px 10px”,borderRadius:“999px”,background:`${league.color}18`,color:league.color,fontSize:10,fontWeight:900,cursor:“pointer”,border:`1.5px solid ${league.color}40`,fontFamily:”‘Nunito’,sans-serif”}}>{tl.hit}</button>}
+</div>
+))}
+{tab===“challenges”&&CHALLENGES.map((ch,i)=>(
+<div key={ch.id} style={{display:“flex”,alignItems:“center”,gap:12,padding:“13px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<span style={{fontSize:28}}>{ch.emoji}</span>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.chs[ch.id-1]}</div><div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{t.cats[ch.id-1]} · {ch.timer}s · +{ch.xp} XP</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>+{ch.xp}</div>
+</div>
+))}
+{tab===“rules”&&<div style={{padding:“14px 16px”}}>{t.rules.map((r,i)=>(
+<div key={i} style={{display:“flex”,gap:11,background:”#fff”,borderRadius:16,padding:13,marginBottom:8,boxShadow:“0 2px 10px rgba(0,0,0,.06)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<span style={{fontSize:20,flexShrink:0}}>{r.i}</span>
+<div><div style={{fontWeight:900,fontSize:13}}>{r.t}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:3}}>{r.d}</div></div>
+</div>
+))}</div>}
+<div style={{height:20}}/>
+</div>
+);
+}
+
+// ═══════════════════════ FLASH ALERT BANNER ═══════════════════════
+// Urgency levels: 60min before → 10min → 2min → LIVE
+function useFlashAlert(onStart) {
+const fs = useFlashState();
+const [dismissed, setDismissed] = useState({});
+const alertRef = useRef(null);
+
+const getAlert = () => {
+if (fs.status === “live”) {
+const key = `live_${fs.index}`;
+if (dismissed[key]) return null;
+return { key, level:“live”, secsLeft:fs.secsRemaining, onStart, onDismiss:()=>setDismissed(d=>({…d,[key]:true})) };
+}
+if (fs.next === null) return null;
+const mins = Math.floor(fs.next / 60);
+let level = null;
+const key = `warn_${fs.index}_${mins < 10 ? "2" : mins < 60 ? "10" : "60"}`;
+if (dismissed[key]) return null;
+if (mins < 2) level = “urgent”;
+else if (mins < 10) level = “soon”;
+else if (mins < 62) level = “reminder”;
+if (!level) return null;
+return { key, level, minsLeft:mins, secsLeft:fs.next, onDismiss:()=>setDismissed(d=>({…d,[key]:true})) };
+};
+
+return getAlert();
+}
+
+function FlashAlertBanner({alert, t}) {
+if (!alert) return null;
+const configs = {
+live:     { bg:“linear-gradient(135deg,#FF6B00,#C084FC)”, icon:“🔴”, pulse:true },
+urgent:   { bg:“linear-gradient(135deg,#FF1744,#FF6B00)”, icon:“⚡”, pulse:true },
+soon:     { bg:“linear-gradient(135deg,#FF6B00,#FBBF24)”, icon:“⏰”, pulse:false },
+reminder: { bg:“linear-gradient(135deg,#1E1B2E,#3730A3)”, icon:“📣”, pulse:false },
+};
+const cfg = configs[alert.level];
+const label = alert.level===“live”
+? `${t.home.live} — ${fmtCountdown(alert.secsLeft)} left`
+: `Flash in ${fmtCountdown(alert.secsLeft)}`;
+
+return (
+<div style={{position:“fixed”,top:0,left:“50%”,transform:“translateX(-50%)”,width:“100%”,maxWidth:430,
+zIndex:800,padding:“0 12px”,pointerEvents:“none”}}>
+<div style={{background:cfg.bg,borderRadius:“0 0 20px 20px”,padding:“10px 16px”,
+display:“flex”,alignItems:“center”,gap:12,
+boxShadow:“0 6px 24px rgba(0,0,0,.28)”,pointerEvents:“all”,
+animation:“notifIn .38s cubic-bezier(.2,0,.38,1.35)”}}>
+<span style={{fontSize:20,animation:cfg.pulse?“pulse 1s infinite”:“none”,flexShrink:0}}>{cfg.icon}</span>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:”#fff”,lineHeight:1}}>{label}</div>
+{alert.level===“live” && <div style={{fontSize:11,fontWeight:800,color:“rgba(255,255,255,.75)”,marginTop:2}}>Tap to play · +120 XP</div>}
+</div>
+{alert.level===“live” && (
+<button onClick={alert.onStart} style={{background:“rgba(255,255,255,.25)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:999,padding:“7px 14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:”#fff”,cursor:“pointer”,flexShrink:0}}>
+PLAY ▶
+</button>
+)}
+<button onClick={alert.onDismiss} style={{background:“none”,border:“none”,color:“rgba(255,255,255,.7)”,fontSize:16,cursor:“pointer”,padding:“4px”,flexShrink:0}}>✕</button>
+</div>
+</div>
+);
+}
+
+// ═══════════════════════ HISTORY SCREEN ═══════════════════════
+const MOCK_HISTORY = [
+{date:“Today”,     flash:2, ch:CHALLENGES[4], score:8340, xp:160, rank:4, voted:true,  reacts:14, coins:48},
+{date:“Today”,     flash:0, ch:CHALLENGES[0], score:7980, xp:120, rank:5, voted:true,  reacts:8,  coins:36},
+{date:“Yesterday”, flash:2, ch:CHALLENGES[6], score:8560, xp:200, rank:3, voted:true,  reacts:23, coins:60},
+{date:“Yesterday”, flash:1, ch:CHALLENGES[3], score:7200, xp:180, rank:6, voted:false, reacts:5,  coins:0},
+{date:“Yesterday”, flash:0, ch:CHALLENGES[2], score:8100, xp:100, rank:4, voted:true,  reacts:11, coins:30},
+{date:“Mon”,       flash:2, ch:CHALLENGES[1], score:9100, xp:150, rank:2, voted:true,  reacts:31, coins:45},
+{date:“Mon”,       flash:1, ch:CHALLENGES[5], score:6800, xp:250, rank:7, voted:true,  reacts:4,  coins:75},
+];
+
+function HistoryScreen({t, userAvId, userName}) {
+const [sel, setSel] = useState(null);
+const totalXP  = MOCK_HISTORY.reduce((a,h)=>a+h.xp,0);
+const bestRank = Math.min(…MOCK_HISTORY.map(h=>h.rank));
+const totalReacts = MOCK_HISTORY.reduce((a,h)=>a+h.reacts,0);
+const streak   = 9;
+
+if (sel !== null) {
+const h = MOCK_HISTORY[sel];
+const rank = RANKS.find(r=>ME.xp>=r.min&&r.max>ME.xp)||RANKS[0];
+return (
+<div style={{padding:“20px 18px”,animation:“fadeUp .3s ease-out”}}>
+<button onClick={()=>setSel(null)} style={{background:“none”,border:“none”,fontWeight:900,fontSize:13,color:“var(–mu)”,cursor:“pointer”,marginBottom:16,display:“flex”,alignItems:“center”,gap:6}}>← {t.ld.back}</button>
+{/* Card */}
+<div style={{background:`linear-gradient(145deg,${rank.g1},${rank.g2})`,borderRadius:28,padding:“24px 20px”,marginBottom:16,position:“relative”,overflow:“hidden”}}>
+<div style={{position:“absolute”,width:160,height:160,borderRadius:“50%”,background:“rgba(255,255,255,.1)”,top:-50,right:-30,filter:“blur(20px)”}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“rgba(255,255,255,.7)”,letterSpacing:2,marginBottom:8}}>FLASH {h.flash+1} · {h.date.toUpperCase()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:”#fff”,marginBottom:18,lineHeight:1.3}}>{h.ch.emoji} {t.chs[h.ch.id-1]}</div>
+<div style={{display:“flex”,gap:10}}>
+{[{v:h.score.toLocaleString(),l:“SCORE”},{v:`+${h.xp}`,l:“XP”},{v:`#${h.rank}`,l:“RANK”},{v:`${h.reacts}🔥`,l:“REACTS”}].map((s,i)=>(
+<div key={i} style={{flex:1,background:“rgba(255,255,255,.18)”,borderRadius:12,padding:“10px 6px”,textAlign:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:”#fff”}}>{s.v}</div>
+<div style={{fontSize:8,fontWeight:900,color:“rgba(255,255,255,.65)”,marginTop:3,letterSpacing:.5}}>{s.l}</div>
+</div>
+))}
+</div>
+</div>
+{/* Avatar preview */}
+<div style={{background:”#fff”,borderRadius:20,padding:16,display:“flex”,alignItems:“center”,gap:14,boxShadow:“0 4px 18px rgba(0,0,0,.08)”,marginBottom:10}}>
+<AvatarSVG av={getAv(userAvId)} size={52}/>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18}}>{userName}</div>
+<div style={{fontSize:12,fontWeight:800,color:h.voted?“var(–gn)”:“var(–mu)”,marginTop:3}}>{h.voted?“✓ Voted”:“✗ No vote”} · {h.coins>0?`+${h.coins} 🪙`:“0 🪙”}</div>
+</div>
+</div>
+</div>
+);
+}
+
+return (
+<div>
+{/* Header */}
+<div style={{background:“linear-gradient(160deg,#1E1B2E,#2D1B5E)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div style={{position:“absolute”,width:160,height:160,borderRadius:“50%”,background:“rgba(255,107,0,.15)”,top:-50,right:-20,filter:“blur(40px)”}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>⚡ HISTORY</div>
+{/* Weekly stats */}
+<div style={{display:“flex”,gap:8,marginTop:14,position:“relative”,zIndex:1}}>
+{[{v:`${totalXP}`,l:“XP THIS WEEK”,c:“var(–yw)”},{v:`#${bestRank}`,l:“BEST RANK”,c:“var(–gn)”},{v:`${totalReacts}🔥`,l:“REACTIONS”,c:“var(–pk)”}].map((s,i)=>(
+<div key={i} style={{flex:1,background:“rgba(255,255,255,.08)”,borderRadius:14,padding:“10px 6px”,textAlign:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:s.c}}>{s.v}</div>
+<div style={{fontSize:7,fontWeight:900,color:“rgba(255,255,255,.45)”,marginTop:3,letterSpacing:.5}}>{s.l}</div>
+</div>
+))}
+</div>
+</div>
+
+```
+  {/* Streak visual */}
+  <div style={{margin:"14px 16px",background:"#fff",borderRadius:20,padding:"14px 16px",display:"flex",alignItems:"center",gap:14,boxShadow:"0 4px 18px rgba(0,0,0,.07)"}}>
+    <div style={{fontSize:44,animation:"flameWave 1.2s ease-in-out infinite"}}>🔥</div>
+    <div style={{flex:1}}>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--or)",lineHeight:1}}>{streak} <span style={{fontSize:14,color:"var(--mu)"}}>days</span></div>
+      <div style={{height:6,background:"rgba(0,0,0,.06)",borderRadius:3,marginTop:6,overflow:"hidden"}}>
+        <div style={{height:"100%",width:`${Math.min(streak/30*100,100)}%`,background:"linear-gradient(90deg,var(--yw),var(--or))",borderRadius:3}}/>
+      </div>
+      <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:4}}>{streak >= 30 ? "🏅 30-day badge earned!" : `${30-streak} days to badge`}</div>
+    </div>
+  </div>
+
+  {/* History list */}
+  <div style={{padding:"0 16px 20px"}}>
+    {["Today","Yesterday","Mon"].map(day=>{
+      const items = MOCK_HISTORY.filter(h=>h.date===day);
+      return (
+        <div key={day}>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--mu)",letterSpacing:1,padding:"14px 0 6px"}}>{day.toUpperCase()}</div>
+          {items.map((h,i)=>{
+            const gi = MOCK_HISTORY.indexOf(h);
+            return (
+              <div key={i} onClick={()=>{SFX.tap();setSel(gi);}}
+                   style={{background:"#fff",borderRadius:18,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,
+                           marginBottom:8,cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,.07)",
+                           animation:"fadeUp .28s ease-out both",animationDelay:`${i*.07}s`,
+                           borderLeft:`4px solid ${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"var(--mu)"}`}}>
+                <div style={{width:40,height:40,borderRadius:12,background:`${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"rgba(0,0,0,.06)"}22`,display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>
+                  {h.ch.emoji}
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:900,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.chs[h.ch.id-1]}</div>
+                  <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2}}>
+                    Flash {h.flash+1} · #{h.rank} · +{h.xp} XP · {h.reacts}🔥
+                  </div>
+                </div>
+                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"var(--pk)",flexShrink:0}}>{h.score.toLocaleString()}</div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    })}
+  </div>
+</div>
+```
+
+);
+}
+
+// ═══════════════════════ STREAK GUARD ═══════════════════════
+function StreakGuard({streak, playedToday, onPlay, t}) {
+const [show, setShow] = useState(false);
+const fs = useFlashState();
+
+// Show warning after 20h if not played today
+useEffect(()=>{
+const now = new Date();
+if (!playedToday && now.getHours() >= 20) {
+const timer = setTimeout(()=>setShow(true), 2000);
+return ()=>clearTimeout(timer);
+}
+},[playedToday]);
+
+if (!show || playedToday) return null;
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.88)”,zIndex:870,display:“flex”,alignItems:“flex-end”,backdropFilter:“blur(8px)”}}
+onClick={()=>setShow(false)}>
+<div onClick={e=>e.stopPropagation()}
+style={{background:”#fff”,borderRadius:“28px 28px 0 0”,padding:“32px 20px 48px”,width:“100%”,maxWidth:430,margin:“0 auto”,
+animation:“slideUp .35s ease-out”,boxShadow:“0 -12px 48px rgba(0,0,0,.2)”}}>
+<div style={{textAlign:“center”,marginBottom:20}}>
+<div style={{fontSize:64,animation:“wobble .6s ease-in-out infinite”}}>😰</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–ink)”,marginTop:8}}>{t.sk.almostLost}</div>
+<div style={{fontSize:13,fontWeight:900,color:“var(–mu)”,marginTop:6}}>
+🔥 {streak} day streak at risk!
+</div>
+</div>
+{/* Streak visual */}
+<div style={{display:“flex”,justifyContent:“center”,gap:6,marginBottom:24}}>
+{Array.from({length:Math.min(streak,7)}).map((_,i)=>(
+<div key={i} style={{width:32,height:32,borderRadius:10,
+background:i<streak?“linear-gradient(135deg,var(–yw),var(–or))”:“rgba(0,0,0,.06)”,
+display:“grid”,placeItems:“center”,fontSize:14}}>
+{i<streak?“🔥”:””}
+</div>
+))}
+</div>
+<button onClick={()=>{setShow(false);onPlay();}}
+style={{width:“100%”,padding:16,borderRadius:999,
+background:“linear-gradient(135deg,var(–or),var(–pk))”,border:“none”,
+fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:”#fff”,cursor:“pointer”,
+boxShadow:“0 6px 28px rgba(255,107,0,.4)”,letterSpacing:1,marginBottom:10}}>
+⚡ PLAY NOW — SAVE IT
+</button>
+<button onClick={()=>setShow(false)}
+style={{width:“100%”,padding:12,borderRadius:999,background:“rgba(0,0,0,.05)”,border:“none”,
+fontFamily:”‘Nunito’,sans-serif”,fontWeight:900,fontSize:14,cursor:“pointer”,color:“var(–mu)”}}>
+{t.ld.cancel}
+</button>
+</div>
+</div>
+);
+}
+
+// Wrapper to safely use hook at component level
+function FlashAlertBannerWrapper({onPlay, t}) {
+const alert = useFlashAlert(onPlay);
+return <FlashAlertBanner alert={alert} t={t}/>;
+}
+
+// ═══════════════════════ AUTH SCREEN ═══════════════════════
+function AuthScreen({t, onAuth}) {
+const [mode, setMode] = useState(“login”); // login | register
+const [email, setEmail] = useState(””);
+const [password, setPassword] = useState(””);
+const [username, setUsername] = useState(””);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(””);
+const [demoMode, setDemoMode] = useState(false);
+
+const handle = async () => {
+if (!email || !password) { setError(“Fill all fields”); return; }
+setLoading(true); setError(””);
+let result;
+if (mode === “login”) {
+result = await sb.signIn(email, password);
+} else {
+if (!username) { setError(“Pick a username”); setLoading(false); return; }
+result = await sb.signUp(email, password, username.toUpperCase());
+}
+setLoading(false);
+if (result.error) {
+setError(result.error.message || result.error.msg || “Error”);
+} else {
+SFX.victory();
+onAuth(result.data?.user, result.data?.user?.user_metadata);
+}
+};
+
+const handleDemo = () => {
+SFX.victory();
+onAuth(null, { username:“DEMO_PLAYER”, avatar_id:“sakura”, isDemo:true });
+};
+
+return (
+<div style={{position:“fixed”,inset:0,background:“linear-gradient(160deg,#1E1B2E,#2D1B5E,#0F172A)”,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,padding:28,maxWidth:430,margin:“0 auto”}}>
+<style>{CSS}
+/* iOS Install Banner */
+#ios-banner{
+position:fixed;bottom:0;left:0;right:0;
+background:rgba(30,27,46,.97);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+border-top:1px solid rgba(255,255,255,.12);
+padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+z-index:600;transform:translateY(100%);
+transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:“Fredoka One”,sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-family:“Fredoka One”,sans-serif;
+font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+border:none;border-radius:999px;color:rgba(255,255,255,.5);
+font-family:“Nunito”,sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+left:50%;transform:translateX(-50%);
+width:0;height:0;
+border-left:10px solid transparent;border-right:10px solid transparent;
+border-top:12px solid rgba(255,107,0,.8);
+z-index:601;display:none;
+filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+</style>
+{/* Logo */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:72,background:“linear-gradient(135deg,var(–pk),var(–pu))”,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,backgroundClip:“text”,lineHeight:1,marginBottom:4}}>DAREZ</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.4)”,letterSpacing:3,marginBottom:40}}>THE GLOBAL FLASH CHALLENGE</div>
+
+```
+  {/* Toggle */}
+  <div style={{display:"flex",background:"rgba(255,255,255,.08)",borderRadius:14,padding:4,width:"100%",marginBottom:20}}>
+    {["login","register"].map(m=>(
+      <button key={m} onClick={()=>{setMode(m);setError("");}} style={{flex:1,padding:"10px",borderRadius:11,border:"none",background:mode===m?"var(--pk)":"transparent",color:mode===m?"#fff":"rgba(255,255,255,.4)",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer",transition:"all .2s",letterSpacing:.5}}>
+        {m==="login"?"LOGIN":"SIGN UP"}
+      </button>
+    ))}
+  </div>
+
+  {/* Fields */}
+  <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10,marginBottom:16}}>
+    {mode==="register" && (
+      <input value={username} onChange={e=>setUsername(e.target.value)} placeholder="Username (e.g. CHAOS_KID)" maxLength={20}
+        style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%"}}/>
+    )}
+    <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email"
+      style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
+    <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password"
+      style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
+  </div>
+
+  {error && <div style={{color:"#FF6B6B",fontSize:12,fontWeight:800,marginBottom:10,textAlign:"center"}}>{error}</div>}
+
+  <button onClick={handle} disabled={loading}
+    style={{width:"100%",padding:16,borderRadius:999,background:loading?"rgba(255,107,0,.5)":"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:loading?"default":"pointer",boxShadow:"0 6px 28px rgba(255,107,0,.35)",letterSpacing:1,marginBottom:14,transition:"all .2s"}}>
+    {loading?"..." : mode==="login"?"LOGIN ⚡":"CREATE ACCOUNT ⚡"}
+  </button>
+
+  {/* Demo mode */}
+  <button onClick={handleDemo} style={{background:"none",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:999,padding:"10px 24px",color:"rgba(255,255,255,.5)",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:13,cursor:"pointer",width:"100%"}}>
+    👀 Try without account (demo)
+  </button>
+
+  <div style={{fontSize:10,color:"rgba(255,255,255,.2)",marginTop:20,textAlign:"center",lineHeight:1.6}}>
+    By signing up you accept our Terms of Service.<br/>Your data is never sold.
+  </div>
+</div>
+```
+
+);
+}
+
+// ═══════════════════════ LIVE PLAYERS ═══════════════════════
+function LiveCount() {
+const [count, setCount] = useState(48291);
+useEffect(()=>{
+// Simulated real-time drift (real: query flash_sessions.player_count)
+const id = setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);
+return ()=>clearInterval(id);
+},[]);
+return <span>{count.toLocaleString()}</span>;
+}
+
+// ═══════════════════════ ROOT APP ═══════════════════════
+export default function App() {
+const [lang,setLang]=useState(()=>LS.get(“lang”,“en”));
+const t=LANGS[lang];
+useEffect(()=>LS.set(“lang”,lang),[lang]);
+// ── DB ────────────────────────────────────────────────────
+const {state:dbState,binId,ready:dbReady}=useDB();
+const playerId=getPlayerId();
+// ── Profile (hydraté depuis DB) ───────────────────────────
+const [onboarded,setOnboarded]=useState(()=>!!LS.get(“onboarded”));
+const [userName,setUserName]=useState(()=>LS.get(“username”,“YOU”));
+const [userAvId,setUserAvId]=useState(()=>LS.get(“avid”,“sakura”));
+const dbPlayer=dbState.players[playerId]||{};
+const userXP=dbPlayer.xp||15800;
+const userCoins=dbPlayer.coins||680;
+const streak=dbPlayer.streak||9;
+// ── Live leaderboard depuis DB ────────────────────────────
+const liveBoard=DB.getLeaderboard();
+const refreshBoard=()=>DB.init();
+const [tab,setTab]=useState(“home”);
+const [sub,setSub]=useState(null);
+const [selLeague,setSelLeague]=useState(null);
+const [notif,setNotif]=useState(null);
+const [penTarget,setPenTarget]=useState(null);
+const [showStreak,setShowStreak]=useState(false);
+const [showLang,setShowLang]=useState(false);
+const [confetti,setConfetti]=useState(0);
+const [showShare,setShowShare]=useState(false);
+const [playedToday,setPlayedToday]=useState(false);
+const [shareData,setShareData]=useState({xp:120,score:8340,rank:4,chText:“Make your scariest face”,chEmoji:“😱”});
+const [showInvite,setShowInvite]=useState(false);
+const [rankUp,setRankUp]=useState(null);
+const nTimer=useRef(null);
+const showNotif=useCallback((n)=>{setNotif(n);clearTimeout(nTimer.current);nTimer.current=setTimeout(()=>setNotif(null),3000);},[]);
+
+// Trigger rank up demo after 3s (in real app: compare XP before/after challenge)
+useEffect(()=>{
+// Demo: show rank up modal on first load after 4s
+// In production this triggers when XP crosses a rank threshold
+// const t=setTimeout(()=>setRankUp(RANKS[2]),4000); return ()=>clearTimeout(t);
+},[]);
+
+const navItems=[
+{id:“home”,    icon:“🏠”,badge:2},
+{id:“leagues”, icon:“⚔️”,badge:1},
+{id:“flash”,   icon:“⚡”,badge:null},
+{id:“history”, icon:“📊”,badge:null},
+{id:“shop”,    icon:“🛒”,badge:null},
+];
+
+const handleNav=(id)=>{
+if(id===“flash”){SFX.zap();setSub(“challenge”);setTab(“flash”);return;}
+SFX.tap();setTab(id);setSub(null);
+};
+
+if(!onboarded) return(
+<>
+<style>{CSS}
+/* iOS Install Banner */
+#ios-banner{
+position:fixed;bottom:0;left:0;right:0;
+background:rgba(30,27,46,.97);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+border-top:1px solid rgba(255,255,255,.12);
+padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+z-index:600;transform:translateY(100%);
+transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:“Fredoka One”,sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-family:“Fredoka One”,sans-serif;
+font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+border:none;border-radius:999px;color:rgba(255,255,255,.5);
+font-family:“Nunito”,sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+left:50%;transform:translateX(-50%);
+width:0;height:0;
+border-left:10px solid transparent;border-right:10px solid transparent;
+border-top:12px solid rgba(255,107,0,.8);
+z-index:601;display:none;
+filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+</style>
+<Onboarding lang={lang} setLang={setLang} t={t} onComplete={({name,avId})=>{
+const uname=name.toUpperCase()||“PLAYER”;
+setUserName(uname);setUserAvId(avId);
+LS.set(“username”,uname);LS.set(“avid”,avId);LS.set(“onboarded”,true);
+// Enregistre le joueur dans la DB partagée
+DB.upsertPlayer(playerId,{name:uname,avId:avId||“sakura”,xp:0,coins:500,streak:0,flag:“🌍”,lang,rankId:“rookie”});
+setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
+setTimeout(()=>setShowStreak(true),900);
+}}/>
+<Particles trigger={confetti}/>
+</>
+);
+
+const inCh=sub===“challenge”;
+const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,history:t.nav.stats||“Stats”,shop:t.nav.shop};
+
+return(
+<>
+<style>{CSS}
+/* iOS Install Banner */
+#ios-banner{
+position:fixed;bottom:0;left:0;right:0;
+background:rgba(30,27,46,.97);
+backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+border-top:1px solid rgba(255,255,255,.12);
+padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+z-index:600;transform:translateY(100%);
+transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:“Fredoka One”,sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
+background:linear-gradient(135deg,#FF6B00,#C084FC);
+display:grid;place-items:center;font-family:“Fredoka One”,sans-serif;
+font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+border:none;border-radius:999px;color:rgba(255,255,255,.5);
+font-family:“Nunito”,sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+left:50%;transform:translateX(-50%);
+width:0;height:0;
+border-left:10px solid transparent;border-right:10px solid transparent;
+border-top:12px solid rgba(255,107,0,.8);
+z-index:601;display:none;
+filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+</style>
+<div className="app">
+<Particles trigger={confetti}/>
+<Notif n={notif}/>
+<FlashAlertBannerWrapper onPlay={()=>{setSub(“challenge”);setTab(“flash”);}} t={t}/>
+<StreakGuard streak={streak} playedToday={playedToday} onPlay={()=>{setSub(“challenge”);setTab(“flash”);}} t={t}/>
+{showStreak&&<StreakModal streak={streak} t={t} onClose={()=>{setShowStreak(false);SFX.streakFire();}}/>}
+{showLang&&<LangSheet lang={lang} setLang={setLang} onClose={()=>setShowLang(false)}/>}
+{showShare&&<ShareCard {…shareData} userName={userName} avId={userAvId} streak={streak} rank={4} visible={showShare} onClose={()=>setShowShare(false)} t={t}/>}
+{showInvite&&<InviteModal visible={showInvite} onClose={()=>setShowInvite(false)} userName={userName} avId={userAvId} t={t} showNotif={showNotif}/>}
+{rankUp&&<RankUpModal rank={rankUp} onClose={()=>{setRankUp(null);setConfetti(c=>c+1);}}/>}
+{penTarget&&(
+<div className=“pmov” onClick={()=>setPenTarget(null)}>
+<div className=“pmsh” onClick={e=>e.stopPropagation()}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,marginBottom:4}}>💥 {t.ld.hitTitle} {penTarget.name.toUpperCase()}</div>
+<div style={{fontSize:12,fontWeight:800,color:“var(–mu)”,marginBottom:16}}>{t.ld.hitSub}</div>
+{PENALTIES.map(p=>(
+<div key={p.id} onClick={()=>{SFX.zap();showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} → ${penTarget.name}!`,sub:`-${p.cost} ${t.sh.coins.toLowerCase()}`,color:“var(–yw)”});setPenTarget(null);}} style={{background:“rgba(0,0,0,.03)”,borderRadius:16,padding:“12px 14px”,display:“flex”,alignItems:“center”,gap:11,cursor:“pointer”,marginBottom:8,transition:“background .12s”}}>
+<div style={{width:40,height:40,borderRadius:12,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:18,flexShrink:0}}>{p.emoji}</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.sh.pnames[PENALTIES.indexOf(p)]}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:1}}>{t.sh.pdescs[PENALTIES.indexOf(p)]}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:“var(–pk)”}}>🪙{p.cost}</div>
+</div>
+))}
+<button onClick={()=>setPenTarget(null)} style={{width:“100%”,padding:12,background:“rgba(0,0,0,.06)”,border:“none”,borderRadius:999,fontSize:13,fontWeight:900,cursor:“pointer”,fontFamily:”‘Nunito’,sans-serif”,color:“var(–mu)”}}>{t.ld.cancel}</button>
+</div>
+</div>
+)}
+{!inCh&&<Ticker/>}
+{inCh
+?<ChallengeFlow onDone={(data)=>{
+setSub(null);setTab(“home”);setPlayedToday(true);
+if(data){
+// Sauvegarde le score dans la DB partagée
+DB.submitScore(playerId,data.score||ME.score,data.xp||120,Math.round((data.xp||120)*.3),data.chText||””,data.chEmoji||“⚡”);
+setShareData(data);setTimeout(()=>setShowShare(true),600);
+}
+}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName}/>
+:sub===“create_league”
+?<div className="scroll" style={{flex:1}}><CreateLeague onBack={()=>setSub(null)} showNotif={showNotif} t={t}/></div>
+:sub===“league_detail”
+?<div className="scroll" style={{flex:1}}><LeagueDetail league={selLeague} onBack={()=>setSub(null)} showNotif={showNotif} setPT={setPenTarget} t={t} userName={userName}/></div>
+:<div className="scroll" style={{flex:1}}>
+{tab===“home”&&<HomeScreen onStart={()=>{SFX.zap();setSub(“challenge”);}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>{SFX.tap();setShowStreak(true);}} lang={lang} showLS={()=>setShowLang(true)}/>}
+{tab===“leagues”&&<LeaguesScreen showNotif={showNotif} onDetail={l=>{setSelLeague(l);setSub(“league_detail”);}} onCreate={()=>setSub(“create_league”)} onInvite={()=>setShowInvite(true)} t={t}/>}
+{tab===“global”&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
+{tab===“shop”&&<ShopScreen showNotif={showNotif} t={t}/>}
+{tab===“history”&&<HistoryScreen t={t} userAvId={userAvId} userName={userName}/>}
+{tab===“global”&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
+{tab===“profile”&&<ProfileScreen t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)} onHistory={()=>setTab(“history”)}/>}
+{tab===“flash”&&!inCh&&<HomeScreen onStart={()=>setSub(“challenge”)} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
+</div>
+}
+{!inCh&&(
+<nav className="nav">
+{navItems.map(item=>(
+<button key={item.id} className={`nb ${tab===item.id&&!sub?"active":""}`} onClick={()=>handleNav(item.id)} style={{position:“relative”}}>
+{item.badge&&tab!==item.id&&<div className="nbadge">{item.badge}</div>}
+<span className=“ni” style={item.id===“flash”?{filter:“drop-shadow(0 0 6px var(–yw))”}:{}}>{item.icon}</span>
+<span className=“nl” style={item.id===“flash”?{color:“var(–yw)”}:{}}>{navLabels[item.id]}</span>
+</button>
+))}
+</nav>
+)}
+</div>
+</>
+);
+}
+
+ReactDOM.createRoot(document.getElementById(“root”)).render(React.createElement(App));
+</script>
+
+</body>
+</html>
