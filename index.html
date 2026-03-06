@@ -207,7 +207,7 @@ function run(){
   setTimeout(function(){
     try{
       var code=document.getElementById("jsx-src").textContent;
-      var out=Babel.transform(code,{presets:["react"],sourceType:"script"}).code;
+      var out=Babel.transform(code,{presets:[["react"],["env",{targets:{browsers:["last 2 Safari versions"]},modules:false}]],sourceType:"script"}).code;
       out=out.replace(/export\s+default\s+function\s+App\b/g,"window.__App=function App");
       if(fill)fill.style.width="100%";
       setTimeout(function(){
