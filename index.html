@@ -207,7 +207,7 @@ function run(){
   setTimeout(function(){
     try{
       var code=document.getElementById("jsx-src").textContent;
-      var out=Babel.transform(code,{presets:["react"]}).code;
+      var out=Babel.transform(code,{presets:["react"],sourceType:"script"}).code;
       out=out.replace(/export\s+default\s+function\s+App\b/g,"window.__App=function App");
       if(fill)fill.style.width="100%";
       setTimeout(function(){
@@ -540,75 +540,6 @@ const LANGS = {
     rules:[{i:"⚡",t:"3 Flashs par jour",d:"8h30 · 17h30 · 21h00. Manquer 3 = −10 % XP."},{i:"🗳️",t:"Pouvoir de vote",d:"Plus ton rang est élevé, plus ton vote pèse. GOD = ×5."},{i:"💰",t:"Prix hebdomadaires",d:"Top 3 gagnent des pièces."},{i:"💥",t:"Coups",d:"Dépense des pièces pour frapper tes rivaux."},{i:"🔥",t:"Séries",d:"7 jours = +50 % XP. 30 jours = badge exclusif."},{i:"👑",t:"Promotion",d:"Top 3 de chaque ligue montent."},{i:"📉",t:"Relégation",d:"Les 2 derniers descendent."}],
   },
 };
-
-  if (!visible) return null;
-  const rk = RANKS.find(r=>xp>=r.min&&xp<r.max)||RANKS[0];
-
-  return (
-    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:900,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20,backdropFilter:"blur(10px)"}}
-         onClick={onClose}>
-      <div onClick={e=>e.stopPropagation()} style={{width:"100%",maxWidth:360,animation:"popIn .45s cubic-bezier(.2,0,.38,1.4)"}}>
-        {/* THE CARD */}
-        <div style={{background:`linear-gradient(145deg,${rk.g1},${rk.g2})`,borderRadius:28,padding:"28px 24px 24px",position:"relative",overflow:"hidden",boxShadow:`0 24px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.15)`}}>
-          {/* Orb deco */}
-          <div style={{position:"absolute",width:180,height:180,borderRadius:"50%",background:"rgba(255,255,255,.12)",top:-60,right:-40,filter:"blur(30px)"}}/>
-          <div style={{position:"absolute",width:100,height:100,borderRadius:"50%",background:"rgba(0,0,0,.15)",bottom:-20,left:-20,filter:"blur(20px)"}}/>
-
-          {/* Header */}
-          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:18,position:"relative",zIndex:1}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",letterSpacing:1}}>DAREZ</div>
-            <div style={{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",borderRadius:999,padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}}>{rk.icon} {rk.label}</div>
-          </div>
-
-          {/* Avatar + name */}
-          <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:20,position:"relative",zIndex:1}}>
-            <div style={{borderRadius:"50%",boxShadow:"0 0 0 3px rgba(255,255,255,.4), 0 8px 24px rgba(0,0,0,.3)"}}>
-              <AvatarSVG av={av} size={68}/>
-            </div>
-            <div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff",lineHeight:1}}>{userName}</div>
-              <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.7)",marginTop:4}}>🔥 {streak} day streak</div>
-            </div>
-          </div>
-
-          {/* Challenge */}
-          <div style={{background:"rgba(0,0,0,.2)",backdropFilter:"blur(4px)",borderRadius:16,padding:"12px 14px",marginBottom:16,position:"relative",zIndex:1}}>
-            <div style={{fontSize:10,fontWeight:900,color:"rgba(255,255,255,.6)",letterSpacing:1,marginBottom:4}}>⚡ FLASH CHALLENGE</div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"#fff",lineHeight:1.3}}>{chEmoji} {chText}</div>
-          </div>
-
-          {/* Stats row */}
-          <div style={{display:"flex",gap:8,marginBottom:18,position:"relative",zIndex:1}}>
-            {[
-              {v:score.toLocaleString(),l:"SCORE",c:"#fff"},
-              {v:`+${xp}`,l:"XP",c:"#FFE600"},
-              {v:`#${rank}`,l:"RANK",c:"#7FFFD4"},
-            ].map((s,i)=>(
-              <div key={i} style={{flex:1,background:"rgba(255,255,255,.15)",backdropFilter:"blur(4px)",borderRadius:14,padding:"10px 8px",textAlign:"center"}}>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:s.c,lineHeight:1}}>{s.v}</div>
-                <div style={{fontSize:8,fontWeight:900,color:"rgba(255,255,255,.6)",marginTop:3,letterSpacing:.5}}>{s.l}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div style={{background:"rgba(255,255,255,.15)",borderRadius:14,padding:"10px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"relative",zIndex:1}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"rgba(255,255,255,.8)"}}>darez.app/join</div>
-            <div style={{fontSize:10,fontWeight:900,color:"#fff",background:"rgba(255,255,255,.2)",borderRadius:999,padding:"4px 10px"}}>JOIN NOW →</div>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div style={{display:"flex",gap:10,marginTop:14}}>
-          <button onClick={handleShare} style={{flex:1,padding:16,borderRadius:20,background:copied?"var(--gn)":"var(--pk)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",cursor:"pointer",boxShadow:`0 6px 24px rgba(255,107,0,.4)`,transition:"background .2s",letterSpacing:1}}>
-            {copied?"✓ COPIED!":"📤 SHARE"}
-          </button>
-          <button onClick={onClose} style={{width:54,height:54,borderRadius:16,background:"rgba(255,255,255,.12)",border:"none",fontSize:20,cursor:"pointer",color:"#fff",backdropFilter:"blur(4px)"}}>✕</button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ═══════════════════════ INVITE MODAL ═══════════════════════
 function InviteModal({visible,onClose,userName,avId,t,showNotif}) {
