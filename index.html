@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
@@ -46,47 +47,50 @@
              background:linear-gradient(135deg,#FF6B00,#C084FC);border:none;
              border-radius:999px;padding:8px 16px;cursor:pointer;flex-shrink:0}
     .ib-x{background:none;border:none;color:rgba(255,255,255,.35);font-size:18px;cursor:pointer;padding:4px}
-  
-    /* iOS Install Banner */
-    #ios-banner{
-      position:fixed;bottom:0;left:0;right:0;
-      background:rgba(30,27,46,.97);
-      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-      border-top:1px solid rgba(255,255,255,.12);
-      padding:16px 20px calc(16px + env(safe-area-inset-bottom));
-      z-index:600;transform:translateY(100%);
-      transition:transform .4s cubic-bezier(.2,0,.38,1.1);
-      box-shadow:0 -8px 32px rgba(0,0,0,.4);
-    }
-    #ios-banner.show{transform:translateY(0);}
-    .ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-    .ios-icon{width:48px;height:48px;border-radius:12px;
+
+```
+/* iOS Install Banner */
+#ios-banner{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(30,27,46,.97);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.12);
+  padding:16px 20px calc(16px + env(safe-area-inset-bottom));
+  z-index:600;transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.2,0,.38,1.1);
+  box-shadow:0 -8px 32px rgba(0,0,0,.4);
+}
+#ios-banner.show{transform:translateY(0);}
+.ios-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ios-icon{width:48px;height:48px;border-radius:12px;
+          background:linear-gradient(135deg,#FF6B00,#C084FC);
+          display:grid;place-items:center;font-size:24px;flex-shrink:0;}
+.ios-title{font-family:"Fredoka One",sans-serif;font-size:17px;color:#fff;}
+.ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
+.ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.ios-step{display:flex;align-items:center;gap:10px;
+          background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;
               background:linear-gradient(135deg,#FF6B00,#C084FC);
-              display:grid;place-items:center;font-size:24px;flex-shrink:0;}
-    .ios-title{font-family:"Fredoka One",sans-serif;font-size:17px;color:#fff;}
-    .ios-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px;}
-    .ios-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
-    .ios-step{display:flex;align-items:center;gap:10px;
-              background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;}
-    .ios-step-num{width:24px;height:24px;border-radius:50%;
-                  background:linear-gradient(135deg,#FF6B00,#C084FC);
-                  display:grid;place-items:center;font-family:"Fredoka One",sans-serif;
-                  font-size:13px;color:#fff;flex-shrink:0;}
-    .ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
-    .ios-step-icon{font-size:18px;flex-shrink:0;}
-    .ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
-               border:none;border-radius:999px;color:rgba(255,255,255,.5);
-               font-family:"Nunito",sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
-    /* Arrow pointant vers le bas (bouton Share de Safari) */
-    #ios-arrow{
-      position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
-      left:50%;transform:translateX(-50%);
-      width:0;height:0;
-      border-left:10px solid transparent;border-right:10px solid transparent;
-      border-top:12px solid rgba(255,107,0,.8);
-      z-index:601;display:none;
-      filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
-    }
+              display:grid;place-items:center;font-family:"Fredoka One",sans-serif;
+              font-size:13px;color:#fff;flex-shrink:0;}
+.ios-step-txt{font-size:13px;font-weight:800;color:rgba(255,255,255,.85);}
+.ios-step-icon{font-size:18px;flex-shrink:0;}
+.ios-close{width:100%;padding:12px;background:rgba(255,255,255,.08);
+           border:none;border-radius:999px;color:rgba(255,255,255,.5);
+           font-family:"Nunito",sans-serif;font-weight:900;font-size:14px;cursor:pointer;}
+/* Arrow pointant vers le bas (bouton Share de Safari) */
+#ios-arrow{
+  position:fixed;bottom:calc(16px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
+  width:0;height:0;
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-top:12px solid rgba(255,107,0,.8);
+  z-index:601;display:none;
+  filter:drop-shadow(0 2px 4px rgba(255,107,0,.4));
+}
+```
+
   </style>
 </head>
 <body>
@@ -98,6 +102,7 @@
 <div id="root"></div>
 
 <!-- iOS Install Banner -->
+
 <div id="ios-banner">
   <div class="ios-row">
     <div class="ios-icon">⚡</div>
@@ -133,7 +138,9 @@
 </div>
 
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
 <script src="https://unpkg.com/@babel/standalone@7.23.3/babel.min.js"></script>
 
 <script>
@@ -218,7 +225,229 @@ function run(){
 window.addEventListener("load",run);
 })();
 </script>
-<script type="text/plain" id="jsx-src">
+
+<script type="text/plain" id="jsx-src">const RANKS=[
+  {id:"rookie",label:"ROOKIE",icon:"🌱",color:"#94A3B8",g1:"#334155",g2:"#1E293B",min:0,max:1000,perks:[]},
+  {id:"riser",label:"RISER",icon:"⚡",color:"#22D3EE",g1:"#0891B2",g2:"#0E7490",min:1000,max:3000,perks:["Vote weight ×1.2"]},
+  {id:"spark",label:"SPARK",icon:"🔥",color:"#F59E0B",g1:"#D97706",g2:"#B45309",min:3000,max:7000,perks:["Vote weight ×1.5","Coin bonus +10%"]},
+  {id:"blaze",label:"BLAZE",icon:"💥",color:"#F97316",g1:"#EA580C",g2:"#C2410C",min:7000,max:15000,perks:["Vote weight ×2","Shield once/week"]},
+  {id:"phantom",label:"PHANTOM",icon:"👻",color:"#A855F7",g1:"#9333EA",g2:"#7E22CE",min:15000,max:30000,perks:["Vote weight ×3","Invisible mode"]},
+  {id:"god",label:"DAREZ GOD",icon:"👑",color:"#FFD700",g1:"#F59E0B",g2:"#D97706",min:30000,max:Infinity,perks:["Vote weight ×5","All powers free"]},
+];
+const CHALLENGES=[
+  {id:1,emoji:"😱",timer:45,xp:120,coins:30},
+  {id:2,emoji:"⚡",timer:30,xp:150,coins:40},
+  {id:3,emoji:"🔴",timer:25,xp:100,coins:25},
+  {id:4,emoji:"🎤",timer:20,xp:180,coins:50},
+  {id:5,emoji:"🕺",timer:30,xp:160,coins:45},
+  {id:6,emoji:"🤯",timer:12,xp:250,coins:70},
+  {id:7,emoji:"🎭",timer:30,xp:200,coins:55},
+];
+const FLASH_TIMES=[{h:8,m:30},{h:17,m:30},{h:21,m:0}];
+const FLASH_DURATION_MIN=30;
+const MOCK_PLAYERS=[
+  {id:"p1",name:"zara_flash 🇧🇷",avId:"blaze",xp:8420,score:9200,coins:340,streak:12,flag:"🇧🇷"},
+  {id:"p2",name:"drift.exe 🇯🇵",avId:"ninja",xp:7100,score:8750,coins:210,streak:7,flag:"🇯🇵"},
+  {id:"p3",name:"neon_leo 🇫🇷",avId:"fox",xp:6300,score:8100,coins:180,streak:5,flag:"🇫🇷"},
+  {id:"p4",name:"sky.wav 🇺🇸",avId:"thunder",xp:5800,score:7600,coins:150,streak:3,flag:"🇺🇸"},
+  {id:"p5",name:"luna_riot 🇪🇸",avId:"sakura",xp:4200,score:6900,coins:120,streak:9,flag:"🇪🇸",isUser:true},
+];
+const MOCK_LEAGUES=[
+  {id:"l1",name:"CHAOS CREW",badge:"💥",color:"#FF6B00",members:847,rank:1,points:12400,joined:true},
+  {id:"l2",name:"SHADOW GUILD",badge:"👻",color:"#A855F7",members:623,rank:2,points:9800,joined:true},
+  {id:"l3",name:"BLAZE SQUAD",badge:"🔥",color:"#F97316",members:512,rank:3,points:8200,joined:false},
+  {id:"l4",name:"CRYSTAL TEAM",badge:"💎",color:"#22D3EE",members:389,rank:4,points:6100,joined:false},
+];
+const PENALTIES=[
+  {id:"silence",emoji:"🤫",cost:50},
+  {id:"shadow",emoji:"👤",cost:80},
+  {id:"expose",emoji:"📢",cost:120},
+  {id:"freeze",emoji:"❄️",cost:150},
+  {id:"demote",emoji:"📉",cost:200},
+];
+const ME={xp:15800,coins:680,score:8340};
+function getRank(xp){return RANKS.slice().reverse().find(r=>xp>=r.min)||RANKS[0];}
+function getMyRank(){return getRank(ME.xp);}
+function getAv(id){return AVS.find(a=>a.id===id)||AVS[0];}
+function fmtCountdown(secs){if(secs<=0)return"0:00";const m=Math.floor(secs/60),s=secs%60;return`${m}:${String(s).padStart(2,"0")}`;}
+function useFlashState(){
+  const[fs,setFs]=useState(()=>{
+    const now=new Date(),h=now.getHours(),m=now.getMinutes();
+    for(let i=0;i<FLASH_TIMES.length;i++){
+      const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;
+      if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();return{status:"live",index:i,secsRemaining:secs,next:0};}
+    }
+    const now2=h*60+m;
+    for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m;if(start>now2){const secs=(start-now2)*60-now.getSeconds();return{status:"next",index:i,secsRemaining:0,next:secs};}}
+    const secs=(FLASH_TIMES[0].h*60+FLASH_TIMES[0].m+1440-now.getHours()*60-now.getMinutes())*60;
+    return{status:"next",index:0,secsRemaining:0,next:Math.max(0,secs)};
+  });
+  useEffect(()=>{
+    const id=setInterval(()=>{
+      const now=new Date(),h=now.getHours(),m=now.getMinutes();
+      for(let i=0;i<FLASH_TIMES.length;i++){
+        const ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN,cur=h*60+m;
+        if(cur>=start&&cur<end){const secs=(end-cur)*60-now.getSeconds();setFs({status:"live",index:i,secsRemaining:secs,next:0});return;}
+      }
+      const now2=h*60+m;
+      for(let i=0;i<FLASH_TIMES.length;i++){const ft=FLASH_TIMES[i],start=ft.h*60+ft.m;if(start>now2){const secs=(start-now2)*60-now.getSeconds();setFs({status:"next",index:i,secsRemaining:0,next:secs});return;}}
+      setFs({status:"next",index:0,secsRemaining:0,next:0});
+    },1000);
+    return()=>clearInterval(id);
+  },[]);
+  return fs;
+}
+function Particles({trigger}){
+  const[ps,setPs]=useState([]);
+  useEffect(()=>{if(!trigger)return;setPs(Array.from({length:18},(_,i)=>({id:Date.now()+i,x:Math.random()*100,c:["#FF6B00","#C084FC","#FFE600","#00E5FF","#FF3366"][i%5],d:2+Math.random()*2})));setTimeout(()=>setPs([]),3000);},[trigger]);
+  return(<div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:999}}>{ps.map(p=>(<div key={p.id} style={{position:"absolute",left:`${p.x}%`,top:"-10px",width:8,height:8,borderRadius:"50%",background:p.c,animation:`fall ${p.d}s linear forwards`}}/>))}</div>);
+}
+function Notif({n}){
+  if(!n)return null;
+  return(<div style={{position:"fixed",top:56,left:"50%",transform:"translateX(-50%)",background:n.color||"var(--pk)",borderRadius:999,padding:"10px 20px",display:"flex",alignItems:"center",gap:8,zIndex:800,boxShadow:"0 6px 24px rgba(0,0,0,.2)",animation:"notifIn .3s ease-out",whiteSpace:"nowrap"}}><span style={{fontSize:18}}>{n.icon}</span><div><div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"#fff"}}>{n.text}</div>{n.sub&&<div style={{fontSize:10,fontWeight:800,color:"rgba(255,255,255,.75)"}}>{n.sub}</div>}</div></div>);
+}
+function Ticker(){
+  const msgs=["🔥 48K players live","⚡ Flash in 2h","👑 zara_flash just hit GOD rank","💥 New challenge dropping soon","🌍 Playing from 87 countries"];
+  const[i,setI]=useState(0);
+  useEffect(()=>{const id=setInterval(()=>setI(x=>(x+1)%msgs.length),3000);return()=>clearInterval(id);},[]);
+  return(<div style={{background:"rgba(255,107,0,.12)",padding:"7px 16px",fontSize:11,fontWeight:800,color:"var(--pk)",letterSpacing:.5,overflow:"hidden",whiteSpace:"nowrap",textOverflow:"ellipsis"}}>{msgs[i]}</div>);
+}
+function StreakModal({streak,t,onClose}){
+  useEffect(()=>{SFX.streakFire();},[]);
+  const sk=t.sk;
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.9)",zIndex:920,display:"flex",alignItems:"center",justifyContent:"center",padding:24,backdropFilter:"blur(12px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"linear-gradient(145deg,#FF6B00,#C084FC)",borderRadius:32,padding:"40px 28px",width:"100%",maxWidth:340,textAlign:"center",animation:"popIn .5s cubic-bezier(.2,0,.38,1.4)"}}>
+        <div style={{fontSize:72,marginBottom:4,animation:"bounce 1.2s infinite"}}>🔥</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:52,color:"#fff",lineHeight:1}}>{streak}</div>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.8)",marginBottom:16}}>{sk.days} {sk.title}</div>
+        <div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,.75)",marginBottom:24}}>
+          {streak>=30?sk.r30:streak>=7?sk.r7:sk.keepGoing}
+        </div>
+        <button onClick={onClose} style={{background:"rgba(255,255,255,.22)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:999,width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:20,cursor:"pointer"}}>LET'S GO ⚡</button>
+      </div>
+    </div>
+  );
+}
+function LangSheet({lang,setLang,onClose}){
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.85)",zIndex:900,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"24px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",animation:"slideUp .32s ease-out"}}>
+        <div style={{width:40,height:4,borderRadius:2,background:"rgba(0,0,0,.1)",margin:"0 auto 20px"}}/>
+        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,marginBottom:16,textAlign:"center"}}>🌍 Language</div>
+        {Object.entries(LANGS).map(([code,l])=>(
+          <div key={code} onClick={()=>{SFX.tap();setLang(code);onClose();}} style={{display:"flex",alignItems:"center",gap:14,padding:"14px 16px",borderRadius:16,background:lang===code?"linear-gradient(135deg,var(--pk),var(--pu))":"rgba(0,0,0,.03)",marginBottom:8,cursor:"pointer"}}>
+            <span style={{fontSize:28}}>{l.flag}</span>
+            <span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:lang===code?"#fff":"var(--ink)"}}>{l.label}</span>
+            {lang===code&&<span style={{marginLeft:"auto",color:"#fff"}}>✓</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function ShareCard({xp,score,rank,chText,chEmoji,userName,avId,streak,visible,onClose,t}){
+  if(!visible)return null;
+  const rk=getMyRank();
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:910,display:"flex",alignItems:"center",justifyContent:"center",padding:24,backdropFilter:"blur(12px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{width:"100%",maxWidth:360}}>
+        <div style={{background:`linear-gradient(145deg,${rk.g1},${rk.g2})`,borderRadius:28,padding:"28px 22px",textAlign:"center",marginBottom:12}}>
+          <AvatarSVG av={getAv(avId)} size={64}/>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:24,color:"#fff",marginTop:10}}>{userName}</div>
+          <div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,.7)",marginBottom:16}}>{rk.icon} {rk.label} · 🔥{streak}</div>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",marginBottom:14}}>{chEmoji} {chText}</div>
+          <div style={{display:"flex",justifyContent:"center",gap:14}}>
+            {[{v:score.toLocaleString(),l:"SCORE"},{v:`+${xp}`,l:"XP"},{v:`#${rank}`,l:"RANK"}].map((s,i)=>(
+              <div key={i} style={{background:"rgba(255,255,255,.15)",borderRadius:12,padding:"10px 16px",textAlign:"center"}}>
+                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff"}}>{s.v}</div>
+                <div style={{fontSize:9,fontWeight:900,color:"rgba(255,255,255,.6)",marginTop:2}}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <button onClick={async()=>{SFX.coin();try{await navigator.share({title:"DAREZ",text:`${userName} scored ${score} on DAREZ! ⚡`,url:"https://darez.app"});}catch(e){}}} style={{width:"100%",padding:14,borderRadius:999,background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff",cursor:"pointer",marginBottom:8}}>📤 {t.res.share}</button>
+        <button onClick={onClose} style={{width:"100%",padding:12,borderRadius:999,background:"rgba(255,255,255,.12)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"rgba(255,255,255,.7)",cursor:"pointer"}}>✕ {t.ld.cancel}</button>
+      </div>
+    </div>
+  );
+}
+const CSS=`
+:root{--pk:#FF6B00;--pu:#C084FC;--yw:#FBBF24;--gn:#34D399;--bl:#38BDF8;--or:#FB923C;--ink:#1E1B2E;--mu:#94A3B8;--bg:#F1F5F9}
+.app{width:100%;height:100%;display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
+.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.07);padding-bottom:env(safe-area-inset-bottom);flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;background:none;cursor:pointer;transition:all .15s}
+.nb.active .ni{transform:scale(1.18)}
+.nb.active .nl{color:var(--pk);font-weight:900}
+.ni{font-size:22px;transition:transform .15s}
+.nl{font-size:9px;font-weight:800;color:var(--mu);letter-spacing:.3px;font-family:'Nunito',sans-serif}
+.nbadge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--pk);color:#fff;font-size:8px;font-weight:900;border-radius:999px;padding:1px 5px;font-family:'Nunito',sans-serif}
+.card{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
+.lhero{padding:24px 18px 20px;border-radius:0 0 32px 32px;position:relative;overflow:hidden}
+.phero{padding:28px 18px 22px;text-align:center;position:relative;overflow:hidden}
+.pstat{flex:1;padding:14px 4px;text-align:center;border-right:1px solid rgba(0,0,0,.06);cursor:pointer}
+.pstat:last-child{border:none}
+.lgcard{display:flex;align-items:center;gap:13px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,.05);cursor:pointer;animation:fadeUp .28s ease-out both;background:#fff;margin:0 16px 8px;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.ltab{flex:1;padding:10px;border:none;background:none;font-weight:900;font-size:13px;cursor:pointer;border-radius:10px;transition:all .15s;font-family:'Nunito',sans-serif}
+.ltab.on{background:var(--pk);color:#fff}
+.joinbtn{padding:8px 16px;borderRadius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));color:#fff;border:none;font-family:'Fredoka One',sans-serif;font-size:13px;cursor:pointer}
+.shopcard{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:13px 14px;margin-bottom:10px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.06);animation:fadeUp .28s ease-out both}
+.packcard{background:#fff;border-radius:18px;padding:16px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.vcard{display:flex;align-items:center;gap:13px;background:#fff;border-radius:18px;padding:13px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.07);border:2px solid transparent;animation:fadeUp .28s ease-out both}
+.vcard.on{border-color:var(--pk);background:rgba(255,107,0,.04)}
+.vchk{width:28px;height:28px;border-radius:50%;border:2px solid rgba(0,0,0,.1);display:grid;place-items:center;font-size:14px;flex-shrink:0;font-weight:900;color:var(--pk)}
+.vcard.on .vchk{background:var(--pk);color:#fff;border-color:var(--pk)}
+.xpstrip{display:flex;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.xpcell{flex:1;padding:16px 8px;text-align:center;border-right:1px solid rgba(0,0,0,.06)}
+.xpcell:last-child{border:none}
+.lbrow{display:flex;align-items:center;gap:11px;padding:11px 18px;border-bottom:1px solid rgba(0,0,0,.05);animation:fadeUp .28s ease-out both}
+.lbrow.me{background:rgba(255,107,0,.04)}
+.chfull{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px 24px}
+.chtimer{font-family:'Fredoka One',sans-serif;font-size:96px;color:#fff;line-height:1;text-shadow:0 0 40px rgba(255,255,255,.4)}
+.chtimer.urg{animation:pulse 0.5s infinite;color:#FF3366}
+.chtext{font-family:'Fredoka One',sans-serif;font-size:28px;color:#fff;text-align:center;line-height:1.3}
+.cddone{padding:16px 40px;border-radius:999px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);font-family:'Fredoka One',sans-serif;font-size:20px;color:#fff;cursor:pointer}
+.cdnum{font-family:'Fredoka One',sans-serif;font-size:120px;color:#fff;line-height:1;animation:popIn .4s cubic-bezier(.2,0,.38,1.4)}
+.gfilter{padding:8px 16px;border-radius:999px;border:none;background:rgba(0,0,0,.06);font-weight:900;font-size:11px;cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0;color:var(--mu)}
+.gfilter.on{background:var(--pk);color:#fff}
+.ob{width:100%;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);overflow:hidden}
+.obs{display:flex;flex-direction:column;align-items:center;flex:1;padding:20px 24px 40px;overflow-y:auto}
+.dots{display:flex;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .2s}
+.dot.on{width:24px;border-radius:4px;background:var(--pk)}
+.obskip{background:none;border:none;color:rgba(255,255,255,.4);font-weight:900;font-size:13px;cursor:pointer;padding:6px 12px;font-family:'Nunito',sans-serif}
+.obnext{width:100%;padding:16px;border-radius:999px;background:linear-gradient(135deg,var(--pk),var(--pu));border:none;font-family:'Fredoka One',sans-serif;font-size:20px;color:#fff;cursor:pointer;box-shadow:0 6px 24px rgba(255,107,0,.4);letter-spacing:1px;margin-top:auto}
+.obinput{width:100%;padding:16px 20px;border-radius:16px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;margin-bottom:6px;letter-spacing:1px}
+.avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;margin-bottom:20px}
+.avitem{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:16px;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.avitem.on{border-color:var(--pk);background:rgba(255,107,0,.1)}
+.avname{font-size:10px;font-weight:800;color:rgba(255,255,255,.6)}
+.avitem.on .avname{color:var(--pk)}
+.lg{display:flex;flex-direction:column;gap:8px}
+.lopt{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08);cursor:pointer;border:2px solid transparent;transition:all .15s}
+.lopt.on{border-color:var(--pk);background:rgba(255,107,0,.15)}
+.finput{width:100%;padding:14px 18px;border-radius:14px;border:1.5px solid rgba(0,0,0,.1);background:#fff;font-family:'Fredoka One',sans-serif;font-size:17px;outline:none}
+.bdgopt{display:grid;place-items:center;font-size:24px;padding:10px;border-radius:14px;background:rgba(0,0,0,.04);cursor:pointer;border:2px solid transparent;transition:all .15s}
+.bdgopt.on{border-color:var(--pk);background:rgba(255,107,0,.1)}
+.cdot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s}
+.cdot.on{border-color:#fff;box-shadow:0 0 0 2px currentColor}
+.pmov{position:fixed;inset:0;background:rgba(15,12,35,.85);z-index:880;display:flex;align-items:flex-end;backdrop-filter:blur(8px)}
+.pmsh{background:#fff;border-radius:28px 28px 0 0;padding:28px 20px 48px;width:100%;max-width:430px;margin:0 auto;animation:slideUp .32s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes notifIn{from{opacity:0;transform:translateX(-50%) translateY(-16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes xpFill{from{width:0}}
+@keyframes barFill{from{width:0}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@keyframes flameWave{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.1) rotate(3deg)}}
+@keyframes wobble{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+`;
+
 const { useState, useEffect, useRef, useCallback } = React;
 
 
@@ -741,1037 +970,1045 @@ function Onboarding({lang,setLang,t,onComplete}) {
   return(
     <div className="ob">
       <style>{CSS}</style>
-      <div style={{padding:"22px 22px 0",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div className="dots">{Array.from({length:TOTAL}).map((_,i)=><div key={i} className={`dot ${i===step?"on":""}`}/>)}</div>
-        {step>0&&<button className="obskip" onClick={skip}>{ob.skip}</button>}
+
+```
+  <div style={{padding:"22px 22px 0",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+    <div className="dots">{Array.from({length:TOTAL}).map((_,i)=><div key={i} className={`dot ${i===step?"on":""}`}/>)}</div>
+    {step>0&&<button className="obskip" onClick={skip}>{ob.skip}</button>}
+  </div>
+  {step===0&&(
+    <div className="obs">
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:68,background:"linear-gradient(135deg,var(--pk),var(--pu))",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1,marginBottom:6}}>DAREZ</div>
+      <div style={{fontSize:13,fontWeight:800,color:"var(--mu)",letterSpacing:2,textTransform:"uppercase",marginBottom:32,textAlign:"center"}}>{ob.tagline}</div>
+      <p style={{fontSize:13,fontWeight:800,color:"var(--mu)",marginBottom:14,textAlign:"center"}}>{ob.chooseLang}</p>
+      <div className="lg" style={{width:"100%",marginBottom:28}}>
+        {Object.entries(LANGS).map(([code,l])=>(
+          <div key={code} className={`lopt ${lang===code?"on":""}`} onClick={()=>{SFX.tap();setLang(code);}}>
+            <span style={{fontSize:22}}>{l.flag}</span>
+            <span style={{fontWeight:800,fontSize:14,color:lang===code?"#fff":"var(--ink)"}}>{l.label}</span>
+          </div>
+        ))}
       </div>
-      {step===0&&(
-        <div className="obs">
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:68,background:"linear-gradient(135deg,var(--pk),var(--pu))",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1,marginBottom:6}}>DAREZ</div>
-          <div style={{fontSize:13,fontWeight:800,color:"var(--mu)",letterSpacing:2,textTransform:"uppercase",marginBottom:32,textAlign:"center"}}>{ob.tagline}</div>
-          <p style={{fontSize:13,fontWeight:800,color:"var(--mu)",marginBottom:14,textAlign:"center"}}>{ob.chooseLang}</p>
-          <div className="lg" style={{width:"100%",marginBottom:28}}>
-            {Object.entries(LANGS).map(([code,l])=>(
-              <div key={code} className={`lopt ${lang===code?"on":""}`} onClick={()=>{SFX.tap();setLang(code);}}>
-                <span style={{fontSize:22}}>{l.flag}</span>
-                <span style={{fontWeight:800,fontSize:14,color:lang===code?"#fff":"var(--ink)"}}>{l.label}</span>
-              </div>
-            ))}
-          </div>
-          <button className="obnext" onClick={next}>{ob.next} →</button>
-        </div>
-      )}
-      {step===1&&(
-        <div className="obs">
-          <div style={{fontSize:64,marginBottom:14,animation:"bounce 2s infinite"}}>👤</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:20,textAlign:"center"}}>{ob.nameLbl}</div>
-          <input className="obinput" placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus/>
-          <p style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginBottom:20}}>{t.cl.maxChars}</p>
-          <button className="obnext" onClick={next}>{ob.next} →</button>
-          <button className="obskip" onClick={skip}>{ob.skip}</button>
-        </div>
-      )}
-      {step===2&&(
-        <div className="obs">
-          <div style={{marginBottom:12,animation:"bounce 2s infinite"}}><AvatarSVG av={getAv(avId)} size={74}/></div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:16,textAlign:"center"}}>{ob.avLbl}</div>
-          <div className="avgrid">
-            {AVS.map(av=>(
-              <div key={av.id} className={`avitem ${avId===av.id?"on":""}`} onClick={()=>{SFX.boing();setAvId(av.id);}}>
-                <AvatarSVG av={av} size={62}/>
-                <span className="avname">{av.name}</span>
-              </div>
-            ))}
-          </div>
-          <button className="obnext" onClick={next}>{ob.next} →</button>
-        </div>
-      )}
-      {step===3&&(
-        <div className="obs">
-          <div style={{fontSize:52,marginBottom:10}}>⚔️</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:16,textAlign:"center"}}>{ob.lgLbl}</div>
-          {MOCK_LEAGUES.slice(0,3).map(l=>(
-            <div key={l.id} onClick={()=>{SFX.tap();setLeague(l.id);}} style={{background:"#fff",borderRadius:16,padding:13,display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:league===l.id?`0 0 0 2.5px ${l.color},0 4px 20px rgba(0,0,0,.1)`:"0 2px 10px rgba(0,0,0,.07)",marginBottom:8,width:"100%",transition:"box-shadow .14s"}}>
-              <div style={{width:46,height:46,borderRadius:14,background:`${l.color}22`,display:"grid",placeItems:"center",fontSize:22,flexShrink:0}}>{l.badge}</div>
-              <div>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17}}>{l.name}</div>
-                <div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>{l.members} {t.lg.members}</div>
-              </div>
-              {league===l.id&&<span style={{marginLeft:"auto",fontSize:18}}>✅</span>}
-            </div>
-          ))}
-          <button className="obnext" style={{marginTop:12}} onClick={next}>{ob.start} ⚡</button>
-          <button className="obskip" onClick={skip}>{ob.skip}</button>
-        </div>
-      )}
+      <button className="obnext" onClick={next}>{ob.next} →</button>
     </div>
-  );
+  )}
+  {step===1&&(
+    <div className="obs">
+      <div style={{fontSize:64,marginBottom:14,animation:"bounce 2s infinite"}}>👤</div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:20,textAlign:"center"}}>{ob.nameLbl}</div>
+      <input className="obinput" placeholder={ob.namePh} value={name} onChange={e=>setName(e.target.value)} maxLength={20} autoFocus/>
+      <p style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginBottom:20}}>{t.cl.maxChars}</p>
+      <button className="obnext" onClick={next}>{ob.next} →</button>
+      <button className="obskip" onClick={skip}>{ob.skip}</button>
+    </div>
+  )}
+  {step===2&&(
+    <div className="obs">
+      <div style={{marginBottom:12,animation:"bounce 2s infinite"}}><AvatarSVG av={getAv(avId)} size={74}/></div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:16,textAlign:"center"}}>{ob.avLbl}</div>
+      <div className="avgrid">
+        {AVS.map(av=>(
+          <div key={av.id} className={`avitem ${avId===av.id?"on":""}`} onClick={()=>{SFX.boing();setAvId(av.id);}}>
+            <AvatarSVG av={av} size={62}/>
+            <span className="avname">{av.name}</span>
+          </div>
+        ))}
+      </div>
+      <button className="obnext" onClick={next}>{ob.next} →</button>
+    </div>
+  )}
+  {step===3&&(
+    <div className="obs">
+      <div style={{fontSize:52,marginBottom:10}}>⚔️</div>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,marginBottom:16,textAlign:"center"}}>{ob.lgLbl}</div>
+      {MOCK_LEAGUES.slice(0,3).map(l=>(
+        <div key={l.id} onClick={()=>{SFX.tap();setLeague(l.id);}} style={{background:"#fff",borderRadius:16,padding:13,display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:league===l.id?`0 0 0 2.5px ${l.color},0 4px 20px rgba(0,0,0,.1)`:"0 2px 10px rgba(0,0,0,.07)",marginBottom:8,width:"100%",transition:"box-shadow .14s"}}>
+          <div style={{width:46,height:46,borderRadius:14,background:`${l.color}22`,display:"grid",placeItems:"center",fontSize:22,flexShrink:0}}>{l.badge}</div>
+          <div>
+            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17}}>{l.name}</div>
+            <div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>{l.members} {t.lg.members}</div>
+          </div>
+          {league===l.id&&<span style={{marginLeft:"auto",fontSize:18}}>✅</span>}
+        </div>
+      ))}
+      <button className="obnext" style={{marginTop:12}} onClick={next}>{ob.start} ⚡</button>
+      <button className="obskip" onClick={skip}>{ob.skip}</button>
+    </div>
+  )}
+</div>
+```
+
+);
 }
-const GRADS=["linear-gradient(160deg,#FF6B00,#7C3AED)","linear-gradient(160deg,#FB923C,#FF6B00)","linear-gradient(160deg,#38BDF8,#3B82F6)","linear-gradient(160deg,#34D399,#0EA5E9)","linear-gradient(160deg,#C084FC,#FF6B00)","linear-gradient(160deg,#FBBF24,#FB923C)"];
+const GRADS=[“linear-gradient(160deg,#FF6B00,#7C3AED)”,“linear-gradient(160deg,#FB923C,#FF6B00)”,“linear-gradient(160deg,#38BDF8,#3B82F6)”,“linear-gradient(160deg,#34D399,#0EA5E9)”,“linear-gradient(160deg,#C084FC,#FF6B00)”,“linear-gradient(160deg,#FBBF24,#FB923C)”];
 
 function ChallengeFlow({onDone,showNotif,t,userAvId,userName}) {
-  const [phase,setPhase]=useState("cd");
-  const [cdN,setCdN]=useState(3);
-  const [ch]=useState(()=>CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)]);
-  const [tLeft,setTLeft]=useState(0);
-  const [voted,setVoted]=useState(null);
-  const [confetti,setConfetti]=useState(0);
-  const [grad]=useState(()=>GRADS[Math.floor(Math.random()*GRADS.length)]);
-  const tRef=useRef(null);
-  const tc=t.ch;const tv=t.vote;const tr=t.res;
-  useEffect(()=>{
-    if(phase!=="cd")return;
-    if(cdN===0){SFX.tick(0);setTimeout(()=>setPhase("ch"),550);return;}
-    SFX.tick(cdN);const tm=setTimeout(()=>setCdN(n=>n-1),1000);return()=>clearTimeout(tm);
-  },[phase,cdN]);
-  useEffect(()=>{
-    if(phase!=="ch")return;
-    setTLeft(ch.timer);let e=0;
-    tRef.current=setInterval(()=>{e++;const l=ch.timer-e;setTLeft(l);if(l<=5&&l>0)SFX.danger();if(l<=0){clearInterval(tRef.current);SFX.zap();setPhase("vote");}},1000);
-    return()=>clearInterval(tRef.current);
-  },[phase]);
-  const submit=async()=>{
-    if(!voted)return;
-    SFX.voteLock();setConfetti(c=>c+1);
-    showNotif({icon:"⚡",text:`+${ch.xp} XP!`,sub:t.ch.done,color:"var(--yw)"});
-    // Submit to Supabase (if real user + live session)
-    // submitScore disabled
-    setTimeout(()=>setPhase("res"),700);
-  };
-  const sorted=[...MOCK_PLAYERS].sort((a,b)=>b.score-a.score);
-  const maxS=sorted[0].score;
-  return(
-    <div style={{flex:1,display:"flex",flexDirection:"column",position:"relative"}}>
-      <Particles trigger={confetti}/>
-      {phase==="cd"&&(
-        <div style={{position:"absolute",inset:0,background:grad,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"rgba(255,255,255,.7)",letterSpacing:4,marginBottom:12}}>{tc.getReady}</div>
-          <div className="cdnum" key={cdN}>{cdN===0?t.go:cdN}</div>
-        </div>
-      )}
-      {phase==="ch"&&(
-        <div className="chfull" style={{position:"absolute",inset:0,background:grad}}>
-          <div className={`chtimer ${tLeft<=5?"urg":""}`}>{tLeft}</div>
-          <div className="chtext">{ch.emoji} {t.chs[ch.id-1]}</div>
-          <button className="cddone" style={{marginTop:"auto"}} onClick={()=>{clearInterval(tRef.current);SFX.zap();setPhase("vote");}}>{tc.done}</button>
-        </div>
-      )}
-      {phase==="vote"&&(
-        <div style={{padding:"24px 18px",display:"flex",flexDirection:"column",gap:13,flex:1,overflow:"auto"}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"var(--ink)",lineHeight:1.2}}>{tv.q}</div>
-          <p style={{fontSize:12,fontWeight:800,color:"var(--mu)",marginTop:-6}}>{tv.hint}</p>
-          {[{id:"a",avId:"blaze",name:"zara_flash 🇧🇷"},{id:"b",avId:"ninja",name:"drift.exe 🇯🇵"},{id:"c",avId:"fox",name:"neon_leo 🇫🇷"}].map((o,i)=>(
-            <div key={o.id} className={`vcard ${voted===o.id?"on":""}`} onClick={()=>{SFX.tap();setVoted(o.id);}} style={{animationDelay:`${i*.08}s`}}>
-              <AvatarSVG av={getAv(o.avId)} size={46}/>
-              <div style={{flex:1}}>
-                <div style={{fontWeight:900,fontSize:14}}>{o.name}</div>
-                <div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>#{i+1}</div>
-              </div>
-              <div className="vchk">{voted===o.id?"✓":""}</div>
-            </div>
-          ))}
-          <button onClick={submit} style={{padding:16,borderRadius:"999px",background:voted?"linear-gradient(135deg,var(--pk),var(--pu))":"rgba(0,0,0,.07)",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:voted?"#fff":"var(--mu)",cursor:"pointer",transition:"all .2s",boxShadow:voted?"0 6px 24px rgba(255,107,0,.33)":"none",letterSpacing:1,marginTop:"auto"}}>
-            {tv.lock} {voted?"→":""}
-          </button>
-        </div>
-      )}
-      {phase==="res"&&(
-        <div style={{padding:"20px 18px",display:"flex",flexDirection:"column",gap:13,overflow:"auto",flex:1}}>
-          <div style={{textAlign:"center",animation:"popIn .5s cubic-bezier(.2,0,.38,1.4)"}}>
-            <div style={{fontSize:52}}>🏆</div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--ink)"}}>{tr.title}</div>
-          </div>
-          <div className="xpstrip">
-            {[{n:`+${ch.xp}`,l:tr.xp,c:"var(--pk)"},{n:`+${Math.round(ch.xp*.3)}`,l:tr.coins,c:"var(--yw)"},{n:`#${MOCK_PLAYERS.findIndex(p=>p.isUser)+1}`,l:tr.rank,c:"var(--gn)"}].map((item,i)=>(
-              <div key={i} className="xpcell">
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:32,color:item.c,lineHeight:1}}>{item.n}</div>
-                <div style={{fontSize:9,fontWeight:900,color:"var(--mu)",marginTop:4,letterSpacing:.5}}>{item.l}</div>
-              </div>
-            ))}
-          </div>
-          <p style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"var(--mu)",letterSpacing:1}}>{tr.top}</p>
-          {sorted.map((p,i)=>(
-            <div key={p.id} className={`lbrow ${p.isUser?"me":""}`} style={{animationDelay:`${i*.06}s`}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-              <AvatarSVG av={getAv(p.isUser?userAvId:p.avId)} size={36}/>
-              <div style={{flex:1}}>
-                <div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
-                <div style={{height:4,background:"rgba(0,0,0,.06)",borderRadius:2,marginTop:4}}>
-                  <div style={{height:"100%",width:`${(p.score/maxS)*100}%`,background:"linear-gradient(90deg,var(--pk),var(--pu))",borderRadius:2,animation:"barFill .6s ease-out"}}/>
-                </div>
-              </div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"var(--pk)"}}>{p.score.toLocaleString()}</div>
-            </div>
-          ))}
-          <button onClick={()=>{SFX.coin();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:14,borderRadius:"999px",background:"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",color:"#fff",fontFamily:"'Fredoka One',sans-serif",fontSize:17,cursor:"pointer",boxShadow:"0 6px 24px rgba(255,107,0,.3)",letterSpacing:1}}>📤 {tr.share}</button>
-          <button onClick={()=>{SFX.whoosh();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:15,borderRadius:"999px",background:"linear-gradient(135deg,var(--ink),#2D1B5E)",color:"#fff",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:17,cursor:"pointer",boxShadow:"0 6px 24px rgba(30,27,46,.28)",letterSpacing:1}}>⚡ {tr.back}</button>
-        </div>
-      )}
-    </div>
-  );
+const [phase,setPhase]=useState(“cd”);
+const [cdN,setCdN]=useState(3);
+const [ch]=useState(()=>CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)]);
+const [tLeft,setTLeft]=useState(0);
+const [voted,setVoted]=useState(null);
+const [confetti,setConfetti]=useState(0);
+const [grad]=useState(()=>GRADS[Math.floor(Math.random()*GRADS.length)]);
+const tRef=useRef(null);
+const tc=t.ch;const tv=t.vote;const tr=t.res;
+useEffect(()=>{
+if(phase!==“cd”)return;
+if(cdN===0){SFX.tick(0);setTimeout(()=>setPhase(“ch”),550);return;}
+SFX.tick(cdN);const tm=setTimeout(()=>setCdN(n=>n-1),1000);return()=>clearTimeout(tm);
+},[phase,cdN]);
+useEffect(()=>{
+if(phase!==“ch”)return;
+setTLeft(ch.timer);let e=0;
+tRef.current=setInterval(()=>{e++;const l=ch.timer-e;setTLeft(l);if(l<=5&&l>0)SFX.danger();if(l<=0){clearInterval(tRef.current);SFX.zap();setPhase(“vote”);}},1000);
+return()=>clearInterval(tRef.current);
+},[phase]);
+const submit=async()=>{
+if(!voted)return;
+SFX.voteLock();setConfetti(c=>c+1);
+showNotif({icon:“⚡”,text:`+${ch.xp} XP!`,sub:t.ch.done,color:“var(–yw)”});
+// Submit to Supabase (if real user + live session)
+// submitScore disabled
+setTimeout(()=>setPhase(“res”),700);
+};
+const sorted=[…MOCK_PLAYERS].sort((a,b)=>b.score-a.score);
+const maxS=sorted[0].score;
+return(
+<div style={{flex:1,display:“flex”,flexDirection:“column”,position:“relative”}}>
+<Particles trigger={confetti}/>
+{phase===“cd”&&(
+<div style={{position:“absolute”,inset:0,background:grad,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“rgba(255,255,255,.7)”,letterSpacing:4,marginBottom:12}}>{tc.getReady}</div>
+<div className="cdnum" key={cdN}>{cdN===0?t.go:cdN}</div>
+</div>
+)}
+{phase===“ch”&&(
+<div className=“chfull” style={{position:“absolute”,inset:0,background:grad}}>
+<div className={`chtimer ${tLeft<=5?"urg":""}`}>{tLeft}</div>
+<div className="chtext">{ch.emoji} {t.chs[ch.id-1]}</div>
+<button className=“cddone” style={{marginTop:“auto”}} onClick={()=>{clearInterval(tRef.current);SFX.zap();setPhase(“vote”);}}>{tc.done}</button>
+</div>
+)}
+{phase===“vote”&&(
+<div style={{padding:“24px 18px”,display:“flex”,flexDirection:“column”,gap:13,flex:1,overflow:“auto”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–ink)”,lineHeight:1.2}}>{tv.q}</div>
+<p style={{fontSize:12,fontWeight:800,color:“var(–mu)”,marginTop:-6}}>{tv.hint}</p>
+{[{id:“a”,avId:“blaze”,name:“zara_flash 🇧🇷”},{id:“b”,avId:“ninja”,name:“drift.exe 🇯🇵”},{id:“c”,avId:“fox”,name:“neon_leo 🇫🇷”}].map((o,i)=>(
+<div key={o.id} className={`vcard ${voted===o.id?"on":""}`} onClick={()=>{SFX.tap();setVoted(o.id);}} style={{animationDelay:`${i*.08}s`}}>
+<AvatarSVG av={getAv(o.avId)} size={46}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:14}}>{o.name}</div>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>#{i+1}</div>
+</div>
+<div className="vchk">{voted===o.id?“✓”:””}</div>
+</div>
+))}
+<button onClick={submit} style={{padding:16,borderRadius:“999px”,background:voted?“linear-gradient(135deg,var(–pk),var(–pu))”:“rgba(0,0,0,.07)”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:voted?”#fff”:“var(–mu)”,cursor:“pointer”,transition:“all .2s”,boxShadow:voted?“0 6px 24px rgba(255,107,0,.33)”:“none”,letterSpacing:1,marginTop:“auto”}}>
+{tv.lock} {voted?“→”:””}
+</button>
+</div>
+)}
+{phase===“res”&&(
+<div style={{padding:“20px 18px”,display:“flex”,flexDirection:“column”,gap:13,overflow:“auto”,flex:1}}>
+<div style={{textAlign:“center”,animation:“popIn .5s cubic-bezier(.2,0,.38,1.4)”}}>
+<div style={{fontSize:52}}>🏆</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–ink)”}}>{tr.title}</div>
+</div>
+<div className="xpstrip">
+{[{n:`+${ch.xp}`,l:tr.xp,c:“var(–pk)”},{n:`+${Math.round(ch.xp*.3)}`,l:tr.coins,c:“var(–yw)”},{n:`#${MOCK_PLAYERS.findIndex(p=>p.isUser)+1}`,l:tr.rank,c:“var(–gn)”}].map((item,i)=>(
+<div key={i} className="xpcell">
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:32,color:item.c,lineHeight:1}}>{item.n}</div>
+<div style={{fontSize:9,fontWeight:900,color:“var(–mu)”,marginTop:4,letterSpacing:.5}}>{item.l}</div>
+</div>
+))}
+</div>
+<p style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,letterSpacing:1}}>{tr.top}</p>
+{sorted.map((p,i)=>(
+<div key={p.id} className={`lbrow ${p.isUser?"me":""}`} style={{animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,width:28,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.isUser?userAvId:p.avId)} size={36}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
+<div style={{height:4,background:“rgba(0,0,0,.06)”,borderRadius:2,marginTop:4}}>
+<div style={{height:“100%”,width:`${(p.score/maxS)*100}%`,background:“linear-gradient(90deg,var(–pk),var(–pu))”,borderRadius:2,animation:“barFill .6s ease-out”}}/>
+</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>{p.score.toLocaleString()}</div>
+</div>
+))}
+<button onClick={()=>{SFX.coin();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:14,borderRadius:“999px”,background:“linear-gradient(135deg,var(–pk),var(–pu))”,border:“none”,color:”#fff”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,cursor:“pointer”,boxShadow:“0 6px 24px rgba(255,107,0,.3)”,letterSpacing:1}}>📤 {tr.share}</button>
+<button onClick={()=>{SFX.whoosh();onDone({xp:ch.xp,score:ME.score,rank:4,chText:t.chs[ch.id-1],chEmoji:ch.emoji});}} style={{padding:15,borderRadius:“999px”,background:“linear-gradient(135deg,var(–ink),#2D1B5E)”,color:”#fff”,border:“none”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,cursor:“pointer”,boxShadow:“0 6px 24px rgba(30,27,46,.28)”,letterSpacing:1}}>⚡ {tr.back}</button>
+</div>
+)}
+</div>
+);
 }
 
 function HomeScreen({onStart,showNotif,t,userAvId,userName,streak,onStreakClick,lang,showLS}) {
-  const th=t.home;const rank=getMyRank();
-  const nri=RANKS.indexOf(rank)+1;const nr=RANKS[nri];
-  const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
-  const dbFeed=DB.getFeed();
-  const feed=dbFeed.length>0
-    ? dbFeed.slice(0,5).map((f,i)=>({p:{name:f.name,avId:f.avId,flag:f.flag,isUser:f.pid===getPlayerId()},ch:{id:1,emoji:f.chEmoji||"⚡",text:f.chText||""},time:Math.floor((Date.now()-f.time)/60000)+"m",score:f.score}))
-    : [{p:MOCK_PLAYERS[0],ch:CHALLENGES[4],time:"2m"},{p:MOCK_PLAYERS[1],ch:CHALLENGES[6],time:"8m"},{p:MOCK_PLAYERS[2],ch:CHALLENGES[3],time:"15m"}];
-  return(
-    <div>
-      {/* HERO */}
-      <div style={{padding:"20px 18px 18px",background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div className="orb" style={{width:200,height:200,background:"rgba(255,107,0,.22)",top:-70,right:-50}}/>
-        <div className="orb" style={{width:130,height:130,background:"rgba(192,132,252,.18)",bottom:-40,left:10}}/>
-        <div style={{display:"flex",alignItems:"center",gap:13,position:"relative",zIndex:2,marginBottom:14}}>
-          <div style={{cursor:"pointer"}} onClick={showLS}><AvatarSVG av={getAv(userAvId)} size={52}/></div>
-          <div style={{flex:1}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,justifyContent:"space-between"}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff"}}>{userName}</div>
-              <button onClick={showLS} style={{background:"rgba(255,255,255,.15)",border:"none",borderRadius:"999px",padding:"5px 12px",fontSize:13,cursor:"pointer",color:"#fff",fontWeight:800,display:"flex",alignItems:"center",gap:5,backdropFilter:"blur(4px)"}}>{LANGS[lang].flag}</button>
-            </div>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginTop:6,flexWrap:"wrap"}}>
-              <div style={{padding:"4px 12px",borderRadius:"999px",fontSize:10,fontWeight:900,background:`rgba(255,255,255,.12)`,color:rank.color,border:`1.5px solid ${rank.color}44`}}>{rank.icon} {rank.label}</div>
-              <div onClick={onStreakClick} style={{display:"flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:"999px",background:"rgba(251,191,36,.15)",border:"1.5px solid rgba(251,191,36,.3)",fontSize:11,fontWeight:900,color:"var(--yw)",cursor:"pointer"}}>🔥 {streak}d</div>
-              <div style={{fontSize:11,fontWeight:900,color:"var(--yw)",background:"rgba(251,191,36,.12)",padding:"4px 10px",borderRadius:"999px"}}>🪙 {ME.coins}</div>
-            </div>
-          </div>
-        </div>
-        <div style={{position:"relative",zIndex:2}}>
-          <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,.5)",fontWeight:800,marginBottom:6}}>
-            <span>{rank.icon} {rank.label}</span>
-            {nr&&<span>{(nr.min-ME.xp).toLocaleString()} {th.xpTo}</span>}
-          </div>
-          <div style={{height:10,background:"rgba(255,255,255,.1)",borderRadius:5,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${pct}%`,background:`linear-gradient(90deg,${rank.g1},${rank.g2})`,borderRadius:5,animation:"xpFill .9s ease-out"}}/>
-          </div>
-        </div>
-      </div>
-      {/* FLASH BAR — TEMPS RÉEL */}
-      <FlashBar t={t}/>
-      {/* FLASH WIDGET — TEMPS RÉEL */}
-      <FlashWidget t={t} onStart={onStart} showNotif={showNotif}/>
-      {/* SEASON COUNTDOWN */}
-      <SeasonBanner t={t}/>
-      {/* MY LEAGUES */}
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"var(--ink)",padding:"16px 18px 8px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-        {th.myLeagues}<button onClick={()=>SFX.tap()} style={{fontSize:11,fontWeight:800,color:"var(--pk)",cursor:"pointer",background:"none",border:"none"}}>{th.seeAll}</button>
-      </div>
-      <div style={{display:"flex",gap:10,padding:"0 16px 4px",overflowX:"auto"}}>
-        {MOCK_LEAGUES.filter(l=>l.joined).map(l=>(
-          <div key={l.id} style={{flexShrink:0,background:"#fff",borderRadius:18,padding:"12px 14px",minWidth:118,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}}>
-            <div style={{fontSize:24,marginBottom:5}}>{l.badge}</div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:14,color:l.color}}>{l.name}</div>
-            <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2}}>#{l.rank} · {l.members}p</div>
-          </div>
-        ))}
-      </div>
-      {/* FEED */}
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"var(--ink)",padding:"16px 18px 8px"}}>{th.feed}</div>
-      {feed.map((item,i)=>(
-        <div key={i} className="card" style={{margin:"0 16px 12px",overflow:"hidden",animation:"fadeUp .35s ease-out both",animationDelay:`${i*.1}s`}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,padding:"13px 14px 8px"}}>
-            <AvatarSVG av={getAv(item.p.avId)} size={38}/>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:900,fontSize:13}}>{item.p.name} {item.p.flag}</div>
-              <div style={{fontSize:10,fontWeight:700,color:"var(--mu)",marginTop:1}}>{t.cats[item.ch.id-1]} · {item.time} {th.ago}</div>
-            </div>
-            <div style={{fontSize:14}}>{(RANKS.find(r=>item.p.xp>=r.min&&item.p.xp<r.max)||{icon:""}).icon}</div>
-          </div>
-          <div style={{padding:"0 14px 10px",fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"var(--ink)"}}>{item.ch.emoji} {t.chs[item.ch.id-1]}</div>
-          <div style={{height:140,background:"linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.07))",margin:"0 14px",borderRadius:16,display:"grid",placeItems:"center"}}><AvatarSVG av={getAv(item.p.avId)} size={60}/></div>
-          <div style={{display:"flex",borderTop:"1px solid rgba(0,0,0,.06)"}}>
-            {[[`🔥 ${t.feed.fire}`,()=>{SFX.coin();showNotif({icon:"🔥",text:t.feed.reacted,sub:t.feed.r5,color:"var(--or)"});}],[t.feed.comment,()=>{SFX.tap();showNotif({icon:"💬",text:t.feed.soon,color:"var(--bl)"});}],[`📤 ${t.feed.share}`,()=>{SFX.coin();showNotif({icon:"📤",text:t.feed.shared,color:"var(--pu)"});}]].map(([label,fn],j)=>(
-              <button key={j} onClick={fn} style={{flex:1,padding:"11px 4px",border:"none",background:"none",fontSize:11,fontWeight:900,cursor:"pointer",color:"var(--mu)",display:"flex",alignItems:"center",justifyContent:"center",gap:5,borderRight:j<2?"1px solid rgba(0,0,0,.06)":"none",transition:"background .12s",fontFamily:"'Nunito',sans-serif"}}>{label}</button>
-            ))}
-          </div>
-        </div>
-      ))}
-      <div style={{height:20}}/>
-    </div>
-  );
+const th=t.home;const rank=getMyRank();
+const nri=RANKS.indexOf(rank)+1;const nr=RANKS[nri];
+const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
+const dbFeed=DB.getFeed();
+const feed=dbFeed.length>0
+? dbFeed.slice(0,5).map((f,i)=>({p:{name:f.name,avId:f.avId,flag:f.flag,isUser:f.pid===getPlayerId()},ch:{id:1,emoji:f.chEmoji||“⚡”,text:f.chText||””},time:Math.floor((Date.now()-f.time)/60000)+“m”,score:f.score}))
+: [{p:MOCK_PLAYERS[0],ch:CHALLENGES[4],time:“2m”},{p:MOCK_PLAYERS[1],ch:CHALLENGES[6],time:“8m”},{p:MOCK_PLAYERS[2],ch:CHALLENGES[3],time:“15m”}];
+return(
+<div>
+{/* HERO */}
+<div style={{padding:“20px 18px 18px”,background:“linear-gradient(160deg,#1E1B2E,#2D1B5E)”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:200,height:200,background:“rgba(255,107,0,.22)”,top:-70,right:-50}}/>
+<div className=“orb” style={{width:130,height:130,background:“rgba(192,132,252,.18)”,bottom:-40,left:10}}/>
+<div style={{display:“flex”,alignItems:“center”,gap:13,position:“relative”,zIndex:2,marginBottom:14}}>
+<div style={{cursor:“pointer”}} onClick={showLS}><AvatarSVG av={getAv(userAvId)} size={52}/></div>
+<div style={{flex:1}}>
+<div style={{display:“flex”,alignItems:“center”,gap:8,justifyContent:“space-between”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:”#fff”}}>{userName}</div>
+<button onClick={showLS} style={{background:“rgba(255,255,255,.15)”,border:“none”,borderRadius:“999px”,padding:“5px 12px”,fontSize:13,cursor:“pointer”,color:”#fff”,fontWeight:800,display:“flex”,alignItems:“center”,gap:5,backdropFilter:“blur(4px)”}}>{LANGS[lang].flag}</button>
+</div>
+<div style={{display:“flex”,alignItems:“center”,gap:8,marginTop:6,flexWrap:“wrap”}}>
+<div style={{padding:“4px 12px”,borderRadius:“999px”,fontSize:10,fontWeight:900,background:`rgba(255,255,255,.12)`,color:rank.color,border:`1.5px solid ${rank.color}44`}}>{rank.icon} {rank.label}</div>
+<div onClick={onStreakClick} style={{display:“flex”,alignItems:“center”,gap:4,padding:“4px 10px”,borderRadius:“999px”,background:“rgba(251,191,36,.15)”,border:“1.5px solid rgba(251,191,36,.3)”,fontSize:11,fontWeight:900,color:“var(–yw)”,cursor:“pointer”}}>🔥 {streak}d</div>
+<div style={{fontSize:11,fontWeight:900,color:“var(–yw)”,background:“rgba(251,191,36,.12)”,padding:“4px 10px”,borderRadius:“999px”}}>🪙 {ME.coins}</div>
+</div>
+</div>
+</div>
+<div style={{position:“relative”,zIndex:2}}>
+<div style={{display:“flex”,justifyContent:“space-between”,fontSize:10,color:“rgba(255,255,255,.5)”,fontWeight:800,marginBottom:6}}>
+<span>{rank.icon} {rank.label}</span>
+{nr&&<span>{(nr.min-ME.xp).toLocaleString()} {th.xpTo}</span>}
+</div>
+<div style={{height:10,background:“rgba(255,255,255,.1)”,borderRadius:5,overflow:“hidden”}}>
+<div style={{height:“100%”,width:`${pct}%`,background:`linear-gradient(90deg,${rank.g1},${rank.g2})`,borderRadius:5,animation:“xpFill .9s ease-out”}}/>
+</div>
+</div>
+</div>
+{/* FLASH BAR — TEMPS RÉEL */}
+<FlashBar t={t}/>
+{/* FLASH WIDGET — TEMPS RÉEL */}
+<FlashWidget t={t} onStart={onStart} showNotif={showNotif}/>
+{/* SEASON COUNTDOWN */}
+<SeasonBanner t={t}/>
+{/* MY LEAGUES */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“var(–ink)”,padding:“16px 18px 8px”,display:“flex”,alignItems:“center”,justifyContent:“space-between”}}>
+{th.myLeagues}<button onClick={()=>SFX.tap()} style={{fontSize:11,fontWeight:800,color:“var(–pk)”,cursor:“pointer”,background:“none”,border:“none”}}>{th.seeAll}</button>
+</div>
+<div style={{display:“flex”,gap:10,padding:“0 16px 4px”,overflowX:“auto”}}>
+{MOCK_LEAGUES.filter(l=>l.joined).map(l=>(
+<div key={l.id} style={{flexShrink:0,background:”#fff”,borderRadius:18,padding:“12px 14px”,minWidth:118,cursor:“pointer”,boxShadow:“0 4px 16px rgba(0,0,0,.07)”}}>
+<div style={{fontSize:24,marginBottom:5}}>{l.badge}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:l.color}}>{l.name}</div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2}}>#{l.rank} · {l.members}p</div>
+</div>
+))}
+</div>
+{/* FEED */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:“var(–ink)”,padding:“16px 18px 8px”}}>{th.feed}</div>
+{feed.map((item,i)=>(
+<div key={i} className=“card” style={{margin:“0 16px 12px”,overflow:“hidden”,animation:“fadeUp .35s ease-out both”,animationDelay:`${i*.1}s`}}>
+<div style={{display:“flex”,alignItems:“center”,gap:10,padding:“13px 14px 8px”}}>
+<AvatarSVG av={getAv(item.p.avId)} size={38}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{item.p.name} {item.p.flag}</div>
+<div style={{fontSize:10,fontWeight:700,color:“var(–mu)”,marginTop:1}}>{t.cats[item.ch.id-1]} · {item.time} {th.ago}</div>
+</div>
+<div style={{fontSize:14}}>{(RANKS.find(r=>item.p.xp>=r.min&&item.p.xp<r.max)||{icon:””}).icon}</div>
+</div>
+<div style={{padding:“0 14px 10px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–ink)”}}>{item.ch.emoji} {t.chs[item.ch.id-1]}</div>
+<div style={{height:140,background:“linear-gradient(135deg,rgba(255,107,0,.07),rgba(192,132,252,.07))”,margin:“0 14px”,borderRadius:16,display:“grid”,placeItems:“center”}}><AvatarSVG av={getAv(item.p.avId)} size={60}/></div>
+<div style={{display:“flex”,borderTop:“1px solid rgba(0,0,0,.06)”}}>
+{[[`🔥 ${t.feed.fire}`,()=>{SFX.coin();showNotif({icon:“🔥”,text:t.feed.reacted,sub:t.feed.r5,color:“var(–or)”});}],[t.feed.comment,()=>{SFX.tap();showNotif({icon:“💬”,text:t.feed.soon,color:“var(–bl)”});}],[`📤 ${t.feed.share}`,()=>{SFX.coin();showNotif({icon:“📤”,text:t.feed.shared,color:“var(–pu)”});}]].map(([label,fn],j)=>(
+<button key={j} onClick={fn} style={{flex:1,padding:“11px 4px”,border:“none”,background:“none”,fontSize:11,fontWeight:900,cursor:“pointer”,color:“var(–mu)”,display:“flex”,alignItems:“center”,justifyContent:“center”,gap:5,borderRight:j<2?“1px solid rgba(0,0,0,.06)”:“none”,transition:“background .12s”,fontFamily:”‘Nunito’,sans-serif”}}>{label}</button>
+))}
+</div>
+</div>
+))}
+<div style={{height:20}}/>
+</div>
+);
 }
 
 function LeaguesScreen({showNotif,onDetail,onCreate,onInvite,t}) {
-  const [tab,setTab]=useState("mine");
-  const tl=t.lg;
-  const shown=tab==="mine"?MOCK_LEAGUES.filter(l=>l.joined):MOCK_LEAGUES.filter(l=>!l.joined);
-  return(
-    <div>
-      <div className="lhero" style={{background:"linear-gradient(160deg,var(--pk),#9333EA)"}}>
-        <div className="orb" style={{width:150,height:150,background:"rgba(255,255,255,.1)",top:-50,right:-30}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:30,color:"#fff",position:"relative",zIndex:1}}>{tl.title}</div>
-        <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.72)",marginTop:4,position:"relative",zIndex:1}}>{tl.sub}</div>
-        <div style={{display:"flex",gap:10,marginTop:14,position:"relative",zIndex:1}}>
-        <button onClick={()=>{SFX.unlock();onCreate();}} style={{flex:1,background:"rgba(255,255,255,.22)",backdropFilter:"blur(8px)",color:"#fff",border:"2px solid rgba(255,255,255,.4)",borderRadius:"999px",padding:"14px",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer",letterSpacing:1}}>⚡ {tl.create}</button>
-        <button onClick={()=>{SFX.tap();onInvite();}} style={{flex:1,background:"rgba(255,255,255,.88)",color:"var(--pk)",border:"none",borderRadius:"999px",padding:"14px",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer",letterSpacing:1}}>📤 {tl.inviteBtn}</button>
-      </div>
-      </div>
-      <div onClick={()=>{SFX.tap();onInvite();}} style={{margin:"12px 16px",background:"#fff",borderRadius:18,padding:14,display:"flex",alignItems:"center",gap:12,cursor:"pointer",boxShadow:"0 4px 16px rgba(0,0,0,.07)"}}>
-        <div style={{width:44,height:44,borderRadius:14,background:"linear-gradient(135deg,var(--pk),var(--pu))",display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>📨</div>
-        <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{tl.invite}</div><div style={{fontSize:11,fontWeight:800,color:"var(--mu)",marginTop:2}}>{tl.inviteSub}</div></div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:14,color:"var(--pk)"}}>{tl.inviteBtn}</div>
-      </div>
-      <div style={{display:"flex",gap:6,padding:"4px 16px 10px",background:"rgba(0,0,0,.03)",margin:"0 16px",borderRadius:14}}>
-        {["mine","disc"].map(tb=>(
-          <button key={tb} className={`ltab ${tab===tb?"on":""}`} onClick={()=>{SFX.tap();setTab(tb);}}>{tb==="mine"?tl.mine:tl.disc}</button>
-        ))}
-      </div>
-      <div style={{height:6}}/>
-      {shown.map((l,i)=>(
-        <div key={l.id} className="lgcard" style={{animationDelay:`${i*.07}s`}} onClick={()=>{SFX.whoosh();onDetail(l);}}>
-          <div style={{width:50,height:50,borderRadius:14,background:`${l.color}22`,display:"grid",placeItems:"center",fontSize:24,flexShrink:0}}>{l.badge}</div>
-          <div style={{flex:1}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17}}>{l.name}</div>
-            <div style={{fontSize:11,fontWeight:800,color:"var(--mu)",marginTop:2}}>{l.members} {tl.members} · #{l.rank} · {l.points.toLocaleString()} pts</div>
-          </div>
-          {!l.joined?<button className="joinbtn" onClick={e=>{e.stopPropagation();SFX.unlock();showNotif({icon:"🎉",text:tl.joined,sub:tl.joinedSub,color:"var(--yw)"});}}>{tl.join}</button>
-          :<div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--gn)"}}>{tl.member}</div>}
-        </div>
-      ))}
-      <div style={{height:20}}/>
-    </div>
-  );
+const [tab,setTab]=useState(“mine”);
+const tl=t.lg;
+const shown=tab===“mine”?MOCK_LEAGUES.filter(l=>l.joined):MOCK_LEAGUES.filter(l=>!l.joined);
+return(
+<div>
+<div className=“lhero” style={{background:“linear-gradient(160deg,var(–pk),#9333EA)”}}>
+<div className=“orb” style={{width:150,height:150,background:“rgba(255,255,255,.1)”,top:-50,right:-30}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:30,color:”#fff”,position:“relative”,zIndex:1}}>{tl.title}</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.72)”,marginTop:4,position:“relative”,zIndex:1}}>{tl.sub}</div>
+<div style={{display:“flex”,gap:10,marginTop:14,position:“relative”,zIndex:1}}>
+<button onClick={()=>{SFX.unlock();onCreate();}} style={{flex:1,background:“rgba(255,255,255,.22)”,backdropFilter:“blur(8px)”,color:”#fff”,border:“2px solid rgba(255,255,255,.4)”,borderRadius:“999px”,padding:“14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:“pointer”,letterSpacing:1}}>⚡ {tl.create}</button>
+<button onClick={()=>{SFX.tap();onInvite();}} style={{flex:1,background:“rgba(255,255,255,.88)”,color:“var(–pk)”,border:“none”,borderRadius:“999px”,padding:“14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:“pointer”,letterSpacing:1}}>📤 {tl.inviteBtn}</button>
+</div>
+</div>
+<div onClick={()=>{SFX.tap();onInvite();}} style={{margin:“12px 16px”,background:”#fff”,borderRadius:18,padding:14,display:“flex”,alignItems:“center”,gap:12,cursor:“pointer”,boxShadow:“0 4px 16px rgba(0,0,0,.07)”}}>
+<div style={{width:44,height:44,borderRadius:14,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>📨</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{tl.invite}</div><div style={{fontSize:11,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{tl.inviteSub}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:“var(–pk)”}}>{tl.inviteBtn}</div>
+</div>
+<div style={{display:“flex”,gap:6,padding:“4px 16px 10px”,background:“rgba(0,0,0,.03)”,margin:“0 16px”,borderRadius:14}}>
+{[“mine”,“disc”].map(tb=>(
+<button key={tb} className={`ltab ${tab===tb?"on":""}`} onClick={()=>{SFX.tap();setTab(tb);}}>{tb===“mine”?tl.mine:tl.disc}</button>
+))}
+</div>
+<div style={{height:6}}/>
+{shown.map((l,i)=>(
+<div key={l.id} className=“lgcard” style={{animationDelay:`${i*.07}s`}} onClick={()=>{SFX.whoosh();onDetail(l);}}>
+<div style={{width:50,height:50,borderRadius:14,background:`${l.color}22`,display:“grid”,placeItems:“center”,fontSize:24,flexShrink:0}}>{l.badge}</div>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17}}>{l.name}</div>
+<div style={{fontSize:11,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{l.members} {tl.members} · #{l.rank} · {l.points.toLocaleString()} pts</div>
+</div>
+{!l.joined?<button className=“joinbtn” onClick={e=>{e.stopPropagation();SFX.unlock();showNotif({icon:“🎉”,text:tl.joined,sub:tl.joinedSub,color:“var(–yw)”});}}>{tl.join}</button>
+:<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:12,color:“var(–gn)”}}>{tl.member}</div>}
+</div>
+))}
+<div style={{height:20}}/>
+</div>
+);
 }
 
-function GlobalScreen({t, userName="YOU", liveBoard=[], onRefresh}) {
-  const [filter,setFilter]=useState("all");
-  // Use live board if available, otherwise fall back to mock
-  const sorted = liveBoard.length > 0
-    ? liveBoard.map(p=>({...p, isUser: p.username===userName, avId: p.avatar_id||"sakura", score: p.today_score||p.xp}))
-    : [...MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
-  const f=t.filters;
-  return(
-    <div>
-      <div style={{background:"linear-gradient(160deg,#0F172A,#1E3A5F)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div className="orb" style={{width:140,height:140,background:"rgba(56,189,248,.15)",top:-40,right:-20}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>{t.res.title}</div>
-        <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.5)",marginTop:4,position:"relative",zIndex:1,display:"flex",alignItems:"center",gap:8}}><LiveCount/> {t.gl.players} · {t.gl.updated} <button onClick={onRefresh} style={{background:"rgba(255,255,255,.12)",border:"none",borderRadius:999,padding:"2px 8px",color:"rgba(255,255,255,.6)",fontSize:10,cursor:"pointer",fontWeight:900}}>↻</button></div>
-      </div>
-      <div style={{display:"flex",gap:8,padding:"12px 16px 8px",overflowX:"auto"}}>
-        {Object.entries(f).map(([k,v])=>(
-          <button key={k} className={`gfilter ${filter===k?"on":""}`} onClick={()=>{SFX.tap();setFilter(k);}}>{v}</button>
-        ))}
-      </div>
-      {sorted.map((p,i)=>{
-        const rank=RANKS.find(r=>p.xp>=r.min&&p.xp<r.max)||RANKS[0];
-        return(
-          <div key={p.id} style={{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)",background:p.isUser?"rgba(255,107,0,.04)":"",animation:"fadeUp .28s ease-out both",animationDelay:`${i*.06}s`}}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,width:30,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-            <AvatarSVG av={getAv(p.avId)} size={42}/>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:900,fontSize:13,display:"flex",alignItems:"center",gap:6}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag} <span style={{color:rank.color}}>{rank.icon}</span></div>
-              <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:1}}>{rank.label} · 🔥{p.streak}</div>
-            </div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"var(--pk)"}}>{p.score.toLocaleString()}</div>
-          </div>
-        );
-      })}
-      <div style={{height:20}}/>
-    </div>
-  );
+function GlobalScreen({t, userName=“YOU”, liveBoard=[], onRefresh}) {
+const [filter,setFilter]=useState(“all”);
+// Use live board if available, otherwise fall back to mock
+const sorted = liveBoard.length > 0
+? liveBoard.map(p=>({…p, isUser: p.username===userName, avId: p.avatar_id||“sakura”, score: p.today_score||p.xp}))
+: […MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
+const f=t.filters;
+return(
+<div>
+<div style={{background:“linear-gradient(160deg,#0F172A,#1E3A5F)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:140,height:140,background:“rgba(56,189,248,.15)”,top:-40,right:-20}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{t.res.title}</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.5)”,marginTop:4,position:“relative”,zIndex:1,display:“flex”,alignItems:“center”,gap:8}}><LiveCount/> {t.gl.players} · {t.gl.updated} <button onClick={onRefresh} style={{background:“rgba(255,255,255,.12)”,border:“none”,borderRadius:999,padding:“2px 8px”,color:“rgba(255,255,255,.6)”,fontSize:10,cursor:“pointer”,fontWeight:900}}>↻</button></div>
+</div>
+<div style={{display:“flex”,gap:8,padding:“12px 16px 8px”,overflowX:“auto”}}>
+{Object.entries(f).map(([k,v])=>(
+<button key={k} className={`gfilter ${filter===k?"on":""}`} onClick={()=>{SFX.tap();setFilter(k);}}>{v}</button>
+))}
+</div>
+{sorted.map((p,i)=>{
+const rank=RANKS.find(r=>p.xp>=r.min&&p.xp<r.max)||RANKS[0];
+return(
+<div key={p.id} style={{display:“flex”,alignItems:“center”,gap:11,padding:“11px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,background:p.isUser?“rgba(255,107,0,.04)”:””,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,width:30,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.avId)} size={42}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13,display:“flex”,alignItems:“center”,gap:6}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag} <span style={{color:rank.color}}>{rank.icon}</span></div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:1}}>{rank.label} · 🔥{p.streak}</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>{p.score.toLocaleString()}</div>
+</div>
+);
+})}
+<div style={{height:20}}/>
+</div>
+);
 }
 
 function ProfileScreen({t,userAvId,userName,streak,onStreakClick,lang,showLS,onHistory}) {
-  const rank=getMyRank();const tp=t.pr;
-  const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
-  return(
-    <div>
-      <div className="phero" style={{background:`linear-gradient(160deg,${rank.g1},${rank.g2})`}}>
-        <div className="orb" style={{width:160,height:160,background:"rgba(255,255,255,.12)",top:-50,right:-30}}/>
-        <div style={{position:"absolute",top:16,right:16,zIndex:2}}>
-          <button onClick={showLS} style={{background:"rgba(255,255,255,.25)",backdropFilter:"blur(4px)",border:"none",borderRadius:"999px",padding:"6px 12px",fontSize:13,cursor:"pointer",color:"#fff",fontWeight:800}}>{LANGS[lang].flag} {LANGS[lang].label}</button>
-        </div>
-        <div style={{position:"relative",zIndex:1,display:"inline-block",marginBottom:10}}><AvatarSVG av={getAv(userAvId)} size={86}/></div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>{userName}</div>
-        <div style={{display:"flex",justifyContent:"center",marginTop:8,position:"relative",zIndex:1}}>
-          <div style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",borderRadius:"999px",padding:"5px 16px",fontWeight:900,fontSize:13,color:"#fff"}}>{rank.icon} {rank.label}</div>
-        </div>
-        <div style={{marginTop:14,position:"relative",zIndex:1}}>
-          <div style={{height:10,background:"rgba(255,255,255,.18)",borderRadius:5,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${pct}%`,background:"rgba(255,255,255,.8)",borderRadius:5,animation:"xpFill .9s ease-out"}}/>
-          </div>
-          <div style={{fontSize:10,fontWeight:800,color:"rgba(255,255,255,.6)",marginTop:4}}>{ME.xp.toLocaleString()} {tp.xp}</div>
-        </div>
-      </div>
-      <div style={{display:"flex",margin:"14px 16px",background:"#fff",borderRadius:20,boxShadow:"0 4px 20px rgba(0,0,0,.07)",overflow:"hidden"}}>
-        {[[streak+"🔥",tp.streak,onStreakClick],[ME.coins+"🪙",tp.coins,null],[ME.score,tp.best,null],[3,tp.league,null]].map(([val,label,cb],i)=>(
-          <div key={i} className="pstat" onClick={cb||undefined}>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"var(--pk)"}}>{typeof val==="number"?val.toLocaleString():val}</div>
-            <div style={{fontSize:9,fontWeight:900,color:"var(--mu)",letterSpacing:.5,textTransform:"uppercase"}}>{label}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{padding:"0 16px"}}>
-        <button onClick={onHistory} style={{width:"100%",padding:13,borderRadius:16,background:"linear-gradient(135deg,#1E1B2E,#2D1B5E)",border:"none",display:"flex",alignItems:"center",justifyContent:"space-between",cursor:"pointer",marginBottom:12,paddingLeft:16,paddingRight:16}}>
-          <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <span style={{fontSize:20}}>📊</span>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"#fff"}}>MY HISTORY</div>
-          </div>
-          <span style={{color:"rgba(255,255,255,.5)",fontSize:18}}>›</span>
-        </button>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"var(--mu)",marginBottom:10}}>{tp.powers}</div>
-        {rank.perks.length===0
-          ?<div style={{textAlign:"center",padding:24,color:"var(--mu)",fontWeight:800,fontSize:13}}>{tp.noPowers}</div>
-          :rank.perks.map((perk,i)=>(
-            <div key={i} style={{display:"flex",alignItems:"center",gap:12,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)",animation:"fadeUp .28s ease-out both",animationDelay:`${i*.1}s`}}>
-              <div style={{width:36,height:36,borderRadius:12,background:"linear-gradient(135deg,var(--pk),var(--pu))",display:"grid",placeItems:"center",fontSize:16,flexShrink:0}}>✨</div>
-              <div style={{flex:1,fontWeight:900,fontSize:13}}>{perk}</div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:11,color:"var(--gn)"}}>{tp.active}</div>
-            </div>
-          ))
-        }
-      </div>
-      <div style={{padding:"8px 16px"}}>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"var(--mu)",marginBottom:10}}>{tp.journey}</div>
-        {RANKS.map((r,i)=>{
-          const unlocked=ME.xp>=r.min;const curr=r.id===getMyRank().id;
-          return(
-            <div key={r.id} style={{display:"flex",gap:12,alignItems:"center",marginBottom:8,opacity:unlocked?1:.3}}>
-              <div style={{width:40,height:40,borderRadius:12,background:unlocked?`linear-gradient(135deg,${r.g1},${r.g2})`:"#eee",display:"grid",placeItems:"center",fontSize:18,flexShrink:0,boxShadow:curr?`0 4px 14px ${r.color}55`:"none"}}>{r.icon}</div>
-              <div style={{flex:1}}>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,display:"flex",alignItems:"center",gap:8}}>{r.label}{curr&&<span style={{fontSize:10,background:`${r.color}22`,color:r.color,borderRadius:"999px",padding:"2px 8px",fontFamily:"'Nunito',sans-serif",fontWeight:900}}>{tp.current}</span>}</div>
-                <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:1}}>{r.min.toLocaleString()}+ {tp.xp} · {r.perks.join(", ")||tp.base}</div>
-              </div>
-              {unlocked&&<span style={{color:r.color,fontSize:16}}>✓</span>}
-            </div>
-          );
-        })}
-      </div>
-      <div style={{height:20}}/>
-    </div>
-  );
+const rank=getMyRank();const tp=t.pr;
+const pct=((ME.xp-rank.min)/((rank.max===Infinity?ME.xp*1.5:rank.max)-rank.min))*100;
+return(
+<div>
+<div className=“phero” style={{background:`linear-gradient(160deg,${rank.g1},${rank.g2})`}}>
+<div className=“orb” style={{width:160,height:160,background:“rgba(255,255,255,.12)”,top:-50,right:-30}}/>
+<div style={{position:“absolute”,top:16,right:16,zIndex:2}}>
+<button onClick={showLS} style={{background:“rgba(255,255,255,.25)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:“999px”,padding:“6px 12px”,fontSize:13,cursor:“pointer”,color:”#fff”,fontWeight:800}}>{LANGS[lang].flag} {LANGS[lang].label}</button>
+</div>
+<div style={{position:“relative”,zIndex:1,display:“inline-block”,marginBottom:10}}><AvatarSVG av={getAv(userAvId)} size={86}/></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{userName}</div>
+<div style={{display:“flex”,justifyContent:“center”,marginTop:8,position:“relative”,zIndex:1}}>
+<div style={{background:“rgba(255,255,255,.22)”,backdropFilter:“blur(4px)”,borderRadius:“999px”,padding:“5px 16px”,fontWeight:900,fontSize:13,color:”#fff”}}>{rank.icon} {rank.label}</div>
+</div>
+<div style={{marginTop:14,position:“relative”,zIndex:1}}>
+<div style={{height:10,background:“rgba(255,255,255,.18)”,borderRadius:5,overflow:“hidden”}}>
+<div style={{height:“100%”,width:`${pct}%`,background:“rgba(255,255,255,.8)”,borderRadius:5,animation:“xpFill .9s ease-out”}}/>
+</div>
+<div style={{fontSize:10,fontWeight:800,color:“rgba(255,255,255,.6)”,marginTop:4}}>{ME.xp.toLocaleString()} {tp.xp}</div>
+</div>
+</div>
+<div style={{display:“flex”,margin:“14px 16px”,background:”#fff”,borderRadius:20,boxShadow:“0 4px 20px rgba(0,0,0,.07)”,overflow:“hidden”}}>
+{[[streak+“🔥”,tp.streak,onStreakClick],[ME.coins+“🪙”,tp.coins,null],[ME.score,tp.best,null],[3,tp.league,null]].map(([val,label,cb],i)=>(
+<div key={i} className="pstat" onClick={cb||undefined}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:“var(–pk)”}}>{typeof val===“number”?val.toLocaleString():val}</div>
+<div style={{fontSize:9,fontWeight:900,color:“var(–mu)”,letterSpacing:.5,textTransform:“uppercase”}}>{label}</div>
+</div>
+))}
+</div>
+<div style={{padding:“0 16px”}}>
+<button onClick={onHistory} style={{width:“100%”,padding:13,borderRadius:16,background:“linear-gradient(135deg,#1E1B2E,#2D1B5E)”,border:“none”,display:“flex”,alignItems:“center”,justifyContent:“space-between”,cursor:“pointer”,marginBottom:12,paddingLeft:16,paddingRight:16}}>
+<div style={{display:“flex”,alignItems:“center”,gap:10}}>
+<span style={{fontSize:20}}>📊</span>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:”#fff”}}>MY HISTORY</div>
+</div>
+<span style={{color:“rgba(255,255,255,.5)”,fontSize:18}}>›</span>
+</button>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:“var(–mu)”,marginBottom:10}}>{tp.powers}</div>
+{rank.perks.length===0
+?<div style={{textAlign:“center”,padding:24,color:“var(–mu)”,fontWeight:800,fontSize:13}}>{tp.noPowers}</div>
+:rank.perks.map((perk,i)=>(
+<div key={i} style={{display:“flex”,alignItems:“center”,gap:12,background:”#fff”,borderRadius:16,padding:13,marginBottom:8,boxShadow:“0 2px 10px rgba(0,0,0,.06)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.1}s`}}>
+<div style={{width:36,height:36,borderRadius:12,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:16,flexShrink:0}}>✨</div>
+<div style={{flex:1,fontWeight:900,fontSize:13}}>{perk}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:11,color:“var(–gn)”}}>{tp.active}</div>
+</div>
+))
+}
+</div>
+<div style={{padding:“8px 16px”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:“var(–mu)”,marginBottom:10}}>{tp.journey}</div>
+{RANKS.map((r,i)=>{
+const unlocked=ME.xp>=r.min;const curr=r.id===getMyRank().id;
+return(
+<div key={r.id} style={{display:“flex”,gap:12,alignItems:“center”,marginBottom:8,opacity:unlocked?1:.3}}>
+<div style={{width:40,height:40,borderRadius:12,background:unlocked?`linear-gradient(135deg,${r.g1},${r.g2})`:”#eee”,display:“grid”,placeItems:“center”,fontSize:18,flexShrink:0,boxShadow:curr?`0 4px 14px ${r.color}55`:“none”}}>{r.icon}</div>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,display:“flex”,alignItems:“center”,gap:8}}>{r.label}{curr&&<span style={{fontSize:10,background:`${r.color}22`,color:r.color,borderRadius:“999px”,padding:“2px 8px”,fontFamily:”‘Nunito’,sans-serif”,fontWeight:900}}>{tp.current}</span>}</div>
+<div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:1}}>{r.min.toLocaleString()}+ {tp.xp} · {r.perks.join(”, “)||tp.base}</div>
+</div>
+{unlocked&&<span style={{color:r.color,fontSize:16}}>✓</span>}
+</div>
+);
+})}
+</div>
+<div style={{height:20}}/>
+</div>
+);
 }
 
 function ShopScreen({showNotif,t}) {
-  const [coins,setCoins]=useState(ME.coins);
-  const ts=t.sh;
-  const buy=(p)=>{
-    if(p.cost>coins){SFX.fail();showNotif({icon:"💸",text:ts.notEnough,sub:`${p.cost-coins} ${ts.needMore}`,color:"var(--pk)"});return;}
-    SFX.unlock();setCoins(c=>c-p.cost);showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} ${ts.activated}`,sub:ts.enjoy,color:"var(--gn)"});
-  };
-  return(
-    <div>
-      <div style={{background:"linear-gradient(160deg,#4C1D95,#7C3AED)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div className="orb" style={{width:130,height:130,background:"rgba(192,132,252,.2)",top:-30,right:-20}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>DAREZ <span style={{color:"var(--yw)"}}>{ts.title}</span></div>
-        <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.6)",marginTop:4,position:"relative",zIndex:1}}>{ts.sub}</div>
-        <div style={{display:"inline-flex",alignItems:"center",gap:8,marginTop:14,background:"rgba(251,191,36,.2)",borderRadius:"999px",padding:"8px 16px",position:"relative",zIndex:1}}>
-          <span style={{fontSize:20}}>🪙</span>
-          <span style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"var(--yw)"}}>{coins.toLocaleString()}</span>
-          <span style={{fontSize:11,fontWeight:900,color:"rgba(255,255,255,.6)"}}>{ts.coins}</span>
-        </div>
-      </div>
-      <div style={{padding:"14px 16px 0"}}>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"var(--mu)",marginBottom:10}}>{ts.hits}</div>
-        {PENALTIES.map((p,i)=>(
-          <div key={p.id} className="shopcard" style={{animationDelay:`${i*.07}s`}} onClick={()=>buy(p)}>
-            <div style={{width:46,height:46,borderRadius:14,background:"linear-gradient(135deg,var(--pk),var(--pu))",display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>{p.emoji}</div>
-            <div style={{flex:1}}><div style={{fontWeight:900,fontSize:14}}>{t.sh.pnames[i]}</div><div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>{t.sh.pdescs[i]}</div></div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"var(--pk)"}}>🪙{p.cost}</div>
-          </div>
-        ))}
-      </div>
-      <div style={{padding:"12px 16px 0"}}>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"var(--mu)",marginBottom:10}}>{ts.packs}</div>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-          {[{coins:500,price:"€2.99",bonus:""},{coins:1500,price:"€7.99",bonus:ts.bestDeal},{coins:3500,price:"€14.99",bonus:ts.hot},{coins:10000,price:"€39.99",bonus:ts.whale}].map((pack,i)=>(
-            <div key={i} className="packcard" onClick={()=>{SFX.coin();showNotif({icon:"🪙",text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.thanks,color:"var(--yw)"});}}>
-              {pack.bonus&&<div style={{position:"absolute",top:0,right:0,background:"linear-gradient(135deg,var(--pk),var(--pu))",color:"#fff",fontSize:8,fontWeight:900,padding:"4px 10px",borderRadius:"0 18px 0 18px"}}>{pack.bonus}</div>}
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--yw)"}}>🪙{pack.coins.toLocaleString()}</div>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,marginTop:4}}>{pack.price}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div style={{height:30}}/>
-    </div>
-  );
+const [coins,setCoins]=useState(ME.coins);
+const ts=t.sh;
+const buy=(p)=>{
+if(p.cost>coins){SFX.fail();showNotif({icon:“💸”,text:ts.notEnough,sub:`${p.cost-coins} ${ts.needMore}`,color:“var(–pk)”});return;}
+SFX.unlock();setCoins(c=>c-p.cost);showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} ${ts.activated}`,sub:ts.enjoy,color:“var(–gn)”});
+};
+return(
+<div>
+<div style={{background:“linear-gradient(160deg,#4C1D95,#7C3AED)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:130,height:130,background:“rgba(192,132,252,.2)”,top:-30,right:-20}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>DAREZ <span style={{color:“var(–yw)”}}>{ts.title}</span></div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.6)”,marginTop:4,position:“relative”,zIndex:1}}>{ts.sub}</div>
+<div style={{display:“inline-flex”,alignItems:“center”,gap:8,marginTop:14,background:“rgba(251,191,36,.2)”,borderRadius:“999px”,padding:“8px 16px”,position:“relative”,zIndex:1}}>
+<span style={{fontSize:20}}>🪙</span>
+<span style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–yw)”}}>{coins.toLocaleString()}</span>
+<span style={{fontSize:11,fontWeight:900,color:“rgba(255,255,255,.6)”}}>{ts.coins}</span>
+</div>
+</div>
+<div style={{padding:“14px 16px 0”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.hits}</div>
+{PENALTIES.map((p,i)=>(
+<div key={p.id} className=“shopcard” style={{animationDelay:`${i*.07}s`}} onClick={()=>buy(p)}>
+<div style={{width:46,height:46,borderRadius:14,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>{p.emoji}</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:14}}>{t.sh.pnames[i]}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{t.sh.pdescs[i]}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:“var(–pk)”}}>🪙{p.cost}</div>
+</div>
+))}
+</div>
+<div style={{padding:“12px 16px 0”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:“var(–mu)”,marginBottom:10}}>{ts.packs}</div>
+<div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:10}}>
+{[{coins:500,price:“€2.99”,bonus:””},{coins:1500,price:“€7.99”,bonus:ts.bestDeal},{coins:3500,price:“€14.99”,bonus:ts.hot},{coins:10000,price:“€39.99”,bonus:ts.whale}].map((pack,i)=>(
+<div key={i} className=“packcard” onClick={()=>{SFX.coin();showNotif({icon:“🪙”,text:`${pack.coins.toLocaleString()} ${t.ld.coinsAdded}!`,sub:t.ld.thanks,color:“var(–yw)”});}}>
+{pack.bonus&&<div style={{position:“absolute”,top:0,right:0,background:“linear-gradient(135deg,var(–pk),var(–pu))”,color:”#fff”,fontSize:8,fontWeight:900,padding:“4px 10px”,borderRadius:“0 18px 0 18px”}}>{pack.bonus}</div>}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–yw)”}}>🪙{pack.coins.toLocaleString()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,marginTop:4}}>{pack.price}</div>
+</div>
+))}
+</div>
+</div>
+<div style={{height:30}}/>
+</div>
+);
 }
 
 function CreateLeague({onBack,showNotif,t}) {
-  const [name,setName]=useState("");const [badge,setBadge]=useState("💀");const [color,setColor]=useState("#FF6B00");
-  const tc=t.cl;
-  const badges=["💀","🔥","⚡","🌊","👻","🐉","🦊","🤖","😈","🐺","🦁","💎","🌸","⭐","🎯"];
-  const colors=["#FF6B00","#FB923C","#FBBF24","#34D399","#38BDF8","#C084FC","#1E1B2E","#EC4899"];
-  const launch=()=>{
-    if(!name.trim()){SFX.fail();showNotif({icon:"⚠️",text:tc.enterName,color:"var(--pk)"});return;}
-    SFX.unlock();showNotif({icon:"🎉",text:`${badge} ${name}!`,sub:`+100 ${t.lg.inviteSub.split(" ")[1]||"coins"}`,color:"var(--yw)"});onBack();
-  };
-  return(
-    <div style={{padding:"22px 18px",display:"flex",flexDirection:"column",gap:16,minHeight:"100%"}}>
-      <button onClick={()=>{SFX.tap();onBack();}} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",fontSize:13,cursor:"pointer",fontWeight:900,color:"var(--mu)"}}>← {tc.back}</button>
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--ink)"}}>{tc.title} <span style={{color}}>{tc.word}</span></div>
-      <div style={{background:"#fff",borderRadius:20,padding:16,display:"flex",alignItems:"center",gap:14,boxShadow:"0 4px 20px rgba(0,0,0,.08)"}}>
-        <div style={{width:56,height:56,borderRadius:16,background:`${color}22`,display:"grid",placeItems:"center",fontSize:26,border:`2px solid ${color}44`,flexShrink:0}}>{badge}</div>
-        <div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color}}>{name||tc.word}</div>
-          <div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>1 {t.lg.members}</div>
-        </div>
-      </div>
-      <div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"var(--mu)",marginBottom:8}}>{tc.nameLbl}</div>
-        <input className="finput" placeholder={tc.namePh} value={name} onChange={e=>setName(e.target.value.toUpperCase())} maxLength={20}/>
-        <div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:6}}>{tc.maxChars}</div>
-      </div>
-      <div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"var(--mu)",marginBottom:8}}>{tc.badgeLbl}</div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:8}}>
-          {badges.map(b=><div key={b} className={`bdgopt ${badge===b?"on":""}`} onClick={()=>{SFX.tap();setBadge(b);}}>{b}</div>)}
-        </div>
-      </div>
-      <div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"var(--mu)",marginBottom:8}}>{tc.colorLbl}</div>
-        <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>{colors.map(c=><div key={c} className={`cdot ${color===c?"on":""}`} style={{background:c}} onClick={()=>{SFX.tap();setColor(c);}}/>)}</div>
-      </div>
-      <button onClick={launch} style={{background:`linear-gradient(135deg,${color},${color}CC)`,color:color==="#FBBF24"?"#1E1B2E":"#fff",border:"none",borderRadius:"999px",width:"100%",padding:16,fontFamily:"'Fredoka One',sans-serif",fontSize:18,cursor:"pointer",boxShadow:`0 6px 24px ${color}55`,letterSpacing:1,marginTop:"auto"}}>⚡ {tc.launch}</button>
-    </div>
-  );
+const [name,setName]=useState(””);const [badge,setBadge]=useState(“💀”);const [color,setColor]=useState(”#FF6B00”);
+const tc=t.cl;
+const badges=[“💀”,“🔥”,“⚡”,“🌊”,“👻”,“🐉”,“🦊”,“🤖”,“😈”,“🐺”,“🦁”,“💎”,“🌸”,“⭐”,“🎯”];
+const colors=[”#FF6B00”,”#FB923C”,”#FBBF24”,”#34D399”,”#38BDF8”,”#C084FC”,”#1E1B2E”,”#EC4899”];
+const launch=()=>{
+if(!name.trim()){SFX.fail();showNotif({icon:“⚠️”,text:tc.enterName,color:“var(–pk)”});return;}
+SFX.unlock();showNotif({icon:“🎉”,text:`${badge} ${name}!`,sub:`+100 ${t.lg.inviteSub.split(" ")[1]||"coins"}`,color:“var(–yw)”});onBack();
+};
+return(
+<div style={{padding:“22px 18px”,display:“flex”,flexDirection:“column”,gap:16,minHeight:“100%”}}>
+<button onClick={()=>{SFX.tap();onBack();}} style={{display:“flex”,alignItems:“center”,gap:6,background:“none”,border:“none”,fontSize:13,cursor:“pointer”,fontWeight:900,color:“var(–mu)”}}>← {tc.back}</button>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:“var(–ink)”}}>{tc.title} <span style={{color}}>{tc.word}</span></div>
+<div style={{background:”#fff”,borderRadius:20,padding:16,display:“flex”,alignItems:“center”,gap:14,boxShadow:“0 4px 20px rgba(0,0,0,.08)”}}>
+<div style={{width:56,height:56,borderRadius:16,background:`${color}22`,display:“grid”,placeItems:“center”,fontSize:26,border:`2px solid ${color}44`,flexShrink:0}}>{badge}</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color}}>{name||tc.word}</div>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>1 {t.lg.members}</div>
+</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.nameLbl}</div>
+<input className=“finput” placeholder={tc.namePh} value={name} onChange={e=>setName(e.target.value.toUpperCase())} maxLength={20}/>
+<div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:6}}>{tc.maxChars}</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.badgeLbl}</div>
+<div style={{display:“grid”,gridTemplateColumns:“repeat(5,1fr)”,gap:8}}>
+{badges.map(b=><div key={b} className={`bdgopt ${badge===b?"on":""}`} onClick={()=>{SFX.tap();setBadge(b);}}>{b}</div>)}
+</div>
+</div>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“var(–mu)”,marginBottom:8}}>{tc.colorLbl}</div>
+<div style={{display:“flex”,gap:10,flexWrap:“wrap”}}>{colors.map(c=><div key={c} className={`cdot ${color===c?"on":""}`} style={{background:c}} onClick={()=>{SFX.tap();setColor(c);}}/>)}</div>
+</div>
+<button onClick={launch} style={{background:`linear-gradient(135deg,${color},${color}CC)`,color:color===”#FBBF24”?”#1E1B2E”:”#fff”,border:“none”,borderRadius:“999px”,width:“100%”,padding:16,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,cursor:“pointer”,boxShadow:`0 6px 24px ${color}55`,letterSpacing:1,marginTop:“auto”}}>⚡ {tc.launch}</button>
+</div>
+);
 }
 
-function LeagueDetail({league,onBack,showNotif,setPT,t,userName="YOU"}) {
-  const [tab,setTab]=useState("ranking");
-  const tl=t.ld;
-  // Use live board if available, otherwise fall back to mock
-  const sorted = liveBoard.length > 0
-    ? liveBoard.map(p=>({...p, isUser: p.username===userName, avId: p.avatar_id||"sakura", score: p.today_score||p.xp}))
-    : [...MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
-  return(
-    <div>
-      <div style={{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:"22px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div className="orb" style={{width:140,height:140,background:"rgba(255,255,255,.12)",top:-40,right:-20}}/>
-        <button onClick={()=>{SFX.tap();onBack();}} style={{background:"rgba(255,255,255,.2)",backdropFilter:"blur(4px)",border:"none",borderRadius:"999px",padding:"7px 14px",color:"#fff",fontSize:12,cursor:"pointer",fontWeight:900,marginBottom:14}}>← {tl.back}</button>
-        <div style={{fontSize:44,marginBottom:8}}>{league.badge}</div>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>{league.name}</div>
-        <div style={{display:"flex",gap:8,marginTop:10,flexWrap:"wrap",position:"relative",zIndex:1}}>
-          {[`👥 ${league.members}`,`🏆 #${league.rank}`,`⚡ ${league.points.toLocaleString()}`].map((txt,i)=>(
-            <div key={i} style={{background:"rgba(255,255,255,.22)",backdropFilter:"blur(4px)",borderRadius:"999px",padding:"4px 12px",fontSize:11,fontWeight:900,color:"#fff"}}>{txt}</div>
-          ))}
-        </div>
-      </div>
-      <div style={{margin:"12px 16px",background:"#fff",borderRadius:16,padding:13,display:"flex",gap:11,alignItems:"center",boxShadow:`0 4px 16px ${league.color}28`}}>
-        <div style={{width:40,height:40,borderRadius:12,background:"linear-gradient(135deg,var(--yw),var(--or))",display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>🏆</div>
-        <div><div style={{fontWeight:900,fontSize:12}}>{tl.weeklyReset} 3d 14h</div><div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:2}}>{tl.prizes}</div></div>
-      </div>
-      <div style={{display:"flex",borderBottom:"1px solid rgba(0,0,0,.07)",padding:"0 16px",gap:4}}>
-        {[["ranking",tl.ranking],["challenges",tl.challenges],["rules",tl.rules]].map(([id,label])=>(
-          <button key={id} onClick={()=>{SFX.tap();setTab(id);}} style={{flex:1,padding:"12px 4px",border:"none",background:"none",fontWeight:900,fontSize:12,cursor:"pointer",color:tab===id?"var(--pk)":"var(--mu)",borderBottom:tab===id?"2.5px solid var(--pk)":"2.5px solid transparent",transition:"all .15s",letterSpacing:.5,fontFamily:"'Nunito',sans-serif"}}>{label}</button>
-        ))}
-      </div>
-      {tab==="ranking"&&sorted.map((p,i)=>(
-        <div key={p.id} style={{display:"flex",alignItems:"center",gap:11,padding:"11px 18px",borderBottom:"1px solid rgba(0,0,0,.05)",background:p.isUser?"rgba(255,107,0,.04)":"",animation:"fadeUp .28s ease-out both",animationDelay:`${i*.06}s`}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,width:28,textAlign:"center"}}>{i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`}</div>
-          <AvatarSVG av={getAv(p.avId)} size={40}/>
-          <div style={{flex:1}}>
-            <div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
-            <div style={{height:4,background:"rgba(0,0,0,.06)",borderRadius:2,marginTop:4}}>
-              <div style={{height:"100%",width:`${(p.xp/sorted[0].xp)*100}%`,background:`linear-gradient(90deg,${league.color},${league.color}88)`,borderRadius:2,animation:"barFill .6s ease-out"}}/>
-            </div>
-          </div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:league.color,marginRight:4}}>{p.score.toLocaleString()}</div>
-          {!p.isUser&&<button onClick={()=>{SFX.zap();setPT(p);}} style={{padding:"5px 10px",borderRadius:"999px",background:`${league.color}18`,color:league.color,fontSize:10,fontWeight:900,cursor:"pointer",border:`1.5px solid ${league.color}40`,fontFamily:"'Nunito',sans-serif"}}>{tl.hit}</button>}
-        </div>
-      ))}
-      {tab==="challenges"&&CHALLENGES.map((ch,i)=>(
-        <div key={ch.id} style={{display:"flex",alignItems:"center",gap:12,padding:"13px 18px",borderBottom:"1px solid rgba(0,0,0,.05)",animation:"fadeUp .28s ease-out both",animationDelay:`${i*.06}s`}}>
-          <span style={{fontSize:28}}>{ch.emoji}</span>
-          <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.chs[ch.id-1]}</div><div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2}}>{t.cats[ch.id-1]} · {ch.timer}s · +{ch.xp} XP</div></div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:17,color:"var(--pk)"}}>+{ch.xp}</div>
-        </div>
-      ))}
-      {tab==="rules"&&<div style={{padding:"14px 16px"}}>{t.rules.map((r,i)=>(
-        <div key={i} style={{display:"flex",gap:11,background:"#fff",borderRadius:16,padding:13,marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,.06)",animation:"fadeUp .28s ease-out both",animationDelay:`${i*.06}s`}}>
-          <span style={{fontSize:20,flexShrink:0}}>{r.i}</span>
-          <div><div style={{fontWeight:900,fontSize:13}}>{r.t}</div><div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:3}}>{r.d}</div></div>
-        </div>
-      ))}</div>}
-      <div style={{height:20}}/>
-    </div>
-  );
+function LeagueDetail({league,onBack,showNotif,setPT,t,userName=“YOU”}) {
+const [tab,setTab]=useState(“ranking”);
+const tl=t.ld;
+// Use live board if available, otherwise fall back to mock
+const sorted = liveBoard.length > 0
+? liveBoard.map(p=>({…p, isUser: p.username===userName, avId: p.avatar_id||“sakura”, score: p.today_score||p.xp}))
+: […MOCK_PLAYERS].sort((a,b)=>b.xp-a.xp);
+return(
+<div>
+<div style={{background:`linear-gradient(160deg,${league.color},${league.color}88)`,padding:“22px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div className=“orb” style={{width:140,height:140,background:“rgba(255,255,255,.12)”,top:-40,right:-20}}/>
+<button onClick={()=>{SFX.tap();onBack();}} style={{background:“rgba(255,255,255,.2)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:“999px”,padding:“7px 14px”,color:”#fff”,fontSize:12,cursor:“pointer”,fontWeight:900,marginBottom:14}}>← {tl.back}</button>
+<div style={{fontSize:44,marginBottom:8}}>{league.badge}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>{league.name}</div>
+<div style={{display:“flex”,gap:8,marginTop:10,flexWrap:“wrap”,position:“relative”,zIndex:1}}>
+{[`👥 ${league.members}`,`🏆 #${league.rank}`,`⚡ ${league.points.toLocaleString()}`].map((txt,i)=>(
+<div key={i} style={{background:“rgba(255,255,255,.22)”,backdropFilter:“blur(4px)”,borderRadius:“999px”,padding:“4px 12px”,fontSize:11,fontWeight:900,color:”#fff”}}>{txt}</div>
+))}
+</div>
+</div>
+<div style={{margin:“12px 16px”,background:”#fff”,borderRadius:16,padding:13,display:“flex”,gap:11,alignItems:“center”,boxShadow:`0 4px 16px ${league.color}28`}}>
+<div style={{width:40,height:40,borderRadius:12,background:“linear-gradient(135deg,var(–yw),var(–or))”,display:“grid”,placeItems:“center”,fontSize:20,flexShrink:0}}>🏆</div>
+<div><div style={{fontWeight:900,fontSize:12}}>{tl.weeklyReset} 3d 14h</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:2}}>{tl.prizes}</div></div>
+</div>
+<div style={{display:“flex”,borderBottom:“1px solid rgba(0,0,0,.07)”,padding:“0 16px”,gap:4}}>
+{[[“ranking”,tl.ranking],[“challenges”,tl.challenges],[“rules”,tl.rules]].map(([id,label])=>(
+<button key={id} onClick={()=>{SFX.tap();setTab(id);}} style={{flex:1,padding:“12px 4px”,border:“none”,background:“none”,fontWeight:900,fontSize:12,cursor:“pointer”,color:tab===id?“var(–pk)”:“var(–mu)”,borderBottom:tab===id?“2.5px solid var(–pk)”:“2.5px solid transparent”,transition:“all .15s”,letterSpacing:.5,fontFamily:”‘Nunito’,sans-serif”}}>{label}</button>
+))}
+</div>
+{tab===“ranking”&&sorted.map((p,i)=>(
+<div key={p.id} style={{display:“flex”,alignItems:“center”,gap:11,padding:“11px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,background:p.isUser?“rgba(255,107,0,.04)”:””,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,width:28,textAlign:“center”}}>{i===0?“🥇”:i===1?“🥈”:i===2?“🥉”:`#${i+1}`}</div>
+<AvatarSVG av={getAv(p.avId)} size={40}/>
+<div style={{flex:1}}>
+<div style={{fontWeight:900,fontSize:13}}>{p.isUser?`⭐ ${userName}`:p.name} {p.flag}</div>
+<div style={{height:4,background:“rgba(0,0,0,.06)”,borderRadius:2,marginTop:4}}>
+<div style={{height:“100%”,width:`${(p.xp/sorted[0].xp)*100}%`,background:`linear-gradient(90deg,${league.color},${league.color}88)`,borderRadius:2,animation:“barFill .6s ease-out”}}/>
+</div>
+</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:league.color,marginRight:4}}>{p.score.toLocaleString()}</div>
+{!p.isUser&&<button onClick={()=>{SFX.zap();setPT(p);}} style={{padding:“5px 10px”,borderRadius:“999px”,background:`${league.color}18`,color:league.color,fontSize:10,fontWeight:900,cursor:“pointer”,border:`1.5px solid ${league.color}40`,fontFamily:”‘Nunito’,sans-serif”}}>{tl.hit}</button>}
+</div>
+))}
+{tab===“challenges”&&CHALLENGES.map((ch,i)=>(
+<div key={ch.id} style={{display:“flex”,alignItems:“center”,gap:12,padding:“13px 18px”,borderBottom:“1px solid rgba(0,0,0,.05)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<span style={{fontSize:28}}>{ch.emoji}</span>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.chs[ch.id-1]}</div><div style={{fontSize:10,fontWeight:800,color:“var(–mu)”,marginTop:2}}>{t.cats[ch.id-1]} · {ch.timer}s · +{ch.xp} XP</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:“var(–pk)”}}>+{ch.xp}</div>
+</div>
+))}
+{tab===“rules”&&<div style={{padding:“14px 16px”}}>{t.rules.map((r,i)=>(
+<div key={i} style={{display:“flex”,gap:11,background:”#fff”,borderRadius:16,padding:13,marginBottom:8,boxShadow:“0 2px 10px rgba(0,0,0,.06)”,animation:“fadeUp .28s ease-out both”,animationDelay:`${i*.06}s`}}>
+<span style={{fontSize:20,flexShrink:0}}>{r.i}</span>
+<div><div style={{fontWeight:900,fontSize:13}}>{r.t}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:3}}>{r.d}</div></div>
+</div>
+))}</div>}
+<div style={{height:20}}/>
+</div>
+);
 }
-
 
 // ═══════════════════════ FLASH ALERT BANNER ═══════════════════════
 // Urgency levels: 60min before → 10min → 2min → LIVE
 function useFlashAlert(onStart) {
-  const fs = useFlashState();
-  const [dismissed, setDismissed] = useState({});
-  const alertRef = useRef(null);
+const fs = useFlashState();
+const [dismissed, setDismissed] = useState({});
+const alertRef = useRef(null);
 
-  const getAlert = () => {
-    if (fs.status === "live") {
-      const key = `live_${fs.index}`;
-      if (dismissed[key]) return null;
-      return { key, level:"live", secsLeft:fs.secsRemaining, onStart, onDismiss:()=>setDismissed(d=>({...d,[key]:true})) };
-    }
-    if (fs.next === null) return null;
-    const mins = Math.floor(fs.next / 60);
-    let level = null;
-    const key = `warn_${fs.index}_${mins < 10 ? "2" : mins < 60 ? "10" : "60"}`;
-    if (dismissed[key]) return null;
-    if (mins < 2) level = "urgent";
-    else if (mins < 10) level = "soon";
-    else if (mins < 62) level = "reminder";
-    if (!level) return null;
-    return { key, level, minsLeft:mins, secsLeft:fs.next, onDismiss:()=>setDismissed(d=>({...d,[key]:true})) };
-  };
+const getAlert = () => {
+if (fs.status === “live”) {
+const key = `live_${fs.index}`;
+if (dismissed[key]) return null;
+return { key, level:“live”, secsLeft:fs.secsRemaining, onStart, onDismiss:()=>setDismissed(d=>({…d,[key]:true})) };
+}
+if (fs.next === null) return null;
+const mins = Math.floor(fs.next / 60);
+let level = null;
+const key = `warn_${fs.index}_${mins < 10 ? "2" : mins < 60 ? "10" : "60"}`;
+if (dismissed[key]) return null;
+if (mins < 2) level = “urgent”;
+else if (mins < 10) level = “soon”;
+else if (mins < 62) level = “reminder”;
+if (!level) return null;
+return { key, level, minsLeft:mins, secsLeft:fs.next, onDismiss:()=>setDismissed(d=>({…d,[key]:true})) };
+};
 
-  return getAlert();
+return getAlert();
 }
 
 function FlashAlertBanner({alert, t}) {
-  if (!alert) return null;
-  const configs = {
-    live:     { bg:"linear-gradient(135deg,#FF6B00,#C084FC)", icon:"🔴", pulse:true },
-    urgent:   { bg:"linear-gradient(135deg,#FF1744,#FF6B00)", icon:"⚡", pulse:true },
-    soon:     { bg:"linear-gradient(135deg,#FF6B00,#FBBF24)", icon:"⏰", pulse:false },
-    reminder: { bg:"linear-gradient(135deg,#1E1B2E,#3730A3)", icon:"📣", pulse:false },
-  };
-  const cfg = configs[alert.level];
-  const label = alert.level==="live"
-    ? `${t.home.live} — ${fmtCountdown(alert.secsLeft)} left`
-    : `Flash in ${fmtCountdown(alert.secsLeft)}`;
+if (!alert) return null;
+const configs = {
+live:     { bg:“linear-gradient(135deg,#FF6B00,#C084FC)”, icon:“🔴”, pulse:true },
+urgent:   { bg:“linear-gradient(135deg,#FF1744,#FF6B00)”, icon:“⚡”, pulse:true },
+soon:     { bg:“linear-gradient(135deg,#FF6B00,#FBBF24)”, icon:“⏰”, pulse:false },
+reminder: { bg:“linear-gradient(135deg,#1E1B2E,#3730A3)”, icon:“📣”, pulse:false },
+};
+const cfg = configs[alert.level];
+const label = alert.level===“live”
+? `${t.home.live} — ${fmtCountdown(alert.secsLeft)} left`
+: `Flash in ${fmtCountdown(alert.secsLeft)}`;
 
-  return (
-    <div style={{position:"fixed",top:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,
-                 zIndex:800,padding:"0 12px",pointerEvents:"none"}}>
-      <div style={{background:cfg.bg,borderRadius:"0 0 20px 20px",padding:"10px 16px",
-                   display:"flex",alignItems:"center",gap:12,
-                   boxShadow:"0 6px 24px rgba(0,0,0,.28)",pointerEvents:"all",
-                   animation:"notifIn .38s cubic-bezier(.2,0,.38,1.35)"}}>
-        <span style={{fontSize:20,animation:cfg.pulse?"pulse 1s infinite":"none",flexShrink:0}}>{cfg.icon}</span>
-        <div style={{flex:1}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:15,color:"#fff",lineHeight:1}}>{label}</div>
-          {alert.level==="live" && <div style={{fontSize:11,fontWeight:800,color:"rgba(255,255,255,.75)",marginTop:2}}>Tap to play · +120 XP</div>}
-        </div>
-        {alert.level==="live" && (
-          <button onClick={alert.onStart} style={{background:"rgba(255,255,255,.25)",backdropFilter:"blur(4px)",border:"none",borderRadius:999,padding:"7px 14px",fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"#fff",cursor:"pointer",flexShrink:0}}>
-            PLAY ▶
-          </button>
-        )}
-        <button onClick={alert.onDismiss} style={{background:"none",border:"none",color:"rgba(255,255,255,.7)",fontSize:16,cursor:"pointer",padding:"4px",flexShrink:0}}>✕</button>
-      </div>
-    </div>
-  );
+return (
+<div style={{position:“fixed”,top:0,left:“50%”,transform:“translateX(-50%)”,width:“100%”,maxWidth:430,
+zIndex:800,padding:“0 12px”,pointerEvents:“none”}}>
+<div style={{background:cfg.bg,borderRadius:“0 0 20px 20px”,padding:“10px 16px”,
+display:“flex”,alignItems:“center”,gap:12,
+boxShadow:“0 6px 24px rgba(0,0,0,.28)”,pointerEvents:“all”,
+animation:“notifIn .38s cubic-bezier(.2,0,.38,1.35)”}}>
+<span style={{fontSize:20,animation:cfg.pulse?“pulse 1s infinite”:“none”,flexShrink:0}}>{cfg.icon}</span>
+<div style={{flex:1}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:”#fff”,lineHeight:1}}>{label}</div>
+{alert.level===“live” && <div style={{fontSize:11,fontWeight:800,color:“rgba(255,255,255,.75)”,marginTop:2}}>Tap to play · +120 XP</div>}
+</div>
+{alert.level===“live” && (
+<button onClick={alert.onStart} style={{background:“rgba(255,255,255,.25)”,backdropFilter:“blur(4px)”,border:“none”,borderRadius:999,padding:“7px 14px”,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:”#fff”,cursor:“pointer”,flexShrink:0}}>
+PLAY ▶
+</button>
+)}
+<button onClick={alert.onDismiss} style={{background:“none”,border:“none”,color:“rgba(255,255,255,.7)”,fontSize:16,cursor:“pointer”,padding:“4px”,flexShrink:0}}>✕</button>
+</div>
+</div>
+);
 }
 
 // ═══════════════════════ HISTORY SCREEN ═══════════════════════
 const MOCK_HISTORY = [
-  {date:"Today",     flash:2, ch:CHALLENGES[4], score:8340, xp:160, rank:4, voted:true,  reacts:14, coins:48},
-  {date:"Today",     flash:0, ch:CHALLENGES[0], score:7980, xp:120, rank:5, voted:true,  reacts:8,  coins:36},
-  {date:"Yesterday", flash:2, ch:CHALLENGES[6], score:8560, xp:200, rank:3, voted:true,  reacts:23, coins:60},
-  {date:"Yesterday", flash:1, ch:CHALLENGES[3], score:7200, xp:180, rank:6, voted:false, reacts:5,  coins:0},
-  {date:"Yesterday", flash:0, ch:CHALLENGES[2], score:8100, xp:100, rank:4, voted:true,  reacts:11, coins:30},
-  {date:"Mon",       flash:2, ch:CHALLENGES[1], score:9100, xp:150, rank:2, voted:true,  reacts:31, coins:45},
-  {date:"Mon",       flash:1, ch:CHALLENGES[5], score:6800, xp:250, rank:7, voted:true,  reacts:4,  coins:75},
+{date:“Today”,     flash:2, ch:CHALLENGES[4], score:8340, xp:160, rank:4, voted:true,  reacts:14, coins:48},
+{date:“Today”,     flash:0, ch:CHALLENGES[0], score:7980, xp:120, rank:5, voted:true,  reacts:8,  coins:36},
+{date:“Yesterday”, flash:2, ch:CHALLENGES[6], score:8560, xp:200, rank:3, voted:true,  reacts:23, coins:60},
+{date:“Yesterday”, flash:1, ch:CHALLENGES[3], score:7200, xp:180, rank:6, voted:false, reacts:5,  coins:0},
+{date:“Yesterday”, flash:0, ch:CHALLENGES[2], score:8100, xp:100, rank:4, voted:true,  reacts:11, coins:30},
+{date:“Mon”,       flash:2, ch:CHALLENGES[1], score:9100, xp:150, rank:2, voted:true,  reacts:31, coins:45},
+{date:“Mon”,       flash:1, ch:CHALLENGES[5], score:6800, xp:250, rank:7, voted:true,  reacts:4,  coins:75},
 ];
 
 function HistoryScreen({t, userAvId, userName}) {
-  const [sel, setSel] = useState(null);
-  const totalXP  = MOCK_HISTORY.reduce((a,h)=>a+h.xp,0);
-  const bestRank = Math.min(...MOCK_HISTORY.map(h=>h.rank));
-  const totalReacts = MOCK_HISTORY.reduce((a,h)=>a+h.reacts,0);
-  const streak   = 9;
+const [sel, setSel] = useState(null);
+const totalXP  = MOCK_HISTORY.reduce((a,h)=>a+h.xp,0);
+const bestRank = Math.min(…MOCK_HISTORY.map(h=>h.rank));
+const totalReacts = MOCK_HISTORY.reduce((a,h)=>a+h.reacts,0);
+const streak   = 9;
 
-  if (sel !== null) {
-    const h = MOCK_HISTORY[sel];
-    const rank = RANKS.find(r=>ME.xp>=r.min&&r.max>ME.xp)||RANKS[0];
-    return (
-      <div style={{padding:"20px 18px",animation:"fadeUp .3s ease-out"}}>
-        <button onClick={()=>setSel(null)} style={{background:"none",border:"none",fontWeight:900,fontSize:13,color:"var(--mu)",cursor:"pointer",marginBottom:16,display:"flex",alignItems:"center",gap:6}}>← {t.ld.back}</button>
-        {/* Card */}
-        <div style={{background:`linear-gradient(145deg,${rank.g1},${rank.g2})`,borderRadius:28,padding:"24px 20px",marginBottom:16,position:"relative",overflow:"hidden"}}>
-          <div style={{position:"absolute",width:160,height:160,borderRadius:"50%",background:"rgba(255,255,255,.1)",top:-50,right:-30,filter:"blur(20px)"}}/>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:13,color:"rgba(255,255,255,.7)",letterSpacing:2,marginBottom:8}}>FLASH {h.flash+1} · {h.date.toUpperCase()}</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:22,color:"#fff",marginBottom:18,lineHeight:1.3}}>{h.ch.emoji} {t.chs[h.ch.id-1]}</div>
-          <div style={{display:"flex",gap:10}}>
-            {[{v:h.score.toLocaleString(),l:"SCORE"},{v:`+${h.xp}`,l:"XP"},{v:`#${h.rank}`,l:"RANK"},{v:`${h.reacts}🔥`,l:"REACTS"}].map((s,i)=>(
-              <div key={i} style={{flex:1,background:"rgba(255,255,255,.18)",borderRadius:12,padding:"10px 6px",textAlign:"center"}}>
-                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18,color:"#fff"}}>{s.v}</div>
-                <div style={{fontSize:8,fontWeight:900,color:"rgba(255,255,255,.65)",marginTop:3,letterSpacing:.5}}>{s.l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Avatar preview */}
-        <div style={{background:"#fff",borderRadius:20,padding:16,display:"flex",alignItems:"center",gap:14,boxShadow:"0 4px 18px rgba(0,0,0,.08)",marginBottom:10}}>
-          <AvatarSVG av={getAv(userAvId)} size={52}/>
-          <div>
-            <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:18}}>{userName}</div>
-            <div style={{fontSize:12,fontWeight:800,color:h.voted?"var(--gn)":"var(--mu)",marginTop:3}}>{h.voted?"✓ Voted":"✗ No vote"} · {h.coins>0?`+${h.coins} 🪙`:"0 🪙"}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+if (sel !== null) {
+const h = MOCK_HISTORY[sel];
+const rank = RANKS.find(r=>ME.xp>=r.min&&r.max>ME.xp)||RANKS[0];
+return (
+<div style={{padding:“20px 18px”,animation:“fadeUp .3s ease-out”}}>
+<button onClick={()=>setSel(null)} style={{background:“none”,border:“none”,fontWeight:900,fontSize:13,color:“var(–mu)”,cursor:“pointer”,marginBottom:16,display:“flex”,alignItems:“center”,gap:6}}>← {t.ld.back}</button>
+{/* Card */}
+<div style={{background:`linear-gradient(145deg,${rank.g1},${rank.g2})`,borderRadius:28,padding:“24px 20px”,marginBottom:16,position:“relative”,overflow:“hidden”}}>
+<div style={{position:“absolute”,width:160,height:160,borderRadius:“50%”,background:“rgba(255,255,255,.1)”,top:-50,right:-30,filter:“blur(20px)”}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,color:“rgba(255,255,255,.7)”,letterSpacing:2,marginBottom:8}}>FLASH {h.flash+1} · {h.date.toUpperCase()}</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:”#fff”,marginBottom:18,lineHeight:1.3}}>{h.ch.emoji} {t.chs[h.ch.id-1]}</div>
+<div style={{display:“flex”,gap:10}}>
+{[{v:h.score.toLocaleString(),l:“SCORE”},{v:`+${h.xp}`,l:“XP”},{v:`#${h.rank}`,l:“RANK”},{v:`${h.reacts}🔥`,l:“REACTS”}].map((s,i)=>(
+<div key={i} style={{flex:1,background:“rgba(255,255,255,.18)”,borderRadius:12,padding:“10px 6px”,textAlign:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:”#fff”}}>{s.v}</div>
+<div style={{fontSize:8,fontWeight:900,color:“rgba(255,255,255,.65)”,marginTop:3,letterSpacing:.5}}>{s.l}</div>
+</div>
+))}
+</div>
+</div>
+{/* Avatar preview */}
+<div style={{background:”#fff”,borderRadius:20,padding:16,display:“flex”,alignItems:“center”,gap:14,boxShadow:“0 4px 18px rgba(0,0,0,.08)”,marginBottom:10}}>
+<AvatarSVG av={getAv(userAvId)} size={52}/>
+<div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18}}>{userName}</div>
+<div style={{fontSize:12,fontWeight:800,color:h.voted?“var(–gn)”:“var(–mu)”,marginTop:3}}>{h.voted?“✓ Voted”:“✗ No vote”} · {h.coins>0?`+${h.coins} 🪙`:“0 🪙”}</div>
+</div>
+</div>
+</div>
+);
+}
 
-  return (
-    <div>
-      {/* Header */}
-      <div style={{background:"linear-gradient(160deg,#1E1B2E,#2D1B5E)",padding:"24px 18px 20px",borderRadius:"0 0 32px 32px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",width:160,height:160,borderRadius:"50%",background:"rgba(255,107,0,.15)",top:-50,right:-20,filter:"blur(40px)"}}/>
-        <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"#fff",position:"relative",zIndex:1}}>⚡ HISTORY</div>
-        {/* Weekly stats */}
-        <div style={{display:"flex",gap:8,marginTop:14,position:"relative",zIndex:1}}>
-          {[{v:`${totalXP}`,l:"XP THIS WEEK",c:"var(--yw)"},{v:`#${bestRank}`,l:"BEST RANK",c:"var(--gn)"},{v:`${totalReacts}🔥`,l:"REACTIONS",c:"var(--pk)"}].map((s,i)=>(
-            <div key={i} style={{flex:1,background:"rgba(255,255,255,.08)",borderRadius:14,padding:"10px 6px",textAlign:"center"}}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:s.c}}>{s.v}</div>
-              <div style={{fontSize:7,fontWeight:900,color:"rgba(255,255,255,.45)",marginTop:3,letterSpacing:.5}}>{s.l}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+return (
+<div>
+{/* Header */}
+<div style={{background:“linear-gradient(160deg,#1E1B2E,#2D1B5E)”,padding:“24px 18px 20px”,borderRadius:“0 0 32px 32px”,position:“relative”,overflow:“hidden”}}>
+<div style={{position:“absolute”,width:160,height:160,borderRadius:“50%”,background:“rgba(255,107,0,.15)”,top:-50,right:-20,filter:“blur(40px)”}}/>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:”#fff”,position:“relative”,zIndex:1}}>⚡ HISTORY</div>
+{/* Weekly stats */}
+<div style={{display:“flex”,gap:8,marginTop:14,position:“relative”,zIndex:1}}>
+{[{v:`${totalXP}`,l:“XP THIS WEEK”,c:“var(–yw)”},{v:`#${bestRank}`,l:“BEST RANK”,c:“var(–gn)”},{v:`${totalReacts}🔥`,l:“REACTIONS”,c:“var(–pk)”}].map((s,i)=>(
+<div key={i} style={{flex:1,background:“rgba(255,255,255,.08)”,borderRadius:14,padding:“10px 6px”,textAlign:“center”}}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:s.c}}>{s.v}</div>
+<div style={{fontSize:7,fontWeight:900,color:“rgba(255,255,255,.45)”,marginTop:3,letterSpacing:.5}}>{s.l}</div>
+</div>
+))}
+</div>
+</div>
 
-      {/* Streak visual */}
-      <div style={{margin:"14px 16px",background:"#fff",borderRadius:20,padding:"14px 16px",display:"flex",alignItems:"center",gap:14,boxShadow:"0 4px 18px rgba(0,0,0,.07)"}}>
-        <div style={{fontSize:44,animation:"flameWave 1.2s ease-in-out infinite"}}>🔥</div>
-        <div style={{flex:1}}>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--or)",lineHeight:1}}>{streak} <span style={{fontSize:14,color:"var(--mu)"}}>days</span></div>
-          <div style={{height:6,background:"rgba(0,0,0,.06)",borderRadius:3,marginTop:6,overflow:"hidden"}}>
-            <div style={{height:"100%",width:`${Math.min(streak/30*100,100)}%`,background:"linear-gradient(90deg,var(--yw),var(--or))",borderRadius:3}}/>
-          </div>
-          <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:4}}>{streak >= 30 ? "🏅 30-day badge earned!" : `${30-streak} days to badge`}</div>
-        </div>
+```
+  {/* Streak visual */}
+  <div style={{margin:"14px 16px",background:"#fff",borderRadius:20,padding:"14px 16px",display:"flex",alignItems:"center",gap:14,boxShadow:"0 4px 18px rgba(0,0,0,.07)"}}>
+    <div style={{fontSize:44,animation:"flameWave 1.2s ease-in-out infinite"}}>🔥</div>
+    <div style={{flex:1}}>
+      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:28,color:"var(--or)",lineHeight:1}}>{streak} <span style={{fontSize:14,color:"var(--mu)"}}>days</span></div>
+      <div style={{height:6,background:"rgba(0,0,0,.06)",borderRadius:3,marginTop:6,overflow:"hidden"}}>
+        <div style={{height:"100%",width:`${Math.min(streak/30*100,100)}%`,background:"linear-gradient(90deg,var(--yw),var(--or))",borderRadius:3}}/>
       </div>
-
-      {/* History list */}
-      <div style={{padding:"0 16px 20px"}}>
-        {["Today","Yesterday","Mon"].map(day=>{
-          const items = MOCK_HISTORY.filter(h=>h.date===day);
-          return (
-            <div key={day}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--mu)",letterSpacing:1,padding:"14px 0 6px"}}>{day.toUpperCase()}</div>
-              {items.map((h,i)=>{
-                const gi = MOCK_HISTORY.indexOf(h);
-                return (
-                  <div key={i} onClick={()=>{SFX.tap();setSel(gi);}}
-                       style={{background:"#fff",borderRadius:18,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,
-                               marginBottom:8,cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,.07)",
-                               animation:"fadeUp .28s ease-out both",animationDelay:`${i*.07}s`,
-                               borderLeft:`4px solid ${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"var(--mu)"}`}}>
-                    <div style={{width:40,height:40,borderRadius:12,background:`${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"rgba(0,0,0,.06)"}22`,display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>
-                      {h.ch.emoji}
-                    </div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{fontWeight:900,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.chs[h.ch.id-1]}</div>
-                      <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2}}>
-                        Flash {h.flash+1} · #{h.rank} · +{h.xp} XP · {h.reacts}🔥
-                      </div>
-                    </div>
-                    <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"var(--pk)",flexShrink:0}}>{h.score.toLocaleString()}</div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:4}}>{streak >= 30 ? "🏅 30-day badge earned!" : `${30-streak} days to badge`}</div>
     </div>
-  );
+  </div>
+
+  {/* History list */}
+  <div style={{padding:"0 16px 20px"}}>
+    {["Today","Yesterday","Mon"].map(day=>{
+      const items = MOCK_HISTORY.filter(h=>h.date===day);
+      return (
+        <div key={day}>
+          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:12,color:"var(--mu)",letterSpacing:1,padding:"14px 0 6px"}}>{day.toUpperCase()}</div>
+          {items.map((h,i)=>{
+            const gi = MOCK_HISTORY.indexOf(h);
+            return (
+              <div key={i} onClick={()=>{SFX.tap();setSel(gi);}}
+                   style={{background:"#fff",borderRadius:18,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,
+                           marginBottom:8,cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,.07)",
+                           animation:"fadeUp .28s ease-out both",animationDelay:`${i*.07}s`,
+                           borderLeft:`4px solid ${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"var(--mu)"}`}}>
+                <div style={{width:40,height:40,borderRadius:12,background:`${h.rank<=3?"var(--yw)":h.rank<=5?"var(--pk)":"rgba(0,0,0,.06)"}22`,display:"grid",placeItems:"center",fontSize:20,flexShrink:0}}>
+                  {h.ch.emoji}
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:900,fontSize:13,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.chs[h.ch.id-1]}</div>
+                  <div style={{fontSize:10,fontWeight:800,color:"var(--mu)",marginTop:2}}>
+                    Flash {h.flash+1} · #{h.rank} · +{h.xp} XP · {h.reacts}🔥
+                  </div>
+                </div>
+                <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:16,color:"var(--pk)",flexShrink:0}}>{h.score.toLocaleString()}</div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    })}
+  </div>
+</div>
+```
+
+);
 }
 
 // ═══════════════════════ STREAK GUARD ═══════════════════════
 function StreakGuard({streak, playedToday, onPlay, t}) {
-  const [show, setShow] = useState(false);
-  const fs = useFlashState();
+const [show, setShow] = useState(false);
+const fs = useFlashState();
 
-  // Show warning after 20h if not played today
-  useEffect(()=>{
-    const now = new Date();
-    if (!playedToday && now.getHours() >= 20) {
-      const timer = setTimeout(()=>setShow(true), 2000);
-      return ()=>clearTimeout(timer);
-    }
-  },[playedToday]);
-
-  if (!show || playedToday) return null;
-  return (
-    <div style={{position:"fixed",inset:0,background:"rgba(15,12,35,.88)",zIndex:870,display:"flex",alignItems:"flex-end",backdropFilter:"blur(8px)"}}
-         onClick={()=>setShow(false)}>
-      <div onClick={e=>e.stopPropagation()}
-           style={{background:"#fff",borderRadius:"28px 28px 0 0",padding:"32px 20px 48px",width:"100%",maxWidth:430,margin:"0 auto",
-                   animation:"slideUp .35s ease-out",boxShadow:"0 -12px 48px rgba(0,0,0,.2)"}}>
-        <div style={{textAlign:"center",marginBottom:20}}>
-          <div style={{fontSize:64,animation:"wobble .6s ease-in-out infinite"}}>😰</div>
-          <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:26,color:"var(--ink)",marginTop:8}}>{t.sk.almostLost}</div>
-          <div style={{fontSize:13,fontWeight:900,color:"var(--mu)",marginTop:6}}>
-            🔥 {streak} day streak at risk!
-          </div>
-        </div>
-        {/* Streak visual */}
-        <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:24}}>
-          {Array.from({length:Math.min(streak,7)}).map((_,i)=>(
-            <div key={i} style={{width:32,height:32,borderRadius:10,
-                                  background:i<streak?"linear-gradient(135deg,var(--yw),var(--or))":"rgba(0,0,0,.06)",
-                                  display:"grid",placeItems:"center",fontSize:14}}>
-              {i<streak?"🔥":""}
-            </div>
-          ))}
-        </div>
-        <button onClick={()=>{setShow(false);onPlay();}}
-                style={{width:"100%",padding:16,borderRadius:999,
-                        background:"linear-gradient(135deg,var(--or),var(--pk))",border:"none",
-                        fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:"pointer",
-                        boxShadow:"0 6px 28px rgba(255,107,0,.4)",letterSpacing:1,marginBottom:10}}>
-          ⚡ PLAY NOW — SAVE IT
-        </button>
-        <button onClick={()=>setShow(false)}
-                style={{width:"100%",padding:12,borderRadius:999,background:"rgba(0,0,0,.05)",border:"none",
-                        fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:14,cursor:"pointer",color:"var(--mu)"}}>
-          {t.ld.cancel}
-        </button>
-      </div>
-    </div>
-  );
+// Show warning after 20h if not played today
+useEffect(()=>{
+const now = new Date();
+if (!playedToday && now.getHours() >= 20) {
+const timer = setTimeout(()=>setShow(true), 2000);
+return ()=>clearTimeout(timer);
 }
+},[playedToday]);
 
+if (!show || playedToday) return null;
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(15,12,35,.88)”,zIndex:870,display:“flex”,alignItems:“flex-end”,backdropFilter:“blur(8px)”}}
+onClick={()=>setShow(false)}>
+<div onClick={e=>e.stopPropagation()}
+style={{background:”#fff”,borderRadius:“28px 28px 0 0”,padding:“32px 20px 48px”,width:“100%”,maxWidth:430,margin:“0 auto”,
+animation:“slideUp .35s ease-out”,boxShadow:“0 -12px 48px rgba(0,0,0,.2)”}}>
+<div style={{textAlign:“center”,marginBottom:20}}>
+<div style={{fontSize:64,animation:“wobble .6s ease-in-out infinite”}}>😰</div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:“var(–ink)”,marginTop:8}}>{t.sk.almostLost}</div>
+<div style={{fontSize:13,fontWeight:900,color:“var(–mu)”,marginTop:6}}>
+🔥 {streak} day streak at risk!
+</div>
+</div>
+{/* Streak visual */}
+<div style={{display:“flex”,justifyContent:“center”,gap:6,marginBottom:24}}>
+{Array.from({length:Math.min(streak,7)}).map((_,i)=>(
+<div key={i} style={{width:32,height:32,borderRadius:10,
+background:i<streak?“linear-gradient(135deg,var(–yw),var(–or))”:“rgba(0,0,0,.06)”,
+display:“grid”,placeItems:“center”,fontSize:14}}>
+{i<streak?“🔥”:””}
+</div>
+))}
+</div>
+<button onClick={()=>{setShow(false);onPlay();}}
+style={{width:“100%”,padding:16,borderRadius:999,
+background:“linear-gradient(135deg,var(–or),var(–pk))”,border:“none”,
+fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:”#fff”,cursor:“pointer”,
+boxShadow:“0 6px 28px rgba(255,107,0,.4)”,letterSpacing:1,marginBottom:10}}>
+⚡ PLAY NOW — SAVE IT
+</button>
+<button onClick={()=>setShow(false)}
+style={{width:“100%”,padding:12,borderRadius:999,background:“rgba(0,0,0,.05)”,border:“none”,
+fontFamily:”‘Nunito’,sans-serif”,fontWeight:900,fontSize:14,cursor:“pointer”,color:“var(–mu)”}}>
+{t.ld.cancel}
+</button>
+</div>
+</div>
+);
+}
 
 // Wrapper to safely use hook at component level
 function FlashAlertBannerWrapper({onPlay, t}) {
-  const alert = useFlashAlert(onPlay);
-  return <FlashAlertBanner alert={alert} t={t}/>;
+const alert = useFlashAlert(onPlay);
+return <FlashAlertBanner alert={alert} t={t}/>;
 }
 
 // ═══════════════════════ AUTH SCREEN ═══════════════════════
 function AuthScreen({t, onAuth}) {
-  const [mode, setMode] = useState("login"); // login | register
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [demoMode, setDemoMode] = useState(false);
+const [mode, setMode] = useState(“login”); // login | register
+const [email, setEmail] = useState(””);
+const [password, setPassword] = useState(””);
+const [username, setUsername] = useState(””);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(””);
+const [demoMode, setDemoMode] = useState(false);
 
-  const handle = async () => {
-    if (!email || !password) { setError("Fill all fields"); return; }
-    setLoading(true); setError("");
-    let result;
-    if (mode === "login") {
-      result = await sb.signIn(email, password);
-    } else {
-      if (!username) { setError("Pick a username"); setLoading(false); return; }
-      result = await sb.signUp(email, password, username.toUpperCase());
-    }
-    setLoading(false);
-    if (result.error) {
-      setError(result.error.message || result.error.msg || "Error");
-    } else {
-      SFX.victory();
-      onAuth((result.data && result.data.user), (result.data && result.data.user && result.data.user.user_metadata));
-    }
-  };
+const handle = async () => {
+if (!email || !password) { setError(“Fill all fields”); return; }
+setLoading(true); setError(””);
+let result;
+if (mode === “login”) {
+result = await sb.signIn(email, password);
+} else {
+if (!username) { setError(“Pick a username”); setLoading(false); return; }
+result = await sb.signUp(email, password, username.toUpperCase());
+}
+setLoading(false);
+if (result.error) {
+setError(result.error.message || result.error.msg || “Error”);
+} else {
+SFX.victory();
+onAuth((result.data && result.data.user), (result.data && result.data.user && result.data.user.user_metadata));
+}
+};
 
-  const handleDemo = () => {
-    SFX.victory();
-    onAuth(null, { username:"DEMO_PLAYER", avatar_id:"sakura", isDemo:true });
-  };
+const handleDemo = () => {
+SFX.victory();
+onAuth(null, { username:“DEMO_PLAYER”, avatar_id:“sakura”, isDemo:true });
+};
 
-  return (
-    <div style={{position:"fixed",inset:0,background:"linear-gradient(160deg,#1E1B2E,#2D1B5E,#0F172A)",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:28,maxWidth:430,margin:"0 auto"}}>
-      <style>{CSS}</style>
-      {/* Logo */}
-      <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:72,background:"linear-gradient(135deg,var(--pk),var(--pu))",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",backgroundClip:"text",lineHeight:1,marginBottom:4}}>DAREZ</div>
-      <div style={{fontSize:12,fontWeight:800,color:"rgba(255,255,255,.4)",letterSpacing:3,marginBottom:40}}>THE GLOBAL FLASH CHALLENGE</div>
+return (
+<div style={{position:“fixed”,inset:0,background:“linear-gradient(160deg,#1E1B2E,#2D1B5E,#0F172A)”,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,padding:28,maxWidth:430,margin:“0 auto”}}>
+<style>{CSS}</style>
+{/* Logo */}
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:72,background:“linear-gradient(135deg,var(–pk),var(–pu))”,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,backgroundClip:“text”,lineHeight:1,marginBottom:4}}>DAREZ</div>
+<div style={{fontSize:12,fontWeight:800,color:“rgba(255,255,255,.4)”,letterSpacing:3,marginBottom:40}}>THE GLOBAL FLASH CHALLENGE</div>
 
-      {/* Toggle */}
-      <div style={{display:"flex",background:"rgba(255,255,255,.08)",borderRadius:14,padding:4,width:"100%",marginBottom:20}}>
-        {["login","register"].map(m=>(
-          <button key={m} onClick={()=>{setMode(m);setError("");}} style={{flex:1,padding:"10px",borderRadius:11,border:"none",background:mode===m?"var(--pk)":"transparent",color:mode===m?"#fff":"rgba(255,255,255,.4)",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer",transition:"all .2s",letterSpacing:.5}}>
-            {m==="login"?"LOGIN":"SIGN UP"}
-          </button>
-        ))}
-      </div>
-
-      {/* Fields */}
-      <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10,marginBottom:16}}>
-        {mode==="register" && (
-          <input value={username} onChange={e=>setUsername(e.target.value)} placeholder="Username (e.g. CHAOS_KID)" maxLength={20}
-            style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%"}}/>
-        )}
-        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email"
-          style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
-        <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password"
-          style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
-      </div>
-
-      {error && <div style={{color:"#FF6B6B",fontSize:12,fontWeight:800,marginBottom:10,textAlign:"center"}}>{error}</div>}
-
-      <button onClick={handle} disabled={loading}
-        style={{width:"100%",padding:16,borderRadius:999,background:loading?"rgba(255,107,0,.5)":"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:loading?"default":"pointer",boxShadow:"0 6px 28px rgba(255,107,0,.35)",letterSpacing:1,marginBottom:14,transition:"all .2s"}}>
-        {loading?"..." : mode==="login"?"LOGIN ⚡":"CREATE ACCOUNT ⚡"}
+```
+  {/* Toggle */}
+  <div style={{display:"flex",background:"rgba(255,255,255,.08)",borderRadius:14,padding:4,width:"100%",marginBottom:20}}>
+    {["login","register"].map(m=>(
+      <button key={m} onClick={()=>{setMode(m);setError("");}} style={{flex:1,padding:"10px",borderRadius:11,border:"none",background:mode===m?"var(--pk)":"transparent",color:mode===m?"#fff":"rgba(255,255,255,.4)",fontFamily:"'Fredoka One',sans-serif",fontSize:15,cursor:"pointer",transition:"all .2s",letterSpacing:.5}}>
+        {m==="login"?"LOGIN":"SIGN UP"}
       </button>
+    ))}
+  </div>
 
-      {/* Demo mode */}
-      <button onClick={handleDemo} style={{background:"none",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:999,padding:"10px 24px",color:"rgba(255,255,255,.5)",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:13,cursor:"pointer",width:"100%"}}>
-        👀 Try without account (demo)
-      </button>
+  {/* Fields */}
+  <div style={{width:"100%",display:"flex",flexDirection:"column",gap:10,marginBottom:16}}>
+    {mode==="register" && (
+      <input value={username} onChange={e=>setUsername(e.target.value)} placeholder="Username (e.g. CHAOS_KID)" maxLength={20}
+        style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Fredoka One',sans-serif",outline:"none",width:"100%"}}/>
+    )}
+    <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email"
+      style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
+    <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Password"
+      style={{background:"rgba(255,255,255,.08)",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:14,padding:"13px 16px",color:"#fff",fontSize:15,fontFamily:"'Nunito',sans-serif",fontWeight:800,outline:"none",width:"100%"}}/>
+  </div>
 
-      <div style={{fontSize:10,color:"rgba(255,255,255,.2)",marginTop:20,textAlign:"center",lineHeight:1.6}}>
-        By signing up you accept our Terms of Service.<br/>Your data is never sold.
-      </div>
-    </div>
-  );
+  {error && <div style={{color:"#FF6B6B",fontSize:12,fontWeight:800,marginBottom:10,textAlign:"center"}}>{error}</div>}
+
+  <button onClick={handle} disabled={loading}
+    style={{width:"100%",padding:16,borderRadius:999,background:loading?"rgba(255,107,0,.5)":"linear-gradient(135deg,var(--pk),var(--pu))",border:"none",fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"#fff",cursor:loading?"default":"pointer",boxShadow:"0 6px 28px rgba(255,107,0,.35)",letterSpacing:1,marginBottom:14,transition:"all .2s"}}>
+    {loading?"..." : mode==="login"?"LOGIN ⚡":"CREATE ACCOUNT ⚡"}
+  </button>
+
+  {/* Demo mode */}
+  <button onClick={handleDemo} style={{background:"none",border:"1.5px solid rgba(255,255,255,.15)",borderRadius:999,padding:"10px 24px",color:"rgba(255,255,255,.5)",fontFamily:"'Nunito',sans-serif",fontWeight:900,fontSize:13,cursor:"pointer",width:"100%"}}>
+    👀 Try without account (demo)
+  </button>
+
+  <div style={{fontSize:10,color:"rgba(255,255,255,.2)",marginTop:20,textAlign:"center",lineHeight:1.6}}>
+    By signing up you accept our Terms of Service.<br/>Your data is never sold.
+  </div>
+</div>
+```
+
+);
 }
 
 // ═══════════════════════ LIVE PLAYERS ═══════════════════════
 function LiveCount() {
-  const [count, setCount] = useState(48291);
-  useEffect(()=>{
-    // Simulated real-time drift (real: query flash_sessions.player_count)
-    const id = setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);
-    return ()=>clearInterval(id);
-  },[]);
-  return <span>{count.toLocaleString()}</span>;
+const [count, setCount] = useState(48291);
+useEffect(()=>{
+// Simulated real-time drift (real: query flash_sessions.player_count)
+const id = setInterval(()=>setCount(c=>c+Math.floor(Math.random()*3)-1),3000);
+return ()=>clearInterval(id);
+},[]);
+return <span>{count.toLocaleString()}</span>;
 }
 
 // ═══════════════════════ ROOT APP ═══════════════════════
-export default function App() {
-  const [lang,setLang]=useState(()=>LS.get("lang","en"));
-  const t=LANGS[lang];
-  useEffect(()=>LS.set("lang",lang),[lang]);
-  // ── DB ────────────────────────────────────────────────────
-  const {state:dbState,binId,ready:dbReady}=useDB();
-  const playerId=getPlayerId();
-  // ── Profile (hydraté depuis DB) ───────────────────────────
-  const [onboarded,setOnboarded]=useState(()=>!!LS.get("onboarded"));
-  const [userName,setUserName]=useState(()=>LS.get("username","YOU"));
-  const [userAvId,setUserAvId]=useState(()=>LS.get("avid","sakura"));
-  const dbPlayer=dbState.players[playerId]||{};
-  const userXP=dbPlayer.xp||15800;
-  const userCoins=dbPlayer.coins||680;
-  const streak=dbPlayer.streak||9;
-  // ── Live leaderboard depuis DB ────────────────────────────
-  const liveBoard=DB.getLeaderboard();
-  const refreshBoard=()=>DB.init();
-  const [tab,setTab]=useState("home");
-  const [sub,setSub]=useState(null);
-  const [selLeague,setSelLeague]=useState(null);
-  const [notif,setNotif]=useState(null);
-  const [penTarget,setPenTarget]=useState(null);
-  const [showStreak,setShowStreak]=useState(false);
-  const [showLang,setShowLang]=useState(false);
-  const [confetti,setConfetti]=useState(0);
-  const [showShare,setShowShare]=useState(false);
-  const [playedToday,setPlayedToday]=useState(false);
-  const [shareData,setShareData]=useState({xp:120,score:8340,rank:4,chText:"Make your scariest face",chEmoji:"😱"});
-  const [showInvite,setShowInvite]=useState(false);
-  const [rankUp,setRankUp]=useState(null);
-  const nTimer=useRef(null);
-  const showNotif=useCallback((n)=>{setNotif(n);clearTimeout(nTimer.current);nTimer.current=setTimeout(()=>setNotif(null),3000);},[]);
+function App() {
+const [lang,setLang]=useState(()=>LS.get(“lang”,“en”));
+const t=LANGS[lang];
+useEffect(()=>LS.set(“lang”,lang),[lang]);
+// ── DB ────────────────────────────────────────────────────
+const {state:dbState,binId,ready:dbReady}=useDB();
+const playerId=getPlayerId();
+// ── Profile (hydraté depuis DB) ───────────────────────────
+const [onboarded,setOnboarded]=useState(()=>!!LS.get(“onboarded”));
+const [userName,setUserName]=useState(()=>LS.get(“username”,“YOU”));
+const [userAvId,setUserAvId]=useState(()=>LS.get(“avid”,“sakura”));
+const dbPlayer=dbState.players[playerId]||{};
+const userXP=dbPlayer.xp||15800;
+const userCoins=dbPlayer.coins||680;
+const streak=dbPlayer.streak||9;
+// ── Live leaderboard depuis DB ────────────────────────────
+const liveBoard=DB.getLeaderboard();
+const refreshBoard=()=>DB.init();
+const [tab,setTab]=useState(“home”);
+const [sub,setSub]=useState(null);
+const [selLeague,setSelLeague]=useState(null);
+const [notif,setNotif]=useState(null);
+const [penTarget,setPenTarget]=useState(null);
+const [showStreak,setShowStreak]=useState(false);
+const [showLang,setShowLang]=useState(false);
+const [confetti,setConfetti]=useState(0);
+const [showShare,setShowShare]=useState(false);
+const [playedToday,setPlayedToday]=useState(false);
+const [shareData,setShareData]=useState({xp:120,score:8340,rank:4,chText:“Make your scariest face”,chEmoji:“😱”});
+const [showInvite,setShowInvite]=useState(false);
+const [rankUp,setRankUp]=useState(null);
+const nTimer=useRef(null);
+const showNotif=useCallback((n)=>{setNotif(n);clearTimeout(nTimer.current);nTimer.current=setTimeout(()=>setNotif(null),3000);},[]);
 
-  // Trigger rank up demo after 3s (in real app: compare XP before/after challenge)
-  useEffect(()=>{
-    // Demo: show rank up modal on first load after 4s
-    // In production this triggers when XP crosses a rank threshold
-    // const t=setTimeout(()=>setRankUp(RANKS[2]),4000); return ()=>clearTimeout(t);
-  },[]);
+// Trigger rank up demo after 3s (in real app: compare XP before/after challenge)
+useEffect(()=>{
+// Demo: show rank up modal on first load after 4s
+// In production this triggers when XP crosses a rank threshold
+// const t=setTimeout(()=>setRankUp(RANKS[2]),4000); return ()=>clearTimeout(t);
+},[]);
 
-  const navItems=[
-    {id:"home",    icon:"🏠",badge:2},
-    {id:"leagues", icon:"⚔️",badge:1},
-    {id:"flash",   icon:"⚡",badge:null},
-    {id:"history", icon:"📊",badge:null},
-    {id:"shop",    icon:"🛒",badge:null},
-  ];
+const navItems=[
+{id:“home”,    icon:“🏠”,badge:2},
+{id:“leagues”, icon:“⚔️”,badge:1},
+{id:“flash”,   icon:“⚡”,badge:null},
+{id:“history”, icon:“📊”,badge:null},
+{id:“shop”,    icon:“🛒”,badge:null},
+];
 
-  const handleNav=(id)=>{
-    if(id==="flash"){SFX.zap();setSub("challenge");setTab("flash");return;}
-    SFX.tap();setTab(id);setSub(null);
-  };
+const handleNav=(id)=>{
+if(id===“flash”){SFX.zap();setSub(“challenge”);setTab(“flash”);return;}
+SFX.tap();setTab(id);setSub(null);
+};
 
-  if(!onboarded) return(
-    <>
-      <style>{CSS}</style>
-      <Onboarding lang={lang} setLang={setLang} t={t} onComplete={({name,avId})=>{
-        const uname=name.toUpperCase()||"PLAYER";
-        setUserName(uname);setUserAvId(avId);
-        LS.set("username",uname);LS.set("avid",avId);LS.set("onboarded",true);
-        // Enregistre le joueur dans la DB partagée
-        DB.upsertPlayer(playerId,{name:uname,avId:avId||"sakura",xp:0,coins:500,streak:0,flag:"🌍",lang,rankId:"rookie"});
-        setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
-        setTimeout(()=>setShowStreak(true),900);
-      }}/>
-      <Particles trigger={confetti}/>
-    </>
-  );
+if(!onboarded) return(
+<>
+<style>{CSS}</style>
+<Onboarding lang={lang} setLang={setLang} t={t} onComplete={({name,avId})=>{
+const uname=name.toUpperCase()||“PLAYER”;
+setUserName(uname);setUserAvId(avId);
+LS.set(“username”,uname);LS.set(“avid”,avId);LS.set(“onboarded”,true);
+// Enregistre le joueur dans la DB partagée
+DB.upsertPlayer(playerId,{name:uname,avId:avId||“sakura”,xp:0,coins:500,streak:0,flag:“🌍”,lang,rankId:“rookie”});
+setOnboarded(true);SFX.victory();setConfetti(c=>c+1);
+setTimeout(()=>setShowStreak(true),900);
+}}/>
+<Particles trigger={confetti}/>
+</>
+);
 
-  const inCh=sub==="challenge";
-  const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,history:t.nav.stats||"Stats",shop:t.nav.shop};
+const inCh=sub===“challenge”;
+const navLabels={home:t.nav.feed,leagues:t.nav.leagues,flash:t.nav.flash,history:t.nav.stats||“Stats”,shop:t.nav.shop};
 
-  return(
-    <>
-      <style>{CSS}</style>
-      <div className="app">
-        <Particles trigger={confetti}/>
-        <Notif n={notif}/>
-        <FlashAlertBannerWrapper onPlay={()=>{setSub("challenge");setTab("flash");}} t={t}/>
-        <StreakGuard streak={streak} playedToday={playedToday} onPlay={()=>{setSub("challenge");setTab("flash");}} t={t}/>
-        {showStreak&&<StreakModal streak={streak} t={t} onClose={()=>{setShowStreak(false);SFX.streakFire();}}/>}
-        {showLang&&<LangSheet lang={lang} setLang={setLang} onClose={()=>setShowLang(false)}/>}
-        {showShare&&<ShareCard {...shareData} userName={userName} avId={userAvId} streak={streak} rank={4} visible={showShare} onClose={()=>setShowShare(false)} t={t}/>}
-        {showInvite&&<InviteModal visible={showInvite} onClose={()=>setShowInvite(false)} userName={userName} avId={userAvId} t={t} showNotif={showNotif}/>}
-        {rankUp&&<RankUpModal rank={rankUp} onClose={()=>{setRankUp(null);setConfetti(c=>c+1);}}/>}
-        {penTarget&&(
-          <div className="pmov" onClick={()=>setPenTarget(null)}>
-            <div className="pmsh" onClick={e=>e.stopPropagation()}>
-              <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:24,marginBottom:4}}>💥 {t.ld.hitTitle} {penTarget.name.toUpperCase()}</div>
-              <div style={{fontSize:12,fontWeight:800,color:"var(--mu)",marginBottom:16}}>{t.ld.hitSub}</div>
-              {PENALTIES.map(p=>(
-                <div key={p.id} onClick={()=>{SFX.zap();showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} → ${penTarget.name}!`,sub:`-${p.cost} ${t.sh.coins.toLowerCase()}`,color:"var(--yw)"});setPenTarget(null);}} style={{background:"rgba(0,0,0,.03)",borderRadius:16,padding:"12px 14px",display:"flex",alignItems:"center",gap:11,cursor:"pointer",marginBottom:8,transition:"background .12s"}}>
-                  <div style={{width:40,height:40,borderRadius:12,background:"linear-gradient(135deg,var(--pk),var(--pu))",display:"grid",placeItems:"center",fontSize:18,flexShrink:0}}>{p.emoji}</div>
-                  <div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.sh.pnames[PENALTIES.indexOf(p)]}</div><div style={{fontSize:11,fontWeight:700,color:"var(--mu)",marginTop:1}}>{t.sh.pdescs[PENALTIES.indexOf(p)]}</div></div>
-                  <div style={{fontFamily:"'Fredoka One',sans-serif",fontSize:20,color:"var(--pk)"}}>🪙{p.cost}</div>
-                </div>
-              ))}
-              <button onClick={()=>setPenTarget(null)} style={{width:"100%",padding:12,background:"rgba(0,0,0,.06)",border:"none",borderRadius:999,fontSize:13,fontWeight:900,cursor:"pointer",fontFamily:"'Nunito',sans-serif",color:"var(--mu)"}}>{t.ld.cancel}</button>
-            </div>
-          </div>
-        )}
-        {!inCh&&<Ticker/>}
-        {inCh
-          ?<ChallengeFlow onDone={(data)=>{
-    setSub(null);setTab("home");setPlayedToday(true);
-    if(data){
-      // Sauvegarde le score dans la DB partagée
-      DB.submitScore(playerId,data.score||ME.score,data.xp||120,Math.round((data.xp||120)*.3),data.chText||"",data.chEmoji||"⚡");
-      setShareData(data);setTimeout(()=>setShowShare(true),600);
-    }
-  }} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName}/>
-          :sub==="create_league"
-            ?<div className="scroll" style={{flex:1}}><CreateLeague onBack={()=>setSub(null)} showNotif={showNotif} t={t}/></div>
-            :sub==="league_detail"
-              ?<div className="scroll" style={{flex:1}}><LeagueDetail league={selLeague} onBack={()=>setSub(null)} showNotif={showNotif} setPT={setPenTarget} t={t} userName={userName}/></div>
-              :<div className="scroll" style={{flex:1}}>
-                {tab==="home"&&<HomeScreen onStart={()=>{SFX.zap();setSub("challenge");}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>{SFX.tap();setShowStreak(true);}} lang={lang} showLS={()=>setShowLang(true)}/>}
-                {tab==="leagues"&&<LeaguesScreen showNotif={showNotif} onDetail={l=>{setSelLeague(l);setSub("league_detail");}} onCreate={()=>setSub("create_league")} onInvite={()=>setShowInvite(true)} t={t}/>}
-                {tab==="global"&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
-                {tab==="shop"&&<ShopScreen showNotif={showNotif} t={t}/>}
-                {tab==="history"&&<HistoryScreen t={t} userAvId={userAvId} userName={userName}/>}
-                {tab==="global"&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
-                {tab==="profile"&&<ProfileScreen t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)} onHistory={()=>setTab("history")}/>}
-                {tab==="flash"&&!inCh&&<HomeScreen onStart={()=>setSub("challenge")} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
-              </div>
-        }
-        {!inCh&&(
-          <nav className="nav">
-            {navItems.map(item=>(
-              <button key={item.id} className={`nb ${tab===item.id&&!sub?"active":""}`} onClick={()=>handleNav(item.id)} style={{position:"relative"}}>
-                {item.badge&&tab!==item.id&&<div className="nbadge">{item.badge}</div>}
-                <span className="ni" style={item.id==="flash"?{filter:"drop-shadow(0 0 6px var(--yw))"}:{}}>{item.icon}</span>
-                <span className="nl" style={item.id==="flash"?{color:"var(--yw)"}:{}}>{navLabels[item.id]}</span>
-              </button>
-            ))}
-          </nav>
-        )}
-      </div>
-    </>
-  );
+return(
+<>
+<style>{CSS}</style>
+<div className="app">
+<Particles trigger={confetti}/>
+<Notif n={notif}/>
+<FlashAlertBannerWrapper onPlay={()=>{setSub(“challenge”);setTab(“flash”);}} t={t}/>
+<StreakGuard streak={streak} playedToday={playedToday} onPlay={()=>{setSub(“challenge”);setTab(“flash”);}} t={t}/>
+{showStreak&&<StreakModal streak={streak} t={t} onClose={()=>{setShowStreak(false);SFX.streakFire();}}/>}
+{showLang&&<LangSheet lang={lang} setLang={setLang} onClose={()=>setShowLang(false)}/>}
+{showShare&&<ShareCard {…shareData} userName={userName} avId={userAvId} streak={streak} rank={4} visible={showShare} onClose={()=>setShowShare(false)} t={t}/>}
+{showInvite&&<InviteModal visible={showInvite} onClose={()=>setShowInvite(false)} userName={userName} avId={userAvId} t={t} showNotif={showNotif}/>}
+{rankUp&&<RankUpModal rank={rankUp} onClose={()=>{setRankUp(null);setConfetti(c=>c+1);}}/>}
+{penTarget&&(
+<div className=“pmov” onClick={()=>setPenTarget(null)}>
+<div className=“pmsh” onClick={e=>e.stopPropagation()}>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:24,marginBottom:4}}>💥 {t.ld.hitTitle} {penTarget.name.toUpperCase()}</div>
+<div style={{fontSize:12,fontWeight:800,color:“var(–mu)”,marginBottom:16}}>{t.ld.hitSub}</div>
+{PENALTIES.map(p=>(
+<div key={p.id} onClick={()=>{SFX.zap();showNotif({icon:p.emoji,text:`${t.sh.pnames[PENALTIES.indexOf(p)]} → ${penTarget.name}!`,sub:`-${p.cost} ${t.sh.coins.toLowerCase()}`,color:“var(–yw)”});setPenTarget(null);}} style={{background:“rgba(0,0,0,.03)”,borderRadius:16,padding:“12px 14px”,display:“flex”,alignItems:“center”,gap:11,cursor:“pointer”,marginBottom:8,transition:“background .12s”}}>
+<div style={{width:40,height:40,borderRadius:12,background:“linear-gradient(135deg,var(–pk),var(–pu))”,display:“grid”,placeItems:“center”,fontSize:18,flexShrink:0}}>{p.emoji}</div>
+<div style={{flex:1}}><div style={{fontWeight:900,fontSize:13}}>{t.sh.pnames[PENALTIES.indexOf(p)]}</div><div style={{fontSize:11,fontWeight:700,color:“var(–mu)”,marginTop:1}}>{t.sh.pdescs[PENALTIES.indexOf(p)]}</div></div>
+<div style={{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:“var(–pk)”}}>🪙{p.cost}</div>
+</div>
+))}
+<button onClick={()=>setPenTarget(null)} style={{width:“100%”,padding:12,background:“rgba(0,0,0,.06)”,border:“none”,borderRadius:999,fontSize:13,fontWeight:900,cursor:“pointer”,fontFamily:”‘Nunito’,sans-serif”,color:“var(–mu)”}}>{t.ld.cancel}</button>
+</div>
+</div>
+)}
+{!inCh&&<Ticker/>}
+{inCh
+?<ChallengeFlow onDone={(data)=>{
+setSub(null);setTab(“home”);setPlayedToday(true);
+if(data){
+// Sauvegarde le score dans la DB partagée
+DB.submitScore(playerId,data.score||ME.score,data.xp||120,Math.round((data.xp||120)*.3),data.chText||””,data.chEmoji||“⚡”);
+setShareData(data);setTimeout(()=>setShowShare(true),600);
+}
+}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName}/>
+:sub===“create_league”
+?<div className="scroll" style={{flex:1}}><CreateLeague onBack={()=>setSub(null)} showNotif={showNotif} t={t}/></div>
+:sub===“league_detail”
+?<div className="scroll" style={{flex:1}}><LeagueDetail league={selLeague} onBack={()=>setSub(null)} showNotif={showNotif} setPT={setPenTarget} t={t} userName={userName}/></div>
+:<div className="scroll" style={{flex:1}}>
+{tab===“home”&&<HomeScreen onStart={()=>{SFX.zap();setSub(“challenge”);}} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>{SFX.tap();setShowStreak(true);}} lang={lang} showLS={()=>setShowLang(true)}/>}
+{tab===“leagues”&&<LeaguesScreen showNotif={showNotif} onDetail={l=>{setSelLeague(l);setSub(“league_detail”);}} onCreate={()=>setSub(“create_league”)} onInvite={()=>setShowInvite(true)} t={t}/>}
+{tab===“global”&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
+{tab===“shop”&&<ShopScreen showNotif={showNotif} t={t}/>}
+{tab===“history”&&<HistoryScreen t={t} userAvId={userAvId} userName={userName}/>}
+{tab===“global”&&<GlobalScreen t={t} userName={userName} liveBoard={liveBoard} onRefresh={refreshBoard}/>}
+{tab===“profile”&&<ProfileScreen t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)} onHistory={()=>setTab(“history”)}/>}
+{tab===“flash”&&!inCh&&<HomeScreen onStart={()=>setSub(“challenge”)} showNotif={showNotif} t={t} userAvId={userAvId} userName={userName} streak={streak} onStreakClick={()=>setShowStreak(true)} lang={lang} showLS={()=>setShowLang(true)}/>}
+</div>
+}
+{!inCh&&(
+<nav className="nav">
+{navItems.map(item=>(
+<button key={item.id} className={`nb ${tab===item.id&&!sub?"active":""}`} onClick={()=>handleNav(item.id)} style={{position:“relative”}}>
+{item.badge&&tab!==item.id&&<div className="nbadge">{item.badge}</div>}
+<span className=“ni” style={item.id===“flash”?{filter:“drop-shadow(0 0 6px var(–yw))”}:{}}>{item.icon}</span>
+<span className=“nl” style={item.id===“flash”?{color:“var(–yw)”}:{}}>{navLabels[item.id]}</span>
+</button>
+))}
+</nav>
+)}
+</div>
+</>
+);
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
-
+window.__App = App;
 </script>
+
 </body>
 </html>
