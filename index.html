@@ -4,682 +4,621 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#FF6B00"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="DAREZ"/>
 <title>DAREZ ⚡</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap"/>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;background:#1E1B2E;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
-#root{width:100%;height:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-#splash{position:fixed;inset:0;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
-#splash.out{opacity:0;pointer-events:none}
-@keyframes sp{from{opacity:0;transform:scale(.8) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes lb{from{width:0}to{width:100%}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:#1E1B2E;font-family:'Nunito',sans-serif;overscroll-behavior:none}
+body{display:flex;justify-content:center}
+#app{width:100%;max-width:430px;height:100%;display:flex;flex-direction:column;overflow:hidden;background:#F1F5F9;position:relative}
+.screen{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
+.screen.active{display:block}
+.ff{font-family:'Fredoka One',sans-serif}
+.pk{color:#FF6B00}.pu{color:#C084FC}.yw{color:#FBBF24}.gn{color:#34D399}.mu{color:#94A3B8}.ink{color:#1E1B2E}
+.btn-main{width:100%;padding:16px;border-radius:999px;background:linear-gradient(135deg,#FF6B00,#C084FC);border:none;font-family:'Fredoka One',sans-serif;font-size:20px;color:#fff;cursor:pointer;letter-spacing:1px}
+.card{background:#fff;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+nav{display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.08);flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border:none;background:none;cursor:pointer}
+.nb .ni{font-size:22px;transition:transform .15s}
+.nb .nl{font-size:9px;font-weight:800;color:#94A3B8;letter-spacing:.3px}
+.nb.active .ni{transform:scale(1.2)}
+.nb.active .nl{color:#FF6B00}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes barFill{from{width:0%}}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@keyframes notifIn{from{opacity:0;transform:translateX(-50%) translateY(-16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-@keyframes xpFill{from{width:0}}
-@keyframes barFill{from{width:0}}
+.fade{animation:fadeUp .3s ease-out both}
+/* SPLASH */
+#splash{position:fixed;inset:0;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999}
+#splash-logo{font-family:'Fredoka One',sans-serif;font-size:80px;background:linear-gradient(135deg,#FF6B00,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#splash-sub{font-weight:900;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:3px;margin-top:8px}
+#splash-bar-wrap{width:48px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:48px;overflow:hidden}
+#splash-bar{height:100%;width:0;background:linear-gradient(90deg,#FF6B00,#C084FC);border-radius:2px;transition:width .1s}
+/* NOTIF */
+#notif{position:fixed;top:60px;left:50%;transform:translateX(-50%);border-radius:999px;padding:10px 20px;display:flex;align-items:center;gap:8px;z-index:800;box-shadow:0 6px 24px rgba(0,0,0,.3);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none}
+#notif.show{opacity:1}
+/* HERO */
+.hero{background:linear-gradient(160deg,#1E1B2E,#2D1B5E);border-radius:0 0 32px 32px;padding:20px 18px 18px;position:relative;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(40px);pointer-events:none}
+/* ONBOARDING */
+#ob{position:fixed;inset:0;background:linear-gradient(160deg,#1E1B2E,#2D1B5E);z-index:5000;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow:hidden}
+.ob-step{display:none;flex-direction:column;align-items:center;flex:1;padding:20px 24px 40px;width:100%;overflow-y:auto}
+.ob-step.active{display:flex}
+.ob-input{width:100%;padding:16px 20px;border-radius:16px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-family:'Fredoka One',sans-serif;font-size:20px;text-align:center;outline:none;letter-spacing:1px}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;margin-bottom:20px}
+.av-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:16px;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.av-item.sel{border-color:#FF6B00;background:rgba(255,107,0,.1)}
+/* CHALLENGE */
+#ch-screen{position:fixed;inset:0;z-index:4000;display:none;flex-direction:column}
+#ch-screen.active{display:flex}
 </style>
 </head>
 <body>
-<div id="splash">
-  <div style="font-family:'Fredoka One',sans-serif;font-size:80px;background:linear-gradient(135deg,#FF6B00,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:sp .6s cubic-bezier(.2,0,.38,1.4) both">DAREZ</div>
-  <div id="ss" style="font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:3px;margin-top:8px;animation:sp .6s .15s cubic-bezier(.2,0,.38,1.4) both">CHARGEMENT...</div>
-  <div style="width:48px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:48px;overflow:hidden;animation:sp .6s .2s ease both">
-    <div id="sb" style="height:100%;background:linear-gradient(90deg,#FF6B00,#C084FC);border-radius:2px;animation:lb 1.4s ease-out forwards"></div>
+<div id="app">
+  <!-- SPLASH -->
+  <div id="splash">
+    <div id="splash-logo">DAREZ</div>
+    <div id="splash-sub">CHARGEMENT...</div>
+    <div id="splash-bar-wrap"><div id="splash-bar"></div></div>
   </div>
+
+  <!-- NOTIF -->
+
+  <div id="notif"><span id="notif-icon"></span><div><div id="notif-text" style="font-family:'Fredoka One',sans-serif;font-size:15px;color:#fff"></div><div id="notif-sub" style="font-size:10px;font-weight:800;color:rgba(255,255,255,.75)"></div></div></div>
+
+  <!-- ONBOARDING -->
+
+  <div id="ob">
+    <div style="padding:22px 22px 0;display:flex;justify-content:center;gap:8px;width:100%">
+      <div class="dot" style="width:24px;height:8px;border-radius:4px;background:#FF6B00;transition:all .2s"></div>
+      <div class="dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .2s"></div>
+      <div class="dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .2s"></div>
+    </div>
+    <!-- Step 0: Lang -->
+    <div class="ob-step active" id="ob0">
+      <div style="font-family:'Fredoka One',sans-serif;font-size:68px;background:linear-gradient(135deg,#FF6B00,#C084FC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px">DAREZ</div>
+      <div style="font-size:12px;font-weight:800;color:rgba(255,255,255,.5);letter-spacing:2px;margin-bottom:32px">THE GLOBAL FLASH CHALLENGE</div>
+      <p style="font-size:13px;font-weight:800;color:rgba(255,255,255,.6);margin-bottom:14px">Choisis ta langue</p>
+      <div style="width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
+        <div class="lang-opt" data-lang="fr" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,107,0,.2);border:2px solid #FF6B00;cursor:pointer">
+          <span style="font-size:24px">🇫🇷</span><span style="font-family:'Fredoka One',sans-serif;font-size:18px;color:#FF6B00">Français</span><span style="margin-left:auto;color:#FF6B00">✓</span>
+        </div>
+        <div class="lang-opt" data-lang="en" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08);border:2px solid transparent;cursor:pointer">
+          <span style="font-size:24px">🇬🇧</span><span style="font-family:'Fredoka One',sans-serif;font-size:18px;color:rgba(255,255,255,.8)">English</span>
+        </div>
+      </div>
+      <button class="btn-main" onclick="obNext()">SUIVANT →</button>
+    </div>
+    <!-- Step 1: Name -->
+    <div class="ob-step" id="ob1">
+      <div style="font-size:64px;margin-bottom:14px">👤</div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:28px;color:#fff;margin-bottom:20px">Ton pseudo</div>
+      <input class="ob-input" id="ob-name" placeholder="Ex: CHAOS_KID" maxlength="20" style="margin-bottom:6px"/>
+      <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);margin-bottom:auto">Max 20 caractères</p>
+      <button class="btn-main" style="margin-top:20px" onclick="obNext()">SUIVANT →</button>
+    </div>
+    <!-- Step 2: Avatar -->
+    <div class="ob-step" id="ob2">
+      <div id="ob-av-preview" style="margin-bottom:12px"></div>
+      <div style="font-family:'Fredoka One',sans-serif;font-size:28px;color:#fff;margin-bottom:16px">Choisis ton perso</div>
+      <div class="av-grid" id="ob-av-grid"></div>
+      <button class="btn-main" onclick="obFinish()">C'EST PARTI ⚡</button>
+    </div>
+  </div>
+
+  <!-- CHALLENGE SCREEN -->
+
+  <div id="ch-screen">
+    <div id="ch-content" style="flex:1;display:flex;flex-direction:column"></div>
+  </div>
+
+  <!-- HOME SCREEN -->
+
+  <div class="screen active" id="screen-home"></div>
+  <!-- LEAGUES SCREEN -->
+  <div class="screen" id="screen-leagues"></div>
+  <!-- GLOBAL SCREEN -->
+  <div class="screen" id="screen-global"></div>
+  <!-- SHOP SCREEN -->
+  <div class="screen" id="screen-shop"></div>
+  <!-- PROFILE SCREEN -->
+  <div class="screen" id="screen-profile"></div>
+
+  <!-- NAV -->
+
+  <nav id="main-nav">
+    <button class="nb active" data-tab="home"><span class="ni">🏠</span><span class="nl">Accueil</span></button>
+    <button class="nb" data-tab="leagues"><span class="ni">⚔️</span><span class="nl">Ligues</span></button>
+    <button class="nb" data-tab="flash" style="position:relative"><span class="ni" style="filter:drop-shadow(0 0 6px #FBBF24)">⚡</span><span class="nl" style="color:#FBBF24">Flash</span></button>
+    <button class="nb" data-tab="global"><span class="ni">🌍</span><span class="nl">Global</span></button>
+    <button class="nb" data-tab="profile"><span class="ni">👤</span><span class="nl">Profil</span></button>
+  </nav>
 </div>
-<div id="root"></div>
+
 <script>
 'use strict';
-var h = React.createElement;
-var useState = React.useState;
-var useEffect = React.useEffect;
-var useRef = React.useRef;
-var useCallback = React.useCallback;
 
-var LS = {
-get: function(k,d) { try{var v=localStorage.getItem(‘dz_’+k);return v?JSON.parse(v):d;}catch(e){return d;} },
-set: function(k,v) { try{localStorage.setItem(‘dz_’+k,JSON.stringify(v));}catch(e){} }
+// ── DATA ──────────────────────────────────────────────────────
+var RANKS=[
+  {id:'rookie',label:'ROOKIE',icon:'🌱',color:'#94A3B8',g1:'#334155',g2:'#1E293B',min:0,max:1000},
+  {id:'riser',label:'RISER',icon:'⚡',color:'#22D3EE',g1:'#0891B2',g2:'#0E7490',min:1000,max:3000},
+  {id:'spark',label:'SPARK',icon:'🔥',color:'#F59E0B',g1:'#D97706',g2:'#B45309',min:3000,max:7000},
+  {id:'blaze',label:'BLAZE',icon:'💥',color:'#F97316',g1:'#EA580C',g2:'#C2410C',min:7000,max:15000},
+  {id:'phantom',label:'PHANTOM',icon:'👻',color:'#A855F7',g1:'#9333EA',g2:'#7E22CE',min:15000,max:30000},
+  {id:'god',label:'DAREZ GOD',icon:'👑',color:'#FFD700',g1:'#F59E0B',g2:'#D97706',min:30000,max:999999}
+];
+var CHALLENGES=[
+  {id:1,emoji:'😱',timer:45,xp:120,text:'Fais ta tête la plus terrifiante'},
+  {id:2,emoji:'⚡',timer:30,xp:150,text:'Pose de super-héros qui atterrit'},
+  {id:3,emoji:'🔴',timer:25,xp:100,text:'Trouve quelque chose de rouge'},
+  {id:4,emoji:'🎤',timer:20,xp:180,text:'Beatboxe pendant 15 secondes'},
+  {id:5,emoji:'🕺',timer:30,xp:160,text:'Montre ton mouvement de danse'},
+  {id:6,emoji:'🤯',timer:12,xp:250,text:'Explique la physique quantique en 10s'},
+  {id:7,emoji:'🎭',timer:30,xp:200,text:'Pleure comme si tu as perdu la Coupe du Monde'}
+];
+var PLAYERS=[
+  {id:'p1',name:'zara_flash 🇧🇷',av:'😈',xp:8420,score:9200,streak:12},
+  {id:'p2',name:'drift.exe 🇯🇵',av:'🥷',xp:7100,score:8750,streak:7},
+  {id:'p3',name:'neon_leo 🇫🇷',av:'🦊',xp:6300,score:8100,streak:5},
+  {id:'p4',name:'sky.wav 🇺🇸',av:'⚡',xp:5800,score:7600,streak:3},
+  {id:'p5',name:'luna_riot 🇪🇸',av:'🌸',xp:4200,score:6900,streak:9}
+];
+var LEAGUES=[
+  {id:'l1',name:'CHAOS CREW',badge:'💥',color:'#FF6B00',members:847,rank:1,joined:true},
+  {id:'l2',name:'SHADOW GUILD',badge:'👻',color:'#A855F7',members:623,rank:2,joined:true},
+  {id:'l3',name:'BLAZE SQUAD',badge:'🔥',color:'#F97316',members:512,rank:3,joined:false},
+  {id:'l4',name:'CRYSTAL TEAM',badge:'💎',color:'#22D3EE',members:389,rank:4,joined:false}
+];
+var AVS=[
+  {id:'ninja',name:'Ninja',bg:'#1A1A2E',skin:'#FFCBA4',ec:'#FF3366'},
+  {id:'blaze',name:'Blaze',bg:'#FF5722',skin:'#FFCBA4',ec:'#FFE600'},
+  {id:'sakura',name:'Sakura',bg:'#FCE4EC',skin:'#FFE4E8',ec:'#E91E63'},
+  {id:'wolf',name:'Wolf',bg:'#4A4E69',skin:'#CFD0D4',ec:'#FFB300'},
+  {id:'thunder',name:'Thunder',bg:'#FFF176',skin:'#FFCBA4',ec:'#1565C0'},
+  {id:'shadow',name:'Shadow',bg:'#311B92',skin:'#B39DDB',ec:'#CE93D8'},
+  {id:'fox',name:'Fox',bg:'#E64A19',skin:'#FFD4A3',ec:'#FF6D00'},
+  {id:'panda',name:'Panda',bg:'#F5F5F5',skin:'#FFFFFF',ec:'#212121'},
+  {id:'dragon',name:'Dragon',bg:'#00BFA5',skin:'#A7FFEB',ec:'#FF6D00'},
+  {id:'robot',name:'Bot',bg:'#546E7A',skin:'#CFD8DC',ec:'#00E5FF'},
+  {id:'angel',name:'Angel',bg:'#FFFDE7',skin:'#FFE4C4',ec:'#81D4FA'},
+  {id:'galaxy',name:'Galaxy',bg:'#0A0A2A',skin:'#CE93D8',ec:'#EA80FC'}
+];
+var ME={xp:15800,coins:680,score:8340};
+
+// ── STATE ──────────────────────────────────────────────────────
+var state={
+  lang: localStorage.getItem('dz_lang')||'fr',
+  userName: localStorage.getItem('dz_name')||'PLAYER',
+  avId: localStorage.getItem('dz_av')||'sakura',
+  streak: 9,
+  onboarded: !!localStorage.getItem('dz_done'),
+  currentTab: 'home'
 };
 
-var RANKS = [
-{id:‘rookie’,label:‘ROOKIE’,icon:‘🌱’,color:’#94A3B8’,g1:’#334155’,g2:’#1E293B’,min:0,max:1000,perks:[]},
-{id:‘riser’,label:‘RISER’,icon:‘⚡’,color:’#22D3EE’,g1:’#0891B2’,g2:’#0E7490’,min:1000,max:3000,perks:[‘Vote ×1.2’]},
-{id:‘spark’,label:‘SPARK’,icon:‘🔥’,color:’#F59E0B’,g1:’#D97706’,g2:’#B45309’,min:3000,max:7000,perks:[‘Vote ×1.5’,‘Coins +10%’]},
-{id:‘blaze’,label:‘BLAZE’,icon:‘💥’,color:’#F97316’,g1:’#EA580C’,g2:’#C2410C’,min:7000,max:15000,perks:[‘Vote ×2’,‘Shield/semaine’]},
-{id:‘phantom’,label:‘PHANTOM’,icon:‘👻’,color:’#A855F7’,g1:’#9333EA’,g2:’#7E22CE’,min:15000,max:30000,perks:[‘Vote ×3’,‘Mode invisible’]},
-{id:‘god’,label:‘DAREZ GOD’,icon:‘👑’,color:’#FFD700’,g1:’#F59E0B’,g2:’#D97706’,min:30000,max:999999,perks:[‘Vote ×5’,‘Tous pouvoirs gratuits’]}
-];
+function getRank(xp){for(var i=RANKS.length-1;i>=0;i--){if(xp>=RANKS[i].min)return RANKS[i];}return RANKS[0];}
+function getAv(id){for(var i=0;i<AVS.length;i++){if(AVS[i].id===id)return AVS[i];}return AVS[0];}
 
-var CHALLENGES = [
-{id:1,emoji:‘😱’,timer:45,xp:120,coins:30},
-{id:2,emoji:‘⚡’,timer:30,xp:150,coins:40},
-{id:3,emoji:‘🔴’,timer:25,xp:100,coins:25},
-{id:4,emoji:‘🎤’,timer:20,xp:180,coins:50},
-{id:5,emoji:‘🕺’,timer:30,xp:160,coins:45},
-{id:6,emoji:‘🤯’,timer:12,xp:250,coins:70},
-{id:7,emoji:‘🎭’,timer:30,xp:200,coins:55}
-];
-
-var FLASH_TIMES = [{h:8,m:30},{h:17,m:30},{h:21,m:0}];
-var FLASH_DURATION_MIN = 30;
-
-var MOCK_PLAYERS = [
-{id:‘p1’,name:‘zara_flash 🇧🇷’,avId:‘blaze’,xp:8420,score:9200,streak:12,flag:‘🇧🇷’},
-{id:‘p2’,name:‘drift.exe 🇯🇵’,avId:‘ninja’,xp:7100,score:8750,streak:7,flag:‘🇯🇵’},
-{id:‘p3’,name:‘neon_leo 🇫🇷’,avId:‘fox’,xp:6300,score:8100,streak:5,flag:‘🇫🇷’},
-{id:‘p4’,name:‘sky.wav 🇺🇸’,avId:‘thunder’,xp:5800,score:7600,streak:3,flag:‘🇺🇸’},
-{id:‘p5’,name:‘luna_riot 🇪🇸’,avId:‘sakura’,xp:4200,score:6900,streak:9,flag:‘🇪🇸’,isUser:true}
-];
-
-var MOCK_LEAGUES = [
-{id:‘l1’,name:‘CHAOS CREW’,badge:‘💥’,color:’#FF6B00’,members:847,rank:1,points:12400,joined:true},
-{id:‘l2’,name:‘SHADOW GUILD’,badge:‘👻’,color:’#A855F7’,members:623,rank:2,points:9800,joined:true},
-{id:‘l3’,name:‘BLAZE SQUAD’,badge:‘🔥’,color:’#F97316’,members:512,rank:3,points:8200,joined:false},
-{id:‘l4’,name:‘CRYSTAL TEAM’,badge:‘💎’,color:’#22D3EE’,members:389,rank:4,points:6100,joined:false}
-];
-
-var PENALTIES = [
-{id:‘silence’,emoji:‘🤫’,cost:50},
-{id:‘shadow’,emoji:‘👤’,cost:80},
-{id:‘expose’,emoji:‘📢’,cost:120},
-{id:‘freeze’,emoji:‘❄️’,cost:150},
-{id:‘demote’,emoji:‘📉’,cost:200}
-];
-
-var ME = {xp:15800,coins:680,score:8340};
-
-var AVS = [
-{id:‘ninja’,name:‘Ninja’,bg:’#1A1A2E’,skin:’#FFCBA4’,hair:’#111’,ec:’#FF3366’},
-{id:‘blaze’,name:‘Blaze’,bg:’#FF5722’,skin:’#FFCBA4’,hair:’#FF2D00’,ec:’#FFE600’},
-{id:‘sakura’,name:‘Sakura’,bg:’#FCE4EC’,skin:’#FFE4E8’,hair:’#F48FB1’,ec:’#E91E63’},
-{id:‘wolf’,name:‘Wolf’,bg:’#4A4E69’,skin:’#CFD0D4’,hair:’#2D2D3A’,ec:’#FFB300’},
-{id:‘thunder’,name:‘Thunder’,bg:’#FFF176’,skin:’#FFCBA4’,hair:’#FDD835’,ec:’#1565C0’},
-{id:‘shadow’,name:‘Shadow’,bg:’#311B92’,skin:’#B39DDB’,hair:’#311B92’,ec:’#CE93D8’},
-{id:‘dragon’,name:‘Dragon’,bg:’#00BFA5’,skin:’#A7FFEB’,hair:’#00695C’,ec:’#FF6D00’},
-{id:‘fox’,name:‘Fox’,bg:’#E64A19’,skin:’#FFD4A3’,hair:’#BF360C’,ec:’#FF6D00’},
-{id:‘panda’,name:‘Panda’,bg:’#F5F5F5’,skin:’#FFFFFF’,hair:’#212121’,ec:’#212121’},
-{id:‘galaxy’,name:‘Galaxy’,bg:’#0A0A2A’,skin:’#CE93D8’,hair:’#6A1B9A’,ec:’#EA80FC’},
-{id:‘robot’,name:‘Bot’,bg:’#546E7A’,skin:’#CFD8DC’,hair:’#37474F’,ec:’#00E5FF’},
-{id:‘angel’,name:‘Angel’,bg:’#FFFDE7’,skin:’#FFE4C4’,hair:’#FFD54F’,ec:’#81D4FA’}
-];
-
-var LANGS = {
-fr:{flag:‘🇫🇷’,label:‘Français’,
-nav:{feed:‘Accueil’,leagues:‘Ligues’,flash:‘Flash’,stats:‘Stats’,shop:‘Boutique’},
-home:{live:‘FLASH EN DIRECT’,next:‘PROCHAIN’,players:‘joueurs’,myLeagues:‘MES LIGUES’,feed:‘FIL D'ACTU’,xpTo:‘XP pour le rang suivant’},
-ch:{getReady:‘PRÉPARE-TOI’,done:‘TERMINÉ ✓’},
-vote:{q:‘Qui a vraiment TOUT DÉCHIRÉ ?’,hint:‘Vote pour le meilleur’,lock:‘VALIDER’},
-res:{title:‘CLASSEMENT MONDIAL’,xp:‘XP GAGNÉ’,rank:‘TON RANG’,coins:‘PIÈCES’,share:‘PARTAGER’,back:‘RETOUR’,top:‘TOP JOUEURS’},
-lg:{title:‘LIGUES’,create:‘CRÉER MA LIGUE’,invite:‘INVITER’,mine:‘MES LIGUES’,disc:‘DÉCOUVRIR’,join:‘REJOINDRE’,member:‘MEMBRE’,members:‘membres’},
-sk:{title:‘SÉRIE’,days:‘JOURS’,keepGoing:‘Continue !’,r7:‘7 jours : +50% XP !’,r30:‘30 jours : Badge exclusif !’,almostLost:‘Joue aujourd'hui sinon ta série est perdue !’},
-go:‘C'EST PARTI!’,
-chs:[‘Fais ta tête la plus terrifiante’,‘Pose de super-héros qui atterrit’,‘Trouve quelque chose de rouge’,‘Beatboxe 15 secondes’,‘Montre ton mouvement de danse’,‘Explique la physique quantique’,‘Pleure comme si tu as perdu la Coupe du Monde’],
-cancel:‘Annuler’
-},
-en:{flag:‘🇬🇧’,label:‘English’,
-nav:{feed:‘Home’,leagues:‘Leagues’,flash:‘Flash’,stats:‘Stats’,shop:‘Shop’},
-home:{live:‘FLASH IS LIVE’,next:‘NEXT’,players:‘players’,myLeagues:‘MY LEAGUES’,feed:‘FEED’,xpTo:‘XP to next rank’},
-ch:{getReady:‘GET READY’,done:‘DONE ✓’},
-vote:{q:‘Who absolutely KILLED IT?’,hint:‘Vote for the best’,lock:‘LOCK IN’},
-res:{title:‘GLOBAL RANKING’,xp:‘XP EARNED’,rank:‘YOUR RANK’,coins:‘COINS’,share:‘SHARE’,back:‘BACK’,top:‘TOP PLAYERS’},
-lg:{title:‘LEAGUES’,create:‘CREATE MY LEAGUE’,invite:‘INVITE’,mine:‘MY LEAGUES’,disc:‘DISCOVER’,join:‘JOIN’,member:‘MEMBER’,members:‘members’},
-sk:{title:‘STREAK’,days:‘DAYS’,keepGoing:‘Keep it up!’,r7:‘7-day bonus: +50% XP!’,r30:‘30-day streak: Exclusive badge!’,almostLost:‘Play today or lose your streak!’},
-go:‘GO!’,
-chs:[‘Make your scariest face NOW’,‘Strike a superhero landing pose’,‘Find something red in 20s’,‘Beatbox for 15 seconds’,‘Show your signature dance move’,‘Explain quantum physics in 10s’,‘Cry like you lost the World Cup’],
-cancel:‘Cancel’
-}
-};
-
-function getRank(xp) {
-for(var i=RANKS.length-1;i>=0;i–) { if(xp>=RANKS[i].min) return RANKS[i]; }
-return RANKS[0];
-}
-function getAv(id) { return AVS.find(function(a){return a.id===id;})||AVS[0]; }
-function fmt(secs) { if(secs<=0)return’0:00’; var m=Math.floor(secs/60),s=secs%60; return m+’:’+(s<10?‘0’:’’)+s; }
-
-// SFX
-var SFX = {
-_ctx:null,
-ctx:function(){if(!this._ctx)this._ctx=new(window.AudioContext||window.webkitAudioContext)();return this._ctx;},
-n:function(f,t,d,v,type){
-try{var c=this.ctx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);
-o.type=type||‘sine’;o.frequency.value=f;var s=c.currentTime+t;
-g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v||0.25,s+0.015);
-g.gain.setValueAtTime(v||0.25,s+d-0.04);g.gain.linearRampToValueAtTime(0,s+d);
-o.start(s);o.stop(s+d+0.05);}catch(e){}},
-tap:function(){this.n(880,0,0.07,0.2);this.n(1100,0.05,0.06,0.12);},
-coin:function(){[880,1100,1320,1760].forEach(function(f,i){SFX.n(f,i*.055,.1,.22);});},
-victory:function(){var ns=[523,659,784,1047,784,1047,1319,1568],t=0;ns.forEach(function(f,i){SFX.n(f,t,.15,.28,‘triangle’);t+=.12;});},
-zap:function(){this.n(140,0,.05,.5,‘sawtooth’);this.n(300,.035,.05,.38,‘square’);},
-whoosh:function(){this.n(180,0,.15,.2);this.n(900,.15,.15,.1);},
-fail:function(){[466,415,370,311].forEach(function(f,i){SFX.n(f,i*.1,.15,.3,‘sawtooth’);});},
-streakFire:function(){[262,330,392,523,659,784].forEach(function(f,i){SFX.n(f,i*.07,.2,.2);});}
-};
-
-// Simple avatar
-function AvatarSVG(props) {
-var av=props.av, size=props.size||52, s=size, cx=s/2;
-return h(‘svg’,{width:s,height:s,viewBox:‘0 0 ‘+s+’ ‘+s,style:{display:‘block’,borderRadius:‘50%’,flexShrink:0}},
-h(‘circle’,{cx:cx,cy:cx,r:cx,fill:av.bg}),
-h(‘ellipse’,{cx:cx,cy:s*.3,rx:s*.28,ry:s*.25,fill:av.hair}),
-h(‘ellipse’,{cx:cx,cy:s*.5,rx:s*.26,ry:s*.28,fill:av.skin}),
-h(‘circle’,{cx:cx-s*.16,cy:s*.43,r:s*.07,fill:’#fff’}),
-h(‘circle’,{cx:cx+s*.16,cy:s*.43,r:s*.07,fill:’#fff’}),
-h(‘circle’,{cx:cx-s*.16,cy:s*.43,r:s*.045,fill:av.ec}),
-h(‘circle’,{cx:cx+s*.16,cy:s*.43,r:s*.045,fill:av.ec}),
-h(‘path’,{d:‘M’+(cx-s*.1)+’ ‘+(s*.63)+’ Q’+cx+’ ‘+(s*.72)+’ ‘+(cx+s*.1)+’ ‘+(s*.63),stroke:’#CC7755’,strokeWidth:s*.027,fill:‘none’,strokeLinecap:‘round’})
-);
+// ── AVATAR SVG ─────────────────────────────────────────────────
+function avSVG(av,size){
+  var s=size||52,cx=s/2;
+  return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 '+s+' '+s+'" style="display:block;border-radius:50%;flex-shrink:0">'
+    +'<circle cx="'+cx+'" cy="'+cx+'" r="'+cx+'" fill="'+av.bg+'"/>'
+    +'<ellipse cx="'+cx+'" cy="'+(s*.3)+'" rx="'+(s*.28)+'" ry="'+(s*.25)+'" fill="#333"/>'
+    +'<ellipse cx="'+cx+'" cy="'+(s*.5)+'" rx="'+(s*.26)+'" ry="'+(s*.28)+'" fill="'+av.skin+'"/>'
+    +'<circle cx="'+(cx-s*.16)+'" cy="'+(s*.43)+'" r="'+(s*.07)+'" fill="#fff"/>'
+    +'<circle cx="'+(cx+s*.16)+'" cy="'+(s*.43)+'" r="'+(s*.07)+'" fill="#fff"/>'
+    +'<circle cx="'+(cx-s*.16)+'" cy="'+(s*.43)+'" r="'+(s*.045)+'" fill="'+av.ec+'"/>'
+    +'<circle cx="'+(cx+s*.16)+'" cy="'+(s*.43)+'" r="'+(s*.045)+'" fill="'+av.ec+'"/>'
+    +'<path d="M'+(cx-s*.1)+' '+(s*.63)+' Q'+cx+' '+(s*.72)+' '+(cx+s*.1)+' '+(s*.63)+'" stroke="#CC7755" stroke-width="'+(s*.027)+'" fill="none" stroke-linecap="round"/>'
+    +'</svg>';
 }
 
-function useFlashState() {
-var init = function() {
-var now=new Date(),h=now.getHours(),m=now.getMinutes(),cur=h*60+m;
-for(var i=0;i<FLASH_TIMES.length;i++){
-var ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN;
-if(cur>=start&&cur<end){return{status:‘live’,index:i,secsRemaining:(end-cur)*60-now.getSeconds(),next:0};}
-}
-for(var j=0;j<FLASH_TIMES.length;j++){
-var ft2=FLASH_TIMES[j],s2=ft2.h*60+ft2.m;
-if(s2>cur){return{status:‘next’,index:j,secsRemaining:0,next:(s2-cur)*60-now.getSeconds()};}
-}
-return{status:‘next’,index:0,secsRemaining:0,next:3600};
-};
-var r = useState(init);
-var fs = r[0], setFs = r[1];
-useEffect(function(){
-var id=setInterval(function(){
-var now=new Date(),h=now.getHours(),m=now.getMinutes(),cur=h*60+m;
-for(var i=0;i<FLASH_TIMES.length;i++){
-var ft=FLASH_TIMES[i],start=ft.h*60+ft.m,end=start+FLASH_DURATION_MIN;
-if(cur>=start&&cur<end){setFs({status:‘live’,index:i,secsRemaining:(end-cur)*60-now.getSeconds(),next:0});return;}
-}
-for(var j=0;j<FLASH_TIMES.length;j++){
-var ft2=FLASH_TIMES[j],s2=ft2.h*60+ft2.m;
-if(s2>cur){setFs({status:‘next’,index:j,secsRemaining:0,next:(s2-cur)*60-now.getSeconds()});return;}
-}
-setFs({status:‘next’,index:0,secsRemaining:0,next:3600});
-},1000);
-return function(){clearInterval(id);};
-},[]);
-return fs;
+// ── NOTIF ──────────────────────────────────────────────────────
+var notifTimer=null;
+function showNotif(icon,text,sub,color){
+  var el=document.getElementById('notif');
+  el.style.background=color||'#FF6B00';
+  document.getElementById('notif-icon').textContent=icon;
+  document.getElementById('notif-text').textContent=text;
+  document.getElementById('notif-sub').textContent=sub||'';
+  el.classList.add('show');
+  clearTimeout(notifTimer);
+  notifTimer=setTimeout(function(){el.classList.remove('show');},3000);
 }
 
-function Particles(props) {
-var r=useState([]); var ps=r[0],setPs=r[1];
-useEffect(function(){
-if(!props.trigger)return;
-var arr=[];for(var i=0;i<16;i++)arr.push({id:Date.now()+i,x:Math.random()*100,c:[’#FF6B00’,’#C084FC’,’#FFE600’,’#00E5FF’,’#FF3366’][i%5],d:2+Math.random()*2});
-setPs(arr);setTimeout(function(){setPs([]);},3000);
-},[props.trigger]);
-return h(‘div’,{style:{position:‘fixed’,inset:0,pointerEvents:‘none’,zIndex:999}},
-ps.map(function(p){return h(‘div’,{key:p.id,style:{position:‘absolute’,left:p.x+’%’,top:’-10px’,width:8,height:8,borderRadius:‘50%’,background:p.c,animation:’fall ’+p.d+‘s linear forwards’}});})
-);
+// ── SFX ───────────────────────────────────────────────────────
+var _ac=null;
+function sfxCtx(){if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();return _ac;}
+function sfxNote(f,t,d,v,type){
+  try{var c=sfxCtx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);
+  o.type=type||'sine';o.frequency.value=f;var s=c.currentTime+t;
+  g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v||.2,s+.015);
+  g.gain.linearRampToValueAtTime(0,s+d);o.start(s);o.stop(s+d+.05);}catch(e){}}
+function sfxTap(){sfxNote(880,0,.07,.2);sfxNote(1100,.05,.06,.12);}
+function sfxCoin(){[880,1100,1320,1760].forEach(function(f,i){sfxNote(f,i*.055,.1,.22);});}
+function sfxZap(){sfxNote(140,0,.05,.5,'sawtooth');sfxNote(300,.035,.05,.38,'square');}
+function sfxWin(){var ns=[523,659,784,1047,1319,1568],t=0;ns.forEach(function(f){sfxNote(f,t,.15,.28,'triangle');t+=.12;});}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function showTab(id){
+  if(id==='flash'){sfxZap();startChallenge();return;}
+  sfxTap();
+  state.currentTab=id;
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var sc=document.getElementById('screen-'+id);
+  if(sc){sc.classList.add('active');renderScreen(id);}
+  document.querySelectorAll('.nb').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-tab')===id);
+  });
 }
 
-function Notif(props) {
-var n=props.n;
-if(!n)return null;
-return h(‘div’,{style:{position:‘fixed’,top:56,left:‘50%’,transform:‘translateX(-50%)’,background:n.color||’#FF6B00’,borderRadius:999,padding:‘10px 20px’,display:‘flex’,alignItems:‘center’,gap:8,zIndex:800,boxShadow:‘0 6px 24px rgba(0,0,0,.3)’,animation:‘notifIn .3s ease-out’,whiteSpace:‘nowrap’}},
-h(‘span’,{style:{fontSize:18}},n.icon),
-h(‘div’,null,
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,color:’#fff’}},n.text),
-n.sub&&h(‘div’,{style:{fontSize:10,fontWeight:800,color:‘rgba(255,255,255,.75)’}},n.sub)
-)
-);
+document.querySelectorAll('.nb').forEach(function(b){
+  b.addEventListener('click',function(){showTab(b.getAttribute('data-tab'));});
+});
+
+// ── ONBOARDING ────────────────────────────────────────────────
+var obStep=0,obLang='fr',obAvId='sakura';
+
+// Build avatar grid
+var grid=document.getElementById('ob-av-grid');
+AVS.forEach(function(av){
+  var d=document.createElement('div');
+  d.className='av-item'+(av.id===obAvId?' sel':'');
+  d.innerHTML=avSVG(av,52)+'<span style="font-size:10px;font-weight:800;color:'+(av.id===obAvId?'#FF6B00':'rgba(255,255,255,.5)')+'">'+av.name+'</span>';
+  d.addEventListener('click',function(){
+    sfxZap();obAvId=av.id;
+    document.querySelectorAll('.av-item').forEach(function(x){x.classList.remove('sel');x.querySelector('span').style.color='rgba(255,255,255,.5)';});
+    d.classList.add('sel');d.querySelector('span').style.color='#FF6B00';
+    document.getElementById('ob-av-preview').innerHTML=avSVG(av,74);
+  });
+  grid.appendChild(d);
+});
+document.getElementById('ob-av-preview').innerHTML=avSVG(getAv(obAvId),74);
+
+document.querySelectorAll('.lang-opt').forEach(function(el){
+  el.addEventListener('click',function(){
+    sfxTap();obLang=el.getAttribute('data-lang');
+    document.querySelectorAll('.lang-opt').forEach(function(x){
+      x.style.background='rgba(255,255,255,.08)';x.style.border='2px solid transparent';
+      x.querySelector('span:last-child') && x.querySelector('span:last-child').remove && (x.innerHTML=x.innerHTML.replace('<span style="margin-left:auto;color:#FF6B00">✓</span>',''));
+    });
+    el.style.background='rgba(255,107,0,.2)';el.style.border='2px solid #FF6B00';
+  });
+});
+
+function obNext(){
+  sfxTap();
+  document.getElementById('ob'+obStep).classList.remove('active');
+  obStep++;
+  document.getElementById('ob'+obStep).classList.add('active');
+  // Update dots
+  var dots=document.querySelectorAll('.dot');
+  dots.forEach(function(d,i){
+    if(i===obStep){d.style.width='24px';d.style.borderRadius='4px';d.style.background='#FF6B00';}
+    else{d.style.width='8px';d.style.borderRadius='50%';d.style.background='rgba(255,255,255,.2)';}
+  });
 }
 
-// ─── ONBOARDING ───────────────────────────────────────────────
-function Onboarding(props) {
-var lang=props.lang,setLang=props.setLang,t=props.t,onComplete=props.onComplete;
-var r1=useState(0); var step=r1[0],setStep=r1[1];
-var r2=useState(’’); var name=r2[0],setName=r2[1];
-var r3=useState(‘sakura’); var avId=r3[0],setAvId=r3[1];
-var TOTAL=3;
-var next=function(){SFX.tap();if(step<TOTAL-1)setStep(function(s){return s+1;});else{SFX.victory();onComplete({name:name||‘PLAYER’,avId:avId});}};
-
-var dotStyle=function(i){return{width:i===step?24:8,height:8,borderRadius:i===step?4:50,background:i===step?’#FF6B00’:‘rgba(255,255,255,.2)’,transition:‘all .2s’};};
-
-return h(‘div’,{style:{position:‘fixed’,inset:0,background:‘linear-gradient(160deg,#1E1B2E,#2D1B5E)’,display:‘flex’,flexDirection:‘column’,alignItems:‘center’,overflow:‘hidden’,padding:‘env(safe-area-inset-top) 0 env(safe-area-inset-bottom)’}},
-h(‘div’,{style:{padding:‘22px 22px 0’,display:‘flex’,justifyContent:‘center’,gap:8,width:‘100%’}},
-[0,1,2].map(function(i){return h(‘div’,{key:i,style:dotStyle(i)});})
-),
-// Step 0 - Language
-step===0&&h(‘div’,{style:{display:‘flex’,flexDirection:‘column’,alignItems:‘center’,flex:1,padding:‘20px 24px 40px’,width:‘100%’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:68,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,WebkitBackgroundClip:‘text’,WebkitTextFillColor:‘transparent’,backgroundClip:‘text’,lineHeight:1,marginBottom:6}},‘DAREZ’),
-h(‘div’,{style:{fontSize:13,fontWeight:800,color:‘rgba(255,255,255,.5)’,letterSpacing:2,marginBottom:32,textAlign:‘center’}},‘THE GLOBAL FLASH CHALLENGE’),
-h(‘p’,{style:{fontSize:13,fontWeight:800,color:‘rgba(255,255,255,.6)’,marginBottom:14,textAlign:‘center’}},‘Choisis ta langue / Choose your language’),
-h(‘div’,{style:{width:‘100%’,display:‘flex’,flexDirection:‘column’,gap:8,marginBottom:28}},
-Object.entries(LANGS).map(function(entry){var code=entry[0],l=entry[1];return h(‘div’,{key:code,onClick:function(){SFX.tap();setLang(code);},style:{display:‘flex’,alignItems:‘center’,gap:12,padding:‘14px 16px’,borderRadius:16,background:lang===code?‘rgba(255,107,0,.2)’:‘rgba(255,255,255,.08)’,border:lang===code?‘2px solid #FF6B00’:‘2px solid transparent’,cursor:‘pointer’}},
-h(‘span’,{style:{fontSize:24}},l.flag),
-h(‘span’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:lang===code?’#FF6B00’:‘rgba(255,255,255,.8)’}},l.label),
-lang===code&&h(‘span’,{style:{marginLeft:‘auto’,color:’#FF6B00’,fontSize:18}},‘✓’)
-);}
-)),
-h(‘button’,{onClick:next,style:{width:‘100%’,padding:16,borderRadius:999,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#fff’,cursor:‘pointer’}},‘SUIVANT / NEXT →’)
-),
-// Step 1 - Name
-step===1&&h(‘div’,{style:{display:‘flex’,flexDirection:‘column’,alignItems:‘center’,flex:1,padding:‘20px 24px 40px’,width:‘100%’}},
-h(‘div’,{style:{fontSize:64,marginBottom:14,animation:‘bounce 2s infinite’}},‘👤’),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’,marginBottom:20,textAlign:‘center’}},‘Ton pseudo’),
-h(‘input’,{style:{width:‘100%’,padding:‘16px 20px’,borderRadius:16,border:‘2px solid rgba(255,255,255,.15)’,background:‘rgba(255,255,255,.08)’,color:’#fff’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,textAlign:‘center’,outline:‘none’,marginBottom:6,letterSpacing:1},placeholder:‘Ex: CHAOS_KID’,value:name,onChange:function(e){setName(e.target.value);},maxLength:20}),
-h(‘p’,{style:{fontSize:11,fontWeight:700,color:‘rgba(255,255,255,.4)’,marginBottom:‘auto’}},‘Max 20 caractères’),
-h(‘button’,{onClick:next,style:{width:‘100%’,padding:16,borderRadius:999,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#fff’,cursor:‘pointer’,marginTop:20}},t.nav.feed+’ →’)
-),
-// Step 2 - Avatar
-step===2&&h(‘div’,{style:{display:‘flex’,flexDirection:‘column’,alignItems:‘center’,flex:1,padding:‘20px 24px 40px’,width:‘100%’,overflowY:‘auto’}},
-h(AvatarSVG,{av:getAv(avId),size:74}),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’,margin:‘12px 0 16px’,textAlign:‘center’}},‘Choisis ton perso’),
-h(‘div’,{style:{display:‘grid’,gridTemplateColumns:‘repeat(4,1fr)’,gap:10,width:‘100%’,marginBottom:20}},
-AVS.map(function(av){return h(‘div’,{key:av.id,onClick:function(){SFX.zap();setAvId(av.id);},style:{display:‘flex’,flexDirection:‘column’,alignItems:‘center’,gap:6,padding:‘10px 6px’,borderRadius:16,cursor:‘pointer’,border:avId===av.id?‘2px solid #FF6B00’:‘2px solid transparent’,background:avId===av.id?‘rgba(255,107,0,.1)’:‘transparent’}},
-h(AvatarSVG,{av:av,size:52}),
-h(‘span’,{style:{fontSize:10,fontWeight:800,color:avId===av.id?’#FF6B00’:‘rgba(255,255,255,.5)’}},av.name)
-);})
-),
-h(‘button’,{onClick:next,style:{width:‘100%’,padding:16,borderRadius:999,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#fff’,cursor:‘pointer’}},t.sk.r7.split(’:’)[0]+’ ⚡’)
-)
-);
+function obFinish(){
+  sfxWin();
+  var name=(document.getElementById('ob-name').value||'PLAYER').toUpperCase().slice(0,20);
+  state.userName=name;state.avId=obAvId;state.lang=obLang;state.onboarded=true;
+  localStorage.setItem('dz_name',name);localStorage.setItem('dz_av',obAvId);
+  localStorage.setItem('dz_lang',obLang);localStorage.setItem('dz_done','1');
+  document.getElementById('ob').style.display='none';
+  renderScreen('home');
+  showNotif('🎉','Bienvenue '+name+' !','DAREZ t\'attend ⚡','#FF6B00');
 }
 
-// ─── HOME SCREEN ───────────────────────────────────────────────
-function HomeScreen(props) {
-var t=props.t,onStart=props.onStart,showNotif=props.showNotif,userName=props.userName,userAvId=props.userAvId,streak=props.streak;
-var fs=useFlashState();
-var rank=getRank(ME.xp);
-var pct=((ME.xp-rank.min)/((rank.max===999999?ME.xp*1.5:rank.max)-rank.min))*100;
-var isLive=fs.status===‘live’;
-var ch=CHALLENGES[fs.index%CHALLENGES.length];
-
-return h(‘div’,{style:{overflowY:‘auto’,height:‘100%’}},
-// Hero
-h(‘div’,{style:{padding:‘20px 18px 18px’,background:‘linear-gradient(160deg,#1E1B2E,#2D1B5E)’,borderRadius:‘0 0 32px 32px’,position:‘relative’,overflow:‘hidden’}},
-h(‘div’,{style:{position:‘absolute’,width:200,height:200,borderRadius:‘50%’,background:‘rgba(255,107,0,.2)’,top:-70,right:-50,filter:‘blur(40px)’}}),
-h(‘div’,{style:{display:‘flex’,alignItems:‘center’,gap:13,position:‘relative’,zIndex:2,marginBottom:14}},
-h(AvatarSVG,{av:getAv(userAvId),size:52}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,color:’#fff’}},userName),
-h(‘div’,{style:{display:‘flex’,alignItems:‘center’,gap:8,marginTop:6}},
-h(‘div’,{style:{padding:‘4px 12px’,borderRadius:999,fontSize:10,fontWeight:900,background:‘rgba(255,255,255,.12)’,color:rank.color}},rank.icon+’ ‘+rank.label),
-h(‘div’,{style:{fontSize:11,fontWeight:900,color:’#FBBF24’,background:‘rgba(251,191,36,.15)’,padding:‘4px 10px’,borderRadius:999}},‘🔥 ‘+streak+‘j’),
-h(‘div’,{style:{fontSize:11,fontWeight:900,color:’#FBBF24’,background:‘rgba(251,191,36,.12)’,padding:‘4px 10px’,borderRadius:999}},‘🪙 ‘+ME.coins)
-)
-)
-),
-h(‘div’,{style:{position:‘relative’,zIndex:2}},
-h(‘div’,{style:{height:10,background:‘rgba(255,255,255,.1)’,borderRadius:5,overflow:‘hidden’}},
-h(‘div’,{style:{height:‘100%’,width:pct+’%’,background:‘linear-gradient(90deg,’+rank.g1+’,’+rank.g2+’)’,borderRadius:5,animation:‘xpFill .9s ease-out’}})
-),
-h(‘div’,{style:{fontSize:10,fontWeight:800,color:‘rgba(255,255,255,.5)’,marginTop:4}},ME.xp.toLocaleString()+’ XP’)
-)
-),
-// Flash widget
-h(‘div’,{onClick:function(){if(isLive){SFX.zap();onStart();}else SFX.tap();},style:{background:’#fff’,borderRadius:24,margin:‘12px 16px 0’,padding:16,cursor:‘pointer’,boxShadow:isLive?‘0 6px 28px rgba(255,107,0,.22)’:‘0 4px 18px rgba(0,0,0,.07)’,border:isLive?‘2px solid rgba(255,107,0,.3)’:‘2px solid transparent’,position:‘relative’,overflow:‘hidden’}},
-h(‘div’,{style:{display:‘flex’,alignItems:‘center’,gap:14}},
-h(‘div’,{style:{width:12,height:12,borderRadius:‘50%’,background:isLive?’#FF6B00’:’#94A3B8’,boxShadow:isLive?‘0 0 10px #FF6B00’:‘none’,animation:isLive?‘pulse 1.2s infinite’:‘none’,flexShrink:0}}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontSize:10,fontWeight:900,color:isLive?’#FF6B00’:’#94A3B8’,letterSpacing:1,marginBottom:3}},isLive?t.home.live:t.home.next+’ →’),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:19,color:’#1E1B2E’,lineHeight:1.2}},ch.emoji+’ ‘+t.chs[ch.id-1])
-),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:isLive?28:20,color:isLive?’#FF6B00’:’#94A3B8’}},(isLive?‘▶’:‘⏳’))
-),
-isLive&&h(‘div’,{style:{height:4,background:‘rgba(255,107,0,.12)’,borderRadius:2,marginTop:12,overflow:‘hidden’}},
-h(‘div’,{style:{height:‘100%’,width:((fs.secsRemaining/(FLASH_DURATION_MIN*60))*100)+’%’,background:‘linear-gradient(90deg,#FF6B00,#C084FC)’,borderRadius:2,transition:‘width 1s linear’}})
-)
-),
-// My leagues
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:’#1E1B2E’,padding:‘16px 18px 8px’}},t.home.myLeagues),
-h(‘div’,{style:{display:‘flex’,gap:10,padding:‘0 16px 4px’,overflowX:‘auto’}},
-MOCK_LEAGUES.filter(function(l){return l.joined;}).map(function(l){return h(‘div’,{key:l.id,style:{flexShrink:0,background:’#fff’,borderRadius:18,padding:‘12px 14px’,minWidth:118,cursor:‘pointer’,boxShadow:‘0 4px 16px rgba(0,0,0,.07)’}},
-h(‘div’,{style:{fontSize:24,marginBottom:5}},l.badge),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:14,color:l.color}},l.name),
-h(‘div’,{style:{fontSize:10,fontWeight:800,color:’#94A3B8’,marginTop:2}},’#’+l.rank+’ · ‘+l.members+‘p’)
-);})
-),
-// Feed
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:’#1E1B2E’,padding:‘16px 18px 8px’}},t.home.feed),
-MOCK_PLAYERS.slice(0,3).map(function(p,i){return h(‘div’,{key:p.id,style:{background:’#fff’,borderRadius:20,margin:‘0 16px 12px’,boxShadow:‘0 2px 12px rgba(0,0,0,.07)’,animation:‘fadeUp .35s ease-out both’,animationDelay:(i*.1)+‘s’}},
-h(‘div’,{style:{display:‘flex’,alignItems:‘center’,gap:10,padding:‘13px 14px 8px’}},
-h(AvatarSVG,{av:getAv(p.avId),size:38}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontWeight:900,fontSize:13}},p.name),
-h(‘div’,{style:{fontSize:10,fontWeight:700,color:’#94A3B8’,marginTop:1}},CHALLENGES[i%CHALLENGES.length].emoji+’ · ‘+p.streak+‘j 🔥’)
-),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:’#FF6B00’}},p.score.toLocaleString())
-),
-h(‘div’,{style:{display:‘flex’,borderTop:‘1px solid rgba(0,0,0,.06)’}},
-[‘🔥 POW’,‘💬 Reply’,‘📤 Share’].map(function(label,j){return h(‘button’,{key:j,onClick:function(){SFX.coin();showNotif({icon:‘🔥’,text:‘POW !’,color:’#FF6B00’});},style:{flex:1,padding:‘11px 4px’,border:‘none’,background:‘none’,fontSize:11,fontWeight:900,cursor:‘pointer’,color:’#94A3B8’,borderRight:j<2?‘1px solid rgba(0,0,0,.06)’:‘none’,fontFamily:”‘Nunito’,sans-serif”}},label);})
-)
-);})
-);
+// ── RENDER SCREENS ────────────────────────────────────────────
+function renderScreen(id){
+  if(id==='home')renderHome();
+  else if(id==='leagues')renderLeagues();
+  else if(id==='global')renderGlobal();
+  else if(id==='shop')renderShop();
+  else if(id==='profile')renderProfile();
 }
 
-// ─── CHALLENGE FLOW ────────────────────────────────────────────
-function ChallengeFlow(props) {
-var t=props.t,onDone=props.onDone,showNotif=props.showNotif;
-var r1=useState(‘cd’); var phase=r1[0],setPhase=r1[1];
-var r2=useState(3); var cdN=r2[0],setCdN=r2[1];
-var r3=useState(function(){return CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];}); var ch=r3[0];
-var r4=useState(0); var tLeft=r4[0],setTLeft=r4[1];
-var r5=useState(null); var voted=r5[0],setVoted=r5[1];
-var r6=useState(0); var confetti=r6[0],setConfetti=r6[1];
-var tRef=useRef(null);
-var grad=‘linear-gradient(160deg,#FF6B00,#7C3AED)’;
-
-useEffect(function(){
-if(phase!==‘cd’)return;
-if(cdN===0){SFX.zap();setTimeout(function(){setPhase(‘ch’);},550);return;}
-SFX.tap();
-var tm=setTimeout(function(){setCdN(function(n){return n-1;});},1000);
-return function(){clearTimeout(tm);};
-},[phase,cdN]);
-
-useEffect(function(){
-if(phase!==‘ch’)return;
-setTLeft(ch.timer);
-var e=0;
-tRef.current=setInterval(function(){
-e++;var l=ch.timer-e;setTLeft(l);
-if(l<=0){clearInterval(tRef.current);SFX.zap();setPhase(‘vote’);}
-},1000);
-return function(){clearInterval(tRef.current);};
-},[phase]);
-
-var VOTERS=[{id:‘a’,avId:‘blaze’,name:‘zara_flash 🇧🇷’},{id:‘b’,avId:‘ninja’,name:‘drift.exe 🇯🇵’},{id:‘c’,avId:‘fox’,name:‘neon_leo 🇫🇷’}];
-
-return h(‘div’,{style:{flex:1,display:‘flex’,flexDirection:‘column’,position:‘relative’,height:‘100%’}},
-h(Particles,{trigger:confetti}),
-phase===‘cd’&&h(‘div’,{style:{position:‘absolute’,inset:0,background:grad,display:‘flex’,flexDirection:‘column’,alignItems:‘center’,justifyContent:‘center’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:‘rgba(255,255,255,.7)’,letterSpacing:4,marginBottom:12}},t.ch.getReady),
-h(‘div’,{key:cdN,style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:120,color:’#fff’,lineHeight:1,animation:‘popIn .4s cubic-bezier(.2,0,.38,1.4)’}},cdN===0?t.go:cdN)
-),
-phase===‘ch’&&h(‘div’,{style:{position:‘absolute’,inset:0,background:grad,display:‘flex’,flexDirection:‘column’,alignItems:‘center’,justifyContent:‘center’,gap:20,padding:‘40px 24px’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:tLeft<=5?96:96,color:tLeft<=5?’#FF3366’:’#fff’,lineHeight:1,animation:tLeft<=5?‘pulse .5s infinite’:‘none’}},tLeft),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’,textAlign:‘center’,lineHeight:1.3}},ch.emoji+’ ‘+t.chs[ch.id-1]),
-h(‘button’,{onClick:function(){clearInterval(tRef.current);SFX.zap();setPhase(‘vote’);},style:{padding:‘16px 40px’,borderRadius:999,background:‘rgba(255,255,255,.25)’,border:‘2px solid rgba(255,255,255,.5)’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#fff’,cursor:‘pointer’,marginTop:‘auto’}},t.ch.done)
-),
-phase===‘vote’&&h(‘div’,{style:{padding:‘24px 18px’,display:‘flex’,flexDirection:‘column’,gap:13,flex:1,overflowY:‘auto’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:’#1E1B2E’,lineHeight:1.2}},t.vote.q),
-h(‘p’,{style:{fontSize:12,fontWeight:800,color:’#94A3B8’,marginTop:-6}},t.vote.hint),
-VOTERS.map(function(o,i){return h(‘div’,{key:o.id,onClick:function(){SFX.tap();setVoted(o.id);},style:{display:‘flex’,alignItems:‘center’,gap:13,background:’#fff’,borderRadius:18,padding:‘13px 14px’,cursor:‘pointer’,boxShadow:‘0 2px 12px rgba(0,0,0,.07)’,border:voted===o.id?‘2px solid #FF6B00’:‘2px solid transparent’,animationDelay:(i*.08)+‘s’}},
-h(AvatarSVG,{av:getAv(o.avId),size:46}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontWeight:900,fontSize:14}},o.name),
-h(‘div’,{style:{fontSize:11,fontWeight:700,color:’#94A3B8’,marginTop:2}},’#’+(i+1))
-),
-h(‘div’,{style:{width:28,height:28,borderRadius:‘50%’,border:voted===o.id?‘none’:‘2px solid rgba(0,0,0,.1)’,background:voted===o.id?’#FF6B00’:‘transparent’,display:‘grid’,placeItems:‘center’,fontSize:14,color:’#fff’,fontWeight:900}},voted===o.id?‘✓’:’’)
-);}),
-h(‘button’,{onClick:function(){if(!voted)return;SFX.coin();setConfetti(function(c){return c+1;});showNotif({icon:‘⚡’,text:’+’+ch.xp+’ XP!’,color:’#FF6B00’});setTimeout(function(){setPhase(‘res’);},700);},style:{padding:16,borderRadius:999,background:voted?‘linear-gradient(135deg,#FF6B00,#C084FC)’:‘rgba(0,0,0,.07)’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:voted?’#fff’:’#94A3B8’,cursor:‘pointer’,marginTop:‘auto’}},t.vote.lock+(voted?’ →’:’’))
-),
-phase===‘res’&&h(‘div’,{style:{padding:‘20px 18px’,display:‘flex’,flexDirection:‘column’,gap:13,overflowY:‘auto’,flex:1}},
-h(‘div’,{style:{textAlign:‘center’,animation:‘popIn .5s cubic-bezier(.2,0,.38,1.4)’}},
-h(‘div’,{style:{fontSize:52}},‘🏆’),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#1E1B2E’}},t.res.title)
-),
-h(‘div’,{style:{display:‘flex’,background:’#fff’,borderRadius:20,overflow:‘hidden’,boxShadow:‘0 2px 12px rgba(0,0,0,.07)’}},
-[{v:ME.score.toLocaleString(),l:t.res.xp},{v:’+’+ch.xp,l:t.res.xp},{v:’#4’,l:t.res.rank}].map(function(s,i){return h(‘div’,{key:i,style:{flex:1,padding:‘16px 8px’,textAlign:‘center’,borderRight:i<2?‘1px solid rgba(0,0,0,.06)’:‘none’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#FF6B00’}},s.v),
-h(‘div’,{style:{fontSize:9,fontWeight:900,color:’#94A3B8’,marginTop:4,letterSpacing:.5}},s.l)
-);})
-),
-MOCK_PLAYERS.map(function(p,i){return h(‘div’,{key:p.id,style:{display:‘flex’,alignItems:‘center’,gap:11,padding:‘11px 18px’,borderBottom:‘1px solid rgba(0,0,0,.05)’,animation:‘fadeUp .28s ease-out both’,animationDelay:(i*.06)+‘s’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,width:28,textAlign:‘center’}},i===0?‘🥇’:i===1?‘🥈’:i===2?‘🥉’:’#’+(i+1)),
-h(AvatarSVG,{av:getAv(p.avId),size:36}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontWeight:900,fontSize:13}},p.name),
-h(‘div’,{style:{height:4,background:‘rgba(0,0,0,.06)’,borderRadius:2,marginTop:4}},
-h(‘div’,{style:{height:‘100%’,width:((p.score/MOCK_PLAYERS[0].score)*100)+’%’,background:‘linear-gradient(90deg,#FF6B00,#C084FC)’,borderRadius:2,animation:‘barFill .6s ease-out’}})
-)
-),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:’#FF6B00’}},p.score.toLocaleString())
-);}),
-h(‘button’,{onClick:function(){SFX.whoosh();onDone({xp:ch.xp,score:ME.score});},style:{padding:14,borderRadius:999,background:‘linear-gradient(135deg,#1E1B2E,#2D1B5E)’,color:’#fff’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,cursor:‘pointer’}},t.res.back+’ ⚡’)
-)
-);
+function renderHome(){
+  var rank=getRank(ME.xp);
+  var pct=((ME.xp-rank.min)/((rank.max===999999?ME.xp*1.5:rank.max)-rank.min))*100;
+  var av=getAv(state.avId);
+  var el=document.getElementById('screen-home');
+  el.innerHTML='<div class="hero">'
+    +'<div class="hero-orb" style="width:200px;height:200px;background:rgba(255,107,0,.2);top:-70px;right:-50px"></div>'
+    +'<div style="display:flex;align-items:center;gap:13px;position:relative;z-index:2;margin-bottom:14px">'
+      +avSVG(av,52)
+      +'<div style="flex:1"><div style="font-family:\'Fredoka One\',sans-serif;font-size:22px;color:#fff">'+state.userName+'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">'
+        +'<div style="padding:4px 12px;border-radius:999px;font-size:10px;font-weight:900;background:rgba(255,255,255,.12);color:'+rank.color+'">'+rank.icon+' '+rank.label+'</div>'
+        +'<div style="font-size:11px;font-weight:900;color:#FBBF24;background:rgba(251,191,36,.15);padding:4px 10px;border-radius:999px">🔥 '+state.streak+'j</div>'
+        +'<div style="font-size:11px;font-weight:900;color:#FBBF24;background:rgba(251,191,36,.12);padding:4px 10px;border-radius:999px">🪙 '+ME.coins+'</div>'
+      +'</div></div></div>'
+    +'<div style="position:relative;z-index:2"><div style="height:10px;background:rgba(255,255,255,.1);border-radius:5px;overflow:hidden">'
+      +'<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,'+rank.g1+','+rank.g2+');border-radius:5px;animation:barFill .9s ease-out"></div></div>'
+      +'<div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.5);margin-top:4px">'+ME.xp.toLocaleString()+' XP</div>'
+    +'</div></div>'
+    // Flash widget
+    +'<div onclick="startChallenge()" style="background:#fff;border-radius:24px;margin:12px 16px 0;padding:16px;cursor:pointer;box-shadow:0 6px 28px rgba(255,107,0,.18);border:2px solid rgba(255,107,0,.3)">'
+      +'<div style="display:flex;align-items:center;gap:14px">'
+        +'<div style="width:12px;height:12px;border-radius:50%;background:#FF6B00;box-shadow:0 0 10px #FF6B00;animation:pulse 1.2s infinite;flex-shrink:0"></div>'
+        +'<div style="flex:1"><div style="font-size:10px;font-weight:900;color:#FF6B00;letter-spacing:1px;margin-bottom:3px">FLASH EN DIRECT</div>'
+          +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:19px;color:#1E1B2E">😱 Fais ta tête la plus terrifiante</div></div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#FF6B00">▶</div>'
+      +'</div>'
+      +'<div style="height:4px;background:rgba(255,107,0,.12);border-radius:2px;margin-top:12px;overflow:hidden">'
+        +'<div style="height:100%;width:65%;background:linear-gradient(90deg,#FF6B00,#C084FC);border-radius:2px"></div></div>'
+      +'<div style="display:flex;justify-content:space-between;margin-top:6px">'
+        +'<div style="font-size:10px;font-weight:800;color:#94A3B8">48 291 joueurs</div>'
+        +'<div style="font-size:10px;font-weight:900;color:#FF6B00">14:23 restant</div>'
+      +'</div></div>'
+    // Leagues
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:18px;color:#1E1B2E;padding:16px 18px 8px">MES LIGUES</div>'
+    +'<div style="display:flex;gap:10px;padding:0 16px 4px;overflow-x:auto">'
+    +LEAGUES.filter(function(l){return l.joined;}).map(function(l){
+      return '<div style="flex-shrink:0;background:#fff;border-radius:18px;padding:12px 14px;min-width:118px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.07)">'
+        +'<div style="font-size:24px;margin-bottom:5px">'+l.badge+'</div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:14px;color:'+l.color+'">'+l.name+'</div>'
+        +'<div style="font-size:10px;font-weight:800;color:#94A3B8;margin-top:2px">#'+l.rank+' · '+l.members+'p</div>'
+      +'</div>';
+    }).join('')+'</div>'
+    // Feed
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:18px;color:#1E1B2E;padding:16px 18px 8px">FIL D\'ACTU</div>'
+    +PLAYERS.slice(0,3).map(function(p,i){
+      return '<div class="card fade" style="margin:0 16px 12px;animation-delay:'+(i*.1)+'s">'
+        +'<div style="display:flex;align-items:center;gap:10px;padding:13px 14px 8px">'
+          +'<div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:20px">'+p.av+'</div>'
+          +'<div style="flex:1"><div style="font-weight:900;font-size:13px">'+p.name+'</div>'
+            +'<div style="font-size:10px;font-weight:700;color:#94A3B8;margin-top:1px">🔥 '+p.streak+' jours</div></div>'
+          +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:16px;color:#FF6B00">'+p.score.toLocaleString()+'</div>'
+        +'</div>'
+        +'<div style="padding:0 14px 10px;font-family:\'Fredoka One\',sans-serif;font-size:16px;color:#1E1B2E">'+CHALLENGES[i].emoji+' '+CHALLENGES[i].text+'</div>'
+        +'<div style="display:flex;border-top:1px solid rgba(0,0,0,.06)">'
+          +['🔥 POW','💬 Répondre','📤 Partager'].map(function(label,j){
+            return '<button onclick="sfxCoin();showNotif(\'🔥\',\'POW !\',\'\',\'#FF6B00\')" style="flex:1;padding:11px 4px;border:none;background:none;font-size:11px;font-weight:900;cursor:pointer;color:#94A3B8;border-right:'+(j<2?'1px solid rgba(0,0,0,.06)':'none')+'">'+label+'</button>';
+          }).join('')
+        +'</div></div>';
+    }).join('')
+    +'<div style="height:20px"></div>';
 }
 
-// ─── LEAGUES SCREEN ────────────────────────────────────────────
-function LeaguesScreen(props) {
-var t=props.t,showNotif=props.showNotif;
-var r=useState(‘mine’); var tab=r[0],setTab=r[1];
-var shown=tab===‘mine’?MOCK_LEAGUES.filter(function(l){return l.joined;}):MOCK_LEAGUES.filter(function(l){return !l.joined;});
-return h(‘div’,{style:{overflowY:‘auto’,height:‘100%’}},
-h(‘div’,{style:{background:‘linear-gradient(160deg,#FF6B00,#9333EA)’,padding:‘24px 18px 20px’,borderRadius:‘0 0 32px 32px’,position:‘relative’,overflow:‘hidden’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:30,color:’#fff’,position:‘relative’,zIndex:1}},t.lg.title),
-h(‘div’,{style:{display:‘flex’,gap:10,marginTop:14,position:‘relative’,zIndex:1}},
-h(‘button’,{onClick:function(){SFX.tap();showNotif({icon:‘⚡’,text:‘Bientôt !’,color:’#FF6B00’});},style:{flex:1,background:‘rgba(255,255,255,.22)’,color:’#fff’,border:‘2px solid rgba(255,255,255,.4)’,borderRadius:999,padding:14,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:‘pointer’}},t.lg.create),
-h(‘button’,{onClick:function(){SFX.tap();showNotif({icon:‘📤’,text:‘Lien copié !’,color:’#C084FC’});},style:{flex:1,background:‘rgba(255,255,255,.88)’,color:’#FF6B00’,border:‘none’,borderRadius:999,padding:14,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15,cursor:‘pointer’}},t.lg.invite)
-)
-),
-h(‘div’,{style:{display:‘flex’,gap:6,padding:‘12px 16px 10px’}},
-[{id:‘mine’,label:t.lg.mine},{id:‘disc’,label:t.lg.disc}].map(function(tb){return h(‘button’,{key:tb.id,onClick:function(){SFX.tap();setTab(tb.id);},style:{flex:1,padding:10,border:‘none’,background:tab===tb.id?’#FF6B00’:‘rgba(0,0,0,.06)’,borderRadius:12,fontWeight:900,fontSize:13,cursor:‘pointer’,color:tab===tb.id?’#fff’:’#94A3B8’,fontFamily:”‘Nunito’,sans-serif”}},tb.label);})
-),
-shown.map(function(l,i){return h(‘div’,{key:l.id,style:{display:‘flex’,alignItems:‘center’,gap:13,padding:‘13px 18px’,background:’#fff’,margin:‘0 16px 8px’,borderRadius:18,boxShadow:‘0 2px 10px rgba(0,0,0,.06)’,animation:‘fadeUp .28s ease-out both’,animationDelay:(i*.07)+‘s’,cursor:‘pointer’}},
-h(‘div’,{style:{width:50,height:50,borderRadius:14,background:l.color+‘22’,display:‘grid’,placeItems:‘center’,fontSize:24,flexShrink:0}},l.badge),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17}},l.name),
-h(‘div’,{style:{fontSize:11,fontWeight:800,color:’#94A3B8’,marginTop:2}},l.members+’ ‘+t.lg.members+’ · #’+l.rank)
-),
-l.joined
-?h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:12,color:’#34D399’}},t.lg.member)
-:h(‘button’,{onClick:function(){SFX.coin();showNotif({icon:‘🎉’,text:‘Rejoint ! +100 🪙’,color:’#FBBF24’});},style:{padding:‘8px 16px’,borderRadius:999,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,color:’#fff’,border:‘none’,fontFamily:”‘Fredoka One’,sans-serif”,fontSize:13,cursor:‘pointer’}},t.lg.join)
-);})
-);
+function renderLeagues(){
+  var el=document.getElementById('screen-leagues');
+  el.innerHTML='<div style="background:linear-gradient(160deg,#FF6B00,#9333EA);padding:24px 18px 20px;border-radius:0 0 32px 32px">'
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:30px;color:#fff">LIGUES ⚔️</div>'
+    +'<div style="display:flex;gap:10px;margin-top:14px">'
+      +'<button onclick="sfxTap();showNotif(\'⚡\',\'Bientôt !\',\'\',\'#FF6B00\')" style="flex:1;background:rgba(255,255,255,.22);color:#fff;border:2px solid rgba(255,255,255,.4);border-radius:999px;padding:14px;font-family:\'Fredoka One\',sans-serif;font-size:15px;cursor:pointer">CRÉER MA LIGUE</button>'
+      +'<button onclick="sfxCoin();showNotif(\'📤\',\'Lien copié !\',\'\',\'#C084FC\')" style="flex:1;background:rgba(255,255,255,.88);color:#FF6B00;border:none;border-radius:999px;padding:14px;font-family:\'Fredoka One\',sans-serif;font-size:15px;cursor:pointer">INVITER</button>'
+    +'</div></div>'
+    +'<div style="padding:12px 16px 20px">'
+    +LEAGUES.map(function(l,i){
+      return '<div class="card fade" style="display:flex;align-items:center;gap:13px;padding:13px 14px;margin-bottom:10px;animation-delay:'+(i*.07)+'s;cursor:pointer">'
+        +'<div style="width:50px;height:50px;border-radius:14px;background:'+l.color+'22;display:grid;place-items:center;font-size:24px;flex-shrink:0">'+l.badge+'</div>'
+        +'<div style="flex:1"><div style="font-family:\'Fredoka One\',sans-serif;font-size:17px">'+l.name+'</div>'
+          +'<div style="font-size:11px;font-weight:800;color:#94A3B8;margin-top:2px">'+l.members+' membres · #'+l.rank+'</div></div>'
+        +(l.joined
+          ?'<div style="font-family:\'Fredoka One\',sans-serif;font-size:12px;color:#34D399">MEMBRE</div>'
+          :'<button onclick="sfxCoin();showNotif(\'🎉\',\'Rejoint ! +100 🪙\',\'\',\'#FBBF24\')" style="padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#FF6B00,#C084FC);color:#fff;border:none;font-family:\'Fredoka One\',sans-serif;font-size:13px;cursor:pointer">REJOINDRE</button>')
+        +'</div>';
+    }).join('')+'</div>';
 }
 
-// ─── GLOBAL SCREEN ─────────────────────────────────────────────
-function GlobalScreen(props) {
-var t=props.t;
-var sorted=MOCK_PLAYERS.slice().sort(function(a,b){return b.xp-a.xp;});
-return h(‘div’,{style:{overflowY:‘auto’,height:‘100%’}},
-h(‘div’,{style:{background:‘linear-gradient(160deg,#0F172A,#1E3A5F)’,padding:‘24px 18px 20px’,borderRadius:‘0 0 32px 32px’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’}},t.res.title),
-h(‘div’,{style:{fontSize:12,fontWeight:800,color:‘rgba(255,255,255,.5)’,marginTop:4}},‘48,291 joueurs · Live’)
-),
-sorted.map(function(p,i){
-var rank=getRank(p.xp);
-return h(‘div’,{key:p.id,style:{display:‘flex’,alignItems:‘center’,gap:11,padding:‘11px 18px’,borderBottom:‘1px solid rgba(0,0,0,.05)’,background:p.isUser?‘rgba(255,107,0,.04)’:’’,animation:‘fadeUp .28s ease-out both’,animationDelay:(i*.06)+‘s’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:22,width:30,textAlign:‘center’}},i===0?‘🥇’:i===1?‘🥈’:i===2?‘🥉’:’#’+(i+1)),
-h(AvatarSVG,{av:getAv(p.avId),size:42}),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontWeight:900,fontSize:13}},p.name+’ ‘+h(‘span’,{style:{color:rank.color}},rank.icon)),
-h(‘div’,{style:{fontSize:10,fontWeight:800,color:’#94A3B8’,marginTop:1}},rank.label+’ · 🔥’+p.streak)
-),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:17,color:’#FF6B00’}},p.xp.toLocaleString())
-);
-})
-);
+function renderGlobal(){
+  var sorted=PLAYERS.slice().sort(function(a,b){return b.xp-a.xp;});
+  var el=document.getElementById('screen-global');
+  el.innerHTML='<div style="background:linear-gradient(160deg,#0F172A,#1E3A5F);padding:24px 18px 20px;border-radius:0 0 32px 32px">'
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#fff">CLASSEMENT MONDIAL</div>'
+    +'<div style="font-size:12px;font-weight:800;color:rgba(255,255,255,.5);margin-top:4px">48 291 joueurs · Live</div></div>'
+    +sorted.map(function(p,i){
+      var rank=getRank(p.xp);
+      return '<div class="fade" style="display:flex;align-items:center;gap:11px;padding:11px 18px;border-bottom:1px solid rgba(0,0,0,.05);animation-delay:'+(i*.06)+'s">'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:22px;width:30px;text-align:center">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1))+'</div>'
+        +'<div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:22px;flex-shrink:0">'+p.av+'</div>'
+        +'<div style="flex:1"><div style="font-weight:900;font-size:13px">'+p.name+' <span style="color:'+rank.color+'">'+rank.icon+'</span></div>'
+          +'<div style="font-size:10px;font-weight:800;color:#94A3B8;margin-top:1px">'+rank.label+' · 🔥'+p.streak+'</div></div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:17px;color:#FF6B00">'+p.xp.toLocaleString()+'</div>'
+      +'</div>';
+    }).join('')+'<div style="height:20px"></div>';
 }
 
-// ─── SHOP SCREEN ───────────────────────────────────────────────
-function ShopScreen(props) {
-var t=props.t,showNotif=props.showNotif;
-var r=useState(ME.coins); var coins=r[0],setCoins=r[1];
-var pnames=t===LANGS.fr?[‘Silence’,‘Ombre’,‘Exposer’,‘Geler’,‘Rétrograder’]:[‘Silence’,‘Shadow’,‘Expose’,‘Freeze’,‘Demote’];
-return h(‘div’,{style:{overflowY:‘auto’,height:‘100%’}},
-h(‘div’,{style:{background:‘linear-gradient(160deg,#4C1D95,#7C3AED)’,padding:‘24px 18px 20px’,borderRadius:‘0 0 32px 32px’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’}},‘DAREZ ARSENAL’),
-h(‘div’,{style:{display:‘inline-flex’,alignItems:‘center’,gap:8,marginTop:14,background:‘rgba(251,191,36,.2)’,borderRadius:999,padding:‘8px 16px’}},
-h(‘span’,{style:{fontSize:20}},‘🪙’),
-h(‘span’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:26,color:’#FBBF24’}},coins.toLocaleString())
-)
-),
-h(‘div’,{style:{padding:‘14px 16px 0’}},
-PENALTIES.map(function(p,i){return h(‘div’,{key:p.id,onClick:function(){if(p.cost>coins){SFX.fail();showNotif({icon:‘💸’,text:‘Pas assez !’,color:’#FF6B00’});return;}SFX.coin();setCoins(function(c){return c-p.cost;});showNotif({icon:p.emoji,text:pnames[i]+’ activé !’,color:’#34D399’});},style:{display:‘flex’,alignItems:‘center’,gap:12,background:’#fff’,borderRadius:18,padding:‘13px 14px’,marginBottom:10,cursor:‘pointer’,boxShadow:‘0 2px 10px rgba(0,0,0,.06)’}},
-h(‘div’,{style:{width:46,height:46,borderRadius:14,background:‘linear-gradient(135deg,#FF6B00,#C084FC)’,display:‘grid’,placeItems:‘center’,fontSize:20,flexShrink:0}},p.emoji),
-h(‘div’,{style:{flex:1}},h(‘div’,{style:{fontWeight:900,fontSize:14}},pnames[i])),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#FF6B00’}},‘🪙’+p.cost)
-);})
-)
-);
+function renderShop(){
+  var powers=[
+    {emoji:'🤫',name:'Silence',desc:'Ne peut pas voter 24h',cost:50},
+    {emoji:'👤',name:'Ombre',desc:'Caché du classement 12h',cost:80},
+    {emoji:'📢',name:'Exposer',desc:'Pire score diffusé',cost:120},
+    {emoji:'❄️',name:'Geler',desc:'XP gelé 24h',cost:150},
+    {emoji:'📉',name:'Rétrograder',desc:'Perd 10% XP hebdo',cost:200}
+  ];
+  var el=document.getElementById('screen-shop');
+  el.innerHTML='<div style="background:linear-gradient(160deg,#4C1D95,#7C3AED);padding:24px 18px 20px;border-radius:0 0 32px 32px">'
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#fff">ARSENAL ⚡</div>'
+    +'<div style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:rgba(251,191,36,.2);border-radius:999px;padding:8px 16px">'
+      +'<span style="font-size:20px">🪙</span><span style="font-family:\'Fredoka One\',sans-serif;font-size:26px;color:#FBBF24">'+ME.coins.toLocaleString()+'</span>'
+    +'</div></div>'
+    +'<div style="padding:14px 16px 20px">'
+    +powers.map(function(p,i){
+      return '<div class="card fade" style="display:flex;align-items:center;gap:12px;padding:13px 14px;margin-bottom:10px;cursor:pointer;animation-delay:'+(i*.07)+'s" onclick="sfxCoin();showNotif(\''+p.emoji+'\',\''+p.name+' activé !\',\'\',\'#34D399\')">'
+        +'<div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:20px;flex-shrink:0">'+p.emoji+'</div>'
+        +'<div style="flex:1"><div style="font-weight:900;font-size:14px">'+p.name+'</div><div style="font-size:11px;font-weight:700;color:#94A3B8;margin-top:2px">'+p.desc+'</div></div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:20px;color:#FF6B00">🪙'+p.cost+'</div>'
+      +'</div>';
+    }).join('')+'</div>';
 }
 
-// ─── PROFILE SCREEN ────────────────────────────────────────────
-function ProfileScreen(props) {
-var t=props.t,userAvId=props.userAvId,userName=props.userName,streak=props.streak,lang=props.lang,setLang=props.setLang;
-var rank=getRank(ME.xp);
-var pct=((ME.xp-rank.min)/((rank.max===999999?ME.xp*1.5:rank.max)-rank.min))*100;
-var r=useState(false); var showLangPicker=r[0],setShowLangPicker=r[1];
-return h(‘div’,{style:{overflowY:‘auto’,height:‘100%’}},
-h(‘div’,{style:{background:‘linear-gradient(160deg,’+rank.g1+’,’+rank.g2+’)’,padding:‘28px 18px 22px’,textAlign:‘center’,position:‘relative’,overflow:‘hidden’}},
-h(‘button’,{onClick:function(){setShowLangPicker(true);},style:{position:‘absolute’,top:16,right:16,background:‘rgba(255,255,255,.25)’,backdropFilter:‘blur(4px)’,border:‘none’,borderRadius:999,padding:‘6px 12px’,fontSize:13,cursor:‘pointer’,color:’#fff’,fontWeight:800}},LANGS[lang].flag+’ ‘+LANGS[lang].label),
-h(AvatarSVG,{av:getAv(userAvId),size:86}),
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:28,color:’#fff’,marginTop:10}},userName),
-h(‘div’,{style:{display:‘inline-flex’,background:‘rgba(255,255,255,.22)’,borderRadius:999,padding:‘5px 16px’,fontWeight:900,fontSize:13,color:’#fff’,marginTop:8}},rank.icon+’ ‘+rank.label),
-h(‘div’,{style:{marginTop:14}},
-h(‘div’,{style:{height:10,background:‘rgba(255,255,255,.18)’,borderRadius:5,overflow:‘hidden’}},
-h(‘div’,{style:{height:‘100%’,width:pct+’%’,background:‘rgba(255,255,255,.8)’,borderRadius:5,animation:‘xpFill .9s ease-out’}})
-),
-h(‘div’,{style:{fontSize:10,fontWeight:800,color:‘rgba(255,255,255,.6)’,marginTop:4}},ME.xp.toLocaleString()+’ XP’)
-)
-),
-h(‘div’,{style:{display:‘flex’,margin:‘14px 16px’,background:’#fff’,borderRadius:20,boxShadow:‘0 4px 20px rgba(0,0,0,.07)’,overflow:‘hidden’}},
-[{v:streak+‘🔥’,l:‘Série’},{v:‘🪙’+ME.coins,l:‘Pièces’},{v:ME.score.toLocaleString(),l:‘Score’},{v:’#2’,l:‘Ligue’}].map(function(s,i){return h(‘div’,{key:i,style:{flex:1,padding:‘14px 4px’,textAlign:‘center’,borderRight:i<3?‘1px solid rgba(0,0,0,.06)’:‘none’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:20,color:’#FF6B00’}},s.v),
-h(‘div’,{style:{fontSize:9,fontWeight:900,color:’#94A3B8’,letterSpacing:.5,marginTop:3}},s.l)
-);})
-),
-h(‘div’,{style:{padding:‘0 16px 20px’}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:16,color:’#94A3B8’,marginBottom:10}},‘PROGRESSION’),
-RANKS.map(function(r2,i){
-var unlocked=ME.xp>=r2.min,curr=r2.id===rank.id;
-return h(‘div’,{key:r2.id,style:{display:‘flex’,gap:12,alignItems:‘center’,marginBottom:8,opacity:unlocked?1:.3}},
-h(‘div’,{style:{width:40,height:40,borderRadius:12,background:unlocked?‘linear-gradient(135deg,’+r2.g1+’,’+r2.g2+’)’:’#eee’,display:‘grid’,placeItems:‘center’,fontSize:18,flexShrink:0,boxShadow:curr?‘0 4px 14px ‘+r2.color+‘55’:‘none’}},r2.icon),
-h(‘div’,{style:{flex:1}},
-h(‘div’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:15}},r2.label+(curr?’ ◀’:’’)),
-h(‘div’,{style:{fontSize:10,fontWeight:800,color:’#94A3B8’,marginTop:1}},r2.min.toLocaleString()+’+ XP’)
-),
-unlocked&&h(‘span’,{style:{color:r2.color,fontSize:16}},‘✓’)
-);
-})
-),
-showLangPicker&&h(‘div’,{style:{position:‘fixed’,inset:0,background:‘rgba(15,12,35,.85)’,zIndex:900,display:‘flex’,alignItems:‘flex-end’},onClick:function(){setShowLangPicker(false);}},
-h(‘div’,{onClick:function(e){e.stopPropagation();},style:{background:’#fff’,borderRadius:‘28px 28px 0 0’,padding:‘24px 20px 48px’,width:‘100%’,maxWidth:430,margin:‘0 auto’,animation:‘slideUp .32s ease-out’}},
-Object.entries(LANGS).map(function(entry){var code=entry[0],l=entry[1];return h(‘div’,{key:code,onClick:function(){SFX.tap();setLang(code);setShowLangPicker(false);},style:{display:‘flex’,alignItems:‘center’,gap:14,padding:‘14px 16px’,borderRadius:16,background:lang===code?‘linear-gradient(135deg,#FF6B00,#C084FC)’:‘rgba(0,0,0,.03)’,marginBottom:8,cursor:‘pointer’}},
-h(‘span’,{style:{fontSize:28}},l.flag),
-h(‘span’,{style:{fontFamily:”‘Fredoka One’,sans-serif”,fontSize:18,color:lang===code?’#fff’:’#1E1B2E’}},l.label)
-);})
-)
-)
-);
+function renderProfile(){
+  var rank=getRank(ME.xp);
+  var pct=((ME.xp-rank.min)/((rank.max===999999?ME.xp*1.5:rank.max)-rank.min))*100;
+  var av=getAv(state.avId);
+  var el=document.getElementById('screen-profile');
+  el.innerHTML='<div style="background:linear-gradient(160deg,'+rank.g1+','+rank.g2+');padding:28px 18px 22px;text-align:center;position:relative;overflow:hidden">'
+    +'<div style="display:inline-block;margin-bottom:10px">'+avSVG(av,86)+'</div>'
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#fff">'+state.userName+'</div>'
+    +'<div style="display:inline-flex;background:rgba(255,255,255,.22);border-radius:999px;padding:5px 16px;font-weight:900;font-size:13px;color:#fff;margin-top:8px">'+rank.icon+' '+rank.label+'</div>'
+    +'<div style="margin-top:14px"><div style="height:10px;background:rgba(255,255,255,.18);border-radius:5px;overflow:hidden">'
+      +'<div style="height:100%;width:'+pct+'%;background:rgba(255,255,255,.8);border-radius:5px;animation:barFill .9s ease-out"></div></div>'
+      +'<div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.6);margin-top:4px">'+ME.xp.toLocaleString()+' XP</div>'
+    +'</div></div>'
+    +'<div style="display:flex;margin:14px 16px;background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,.07);overflow:hidden">'
+    +[{v:state.streak+'🔥',l:'Série'},{v:'🪙'+ME.coins,l:'Pièces'},{v:ME.score.toLocaleString(),l:'Score'},{v:'#2',l:'Ligue'}].map(function(s,i){
+      return '<div style="flex:1;padding:14px 4px;text-align:center;border-right:'+(i<3?'1px solid rgba(0,0,0,.06)':'none')+'">'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:20px;color:#FF6B00">'+s.v+'</div>'
+        +'<div style="font-size:9px;font-weight:900;color:#94A3B8;letter-spacing:.5px;margin-top:3px">'+s.l+'</div>'
+      +'</div>';
+    }).join('')+'</div>'
+    +'<div style="padding:0 16px 20px">'
+    +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:16px;color:#94A3B8;margin-bottom:10px">PROGRESSION</div>'
+    +RANKS.map(function(r){
+      var unlocked=ME.xp>=r.min,curr=r.id===rank.id;
+      return '<div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;opacity:'+(unlocked?1:.3)+'">'
+        +'<div style="width:40px;height:40px;border-radius:12px;background:'+(unlocked?'linear-gradient(135deg,'+r.g1+','+r.g2+')':'#eee')+';display:grid;place-items:center;font-size:18px;flex-shrink:0;box-shadow:'+(curr?'0 4px 14px '+r.color+'55':'none')+'">'+r.icon+'</div>'
+        +'<div style="flex:1"><div style="font-family:\'Fredoka One\',sans-serif;font-size:15px">'+r.label+(curr?' ◀':'')+' </div>'
+          +'<div style="font-size:10px;font-weight:800;color:#94A3B8;margin-top:1px">'+r.min.toLocaleString()+'+ XP</div></div>'
+        +(unlocked?'<span style="color:'+r.color+';font-size:16px">✓</span>':'')
+      +'</div>';
+    }).join('')+'</div>';
 }
 
-// ─── MAIN APP ──────────────────────────────────────────────────
-function App() {
-var r1=useState(function(){return !!LS.get(‘onboarded’);}); var onboarded=r1[0],setOnboarded=r1[1];
-var r2=useState(function(){return LS.get(‘lang’,‘fr’);}); var lang=r2[0],setLang=r2[1];
-var r3=useState(function(){return LS.get(‘username’,‘PLAYER’);}); var userName=r3[0],setUserName=r3[1];
-var r4=useState(function(){return LS.get(‘avid’,‘sakura’);}); var userAvId=r4[0],setUserAvId=r4[1];
-var r5=useState(‘home’); var tab=r5[0],setTab=r5[1];
-var r6=useState(false); var inChallenge=r6[0],setInChallenge=r6[1];
-var r7=useState(null); var notif=r7[0],setNotif=r7[1];
-var r8=useState(0); var confetti=r8[0],setConfetti=r8[1];
-var nTimer=useRef(null);
-var t=LANGS[lang];
-var streak=9;
+// ── CHALLENGE ─────────────────────────────────────────────────
+var chTimer=null;
 
-useEffect(function(){LS.set(‘lang’,lang);},[lang]);
+function startChallenge(){
+  sfxZap();
+  var ch=CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];
+  var screen=document.getElementById('ch-screen');
+  var content=document.getElementById('ch-content');
+  screen.classList.add('active');
+  var grad='linear-gradient(160deg,#FF6B00,#7C3AED)';
+  var cdN=3;
 
-var showNotif=useCallback(function(n){
-setNotif(n);clearTimeout(nTimer.current);
-nTimer.current=setTimeout(function(){setNotif(null);},3000);
-},[]);
+  function showCD(){
+    content.innerHTML='<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:'+grad+'">'
+      +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:18px;color:rgba(255,255,255,.7);letter-spacing:4px;margin-bottom:12px">PRÉPARE-TOI</div>'
+      +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:120px;color:#fff;line-height:1;animation:popIn .4s cubic-bezier(.2,0,.38,1.4)">'+(cdN===0?'GO!':cdN)+'</div>'
+    +'</div>';
+    if(cdN>0){sfxTap();cdN--;chTimer=setTimeout(showCD,1000);}
+    else{sfxZap();chTimer=setTimeout(showChallenge,600);}
+  }
 
-var navItems=[
-{id:‘home’,icon:‘🏠’,label:t.nav.feed},
-{id:‘leagues’,icon:‘⚔️’,label:t.nav.leagues},
-{id:‘flash’,icon:‘⚡’,label:t.nav.flash},
-{id:‘global’,icon:‘🌍’,label:‘Global’},
-{id:‘profile’,icon:‘👤’,label:t.nav.stats}
-];
+  function showChallenge(){
+    var tLeft=ch.timer;
+    function render(){
+      var urg=tLeft<=5;
+      content.innerHTML='<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px 24px;background:'+grad+'">'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:96px;color:'+(urg?'#FF3366':'#fff')+';line-height:1;'+(urg?'animation:pulse .5s infinite':'')+'" id="ch-timer">'+tLeft+'</div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#fff;text-align:center;line-height:1.3">'+ch.emoji+' '+ch.text+'</div>'
+        +'<button onclick="clearInterval(chCountdown);showVote()" style="padding:16px 40px;border-radius:999px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);font-family:\'Fredoka One\',sans-serif;font-size:20px;color:#fff;cursor:pointer;margin-top:auto">TERMINÉ ✓</button>'
+      +'</div>';
+    }
+    render();
+    var chCountdown=setInterval(function(){
+      tLeft--;
+      var t=document.getElementById('ch-timer');
+      if(t)t.textContent=tLeft;
+      if(tLeft<=5&&tLeft>0){t&&(t.style.color='#FF3366');t&&(t.style.animation='pulse .5s infinite');}
+      if(tLeft<=0){clearInterval(chCountdown);sfxZap();showVote();}
+    },1000);
+    window.chCountdown=chCountdown;
+  }
 
-if(!onboarded) return h(Onboarding,{lang:lang,setLang:function(l){setLang(l);LS.set(‘lang’,l);},t:t,onComplete:function(data){
-var uname=(data.name||‘PLAYER’).toUpperCase();
-setUserName(uname);setUserAvId(data.avId);
-LS.set(‘username’,uname);LS.set(‘avid’,data.avId);LS.set(‘onboarded’,true);
-setOnboarded(true);SFX.victory();setConfetti(function(c){return c+1;});
-}});
+  function showVote(){
+    var voted=null;
+    var voters=[{id:'a',av:'😈',name:'zara_flash 🇧🇷'},{id:'b',av:'🥷',name:'drift.exe 🇯🇵'},{id:'c',av:'🦊',name:'neon_leo 🇫🇷'}];
+    function render(){
+      content.innerHTML='<div style="padding:24px 18px;display:flex;flex-direction:column;gap:13px;flex:1;overflow-y:auto;background:#F1F5F9">'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:26px;color:#1E1B2E;line-height:1.2">Qui a vraiment TOUT DÉCHIRÉ ?</div>'
+        +'<p style="font-size:12px;font-weight:800;color:#94A3B8;margin-top:-6px">Vote pour le meilleur · Ton vote compte</p>'
+        +voters.map(function(o){
+          var sel=voted===o.id;
+          return '<div onclick="this.click_()" id="vcard-'+o.id+'" style="display:flex;align-items:center;gap:13px;background:#fff;border-radius:18px;padding:13px 14px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.07);border:'+(sel?'2px solid #FF6B00':'2px solid transparent')+'">'
+            +'<div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:24px;flex-shrink:0">'+o.av+'</div>'
+            +'<div style="flex:1"><div style="font-weight:900;font-size:14px">'+o.name+'</div></div>'
+            +'<div style="width:28px;height:28px;border-radius:50%;border:'+(sel?'none':'2px solid rgba(0,0,0,.1)')+';background:'+(sel?'#FF6B00':'transparent')+';display:grid;place-items:center;font-size:14px;color:#fff;font-weight:900">'+(sel?'✓':'')+'</div>'
+          +'</div>';
+        }).join('')
+        +'<button id="vote-btn" onclick="doVote()" style="padding:16px;border-radius:999px;background:'+(voted?'linear-gradient(135deg,#FF6B00,#C084FC)':'rgba(0,0,0,.07)')+';border:none;font-family:\'Fredoka One\',sans-serif;font-size:20px;color:'+(voted?'#fff':'#94A3B8')+';cursor:pointer;margin-top:auto">VALIDER'+(voted?' →':'')+'</button>'
+      +'</div>';
+      voters.forEach(function(o){
+        var card=document.getElementById('vcard-'+o.id);
+        if(card)card.addEventListener('click',function(){sfxTap();voted=o.id;render();});
+      });
+    }
+    render();
+    window.doVote=function(){
+      if(!voted)return;
+      sfxCoin();
+      showResult();
+    };
+  }
 
-return h(‘div’,{style:{width:‘100%’,height:‘100%’,display:‘flex’,flexDirection:‘column’,background:’#F1F5F9’,overflow:‘hidden’}},
-h(Particles,{trigger:confetti}),
-h(Notif,{n:notif}),
-// Content
-inChallenge
-?h(ChallengeFlow,{t:t,onDone:function(data){setInChallenge(false);setTab(‘home’);setConfetti(function(c){return c+1;});showNotif({icon:‘🏆’,text:’+’+data.xp+’ XP !’,sub:‘Score: ‘+data.score,color:’#FF6B00’});},showNotif:showNotif})
-:h(‘div’,{style:{flex:1,overflow:‘hidden’,display:‘flex’,flexDirection:‘column’}},
-// Ticker
-h(‘div’,{style:{background:‘rgba(255,107,0,.12)’,padding:‘7px 16px’,fontSize:11,fontWeight:800,color:’#FF6B00’,letterSpacing:.5,flexShrink:0}},‘🔥 48K joueurs en live · ⚡ Flash dans 2h · 👑 zara_flash vient d'atteindre GOD’),
-// Screen
-h(‘div’,{style:{flex:1,overflow:‘hidden’}},
-tab===‘home’&&h(HomeScreen,{t:t,onStart:function(){SFX.zap();setInChallenge(true);},showNotif:showNotif,userName:userName,userAvId:userAvId,streak:streak}),
-tab===‘leagues’&&h(LeaguesScreen,{t:t,showNotif:showNotif}),
-tab===‘global’&&h(GlobalScreen,{t:t}),
-tab===‘shop’&&h(ShopScreen,{t:t,showNotif:showNotif}),
-tab===‘profile’&&h(ProfileScreen,{t:t,userAvId:userAvId,userName:userName,streak:streak,lang:lang,setLang:function(l){setLang(l);LS.set(‘lang’,l);}})
-)
-),
-// Nav
-!inChallenge&&h(‘nav’,{style:{display:‘flex’,background:’#fff’,borderTop:‘1px solid rgba(0,0,0,.07)’,paddingBottom:‘env(safe-area-inset-bottom)’,flexShrink:0}},
-navItems.map(function(item){
-var active=tab===item.id&&!inChallenge;
-return h(‘button’,{key:item.id,onClick:function(){if(item.id===‘flash’){SFX.zap();setInChallenge(true);setTab(‘flash’);}else{SFX.tap();setTab(item.id);}},style:{flex:1,display:‘flex’,flexDirection:‘column’,alignItems:‘center’,gap:3,padding:‘10px 4px’,border:‘none’,background:‘none’,cursor:‘pointer’}},
-h(‘span’,{style:{fontSize:22,transform:active?‘scale(1.18)’:‘scale(1)’,transition:‘transform .15s’,filter:item.id===‘flash’?‘drop-shadow(0 0 6px #FBBF24)’:‘none’}},item.icon),
-h(‘span’,{style:{fontSize:9,fontWeight:800,color:active?’#FF6B00’:’#94A3B8’,letterSpacing:.3,fontFamily:”‘Nunito’,sans-serif”}},item.label)
-);
-})
-)
-);
+  function showResult(){
+    sfxWin();
+    var sorted=PLAYERS.slice().sort(function(a,b){return b.score-a.score;});
+    content.innerHTML='<div style="padding:20px 18px;display:flex;flex-direction:column;gap:13px;overflow-y:auto;flex:1;background:#F1F5F9">'
+      +'<div style="text-align:center;animation:popIn .5s cubic-bezier(.2,0,.38,1.4)">'
+        +'<div style="font-size:52px">🏆</div>'
+        +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#1E1B2E">Classement</div>'
+      +'</div>'
+      +'<div style="display:flex;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07)">'
+      +[{v:ME.score.toLocaleString(),l:'SCORE'},{v:'+'+ch.xp,l:'XP'},{v:'#4',l:'RANG'}].map(function(s,i){
+        return '<div style="flex:1;padding:16px 8px;text-align:center;border-right:'+(i<2?'1px solid rgba(0,0,0,.06)':'none')+'">'
+          +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:28px;color:#FF6B00">'+s.v+'</div>'
+          +'<div style="font-size:9px;font-weight:900;color:#94A3B8;margin-top:4px;letter-spacing:.5px">'+s.l+'</div>'
+        +'</div>';
+      }).join('')+'</div>'
+      +sorted.map(function(p,i){
+        return '<div style="display:flex;align-items:center;gap:11px;padding:11px 18px;border-bottom:1px solid rgba(0,0,0,.05);animation:fadeUp .28s ease-out both;animation-delay:'+(i*.06)+'s">'
+          +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:20px;width:28px;text-align:center">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1))+'</div>'
+          +'<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#C084FC);display:grid;place-items:center;font-size:18px;flex-shrink:0">'+p.av+'</div>'
+          +'<div style="flex:1;font-weight:900;font-size:13px">'+p.name+'</div>'
+          +'<div style="font-family:\'Fredoka One\',sans-serif;font-size:17px;color:#FF6B00">'+p.score.toLocaleString()+'</div>'
+        +'</div>';
+      }).join('')
+      +'<button onclick="endChallenge()" style="padding:14px;border-radius:999px;background:linear-gradient(135deg,#1E1B2E,#2D1B5E);color:#fff;border:none;font-family:\'Fredoka One\',sans-serif;font-size:17px;cursor:pointer">⚡ RETOUR</button>'
+    +'</div>';
+  }
+
+  showCD();
 }
 
-// Boot
-function boot() {
-if(typeof React === ‘undefined’ || typeof ReactDOM === ‘undefined’) {
-setTimeout(boot, 50); return;
+function endChallenge(){
+  sfxTap();
+  clearTimeout(chTimer);
+  document.getElementById('ch-screen').classList.remove('active');
+  showNotif('🏆','+120 XP !','Score: '+ME.score,'#FF6B00');
 }
-var sub=document.getElementById(‘ss’), fill=document.getElementById(‘sb’);
+
+// ── BOOT ──────────────────────────────────────────────────────
+var bar=document.getElementById('splash-bar');
+var sub=document.getElementById('splash-sub');
 var pct=0;
 var prog=setInterval(function(){
-pct=Math.min(pct+12,95);
-if(fill)fill.style.width=pct+’%’;
-if(sub)sub.textContent=pct<50?‘CHARGEMENT…’:‘DÉMARRAGE…’;
-},60);
-setTimeout(function(){
-clearInterval(prog);
-if(fill)fill.style.width=‘100%’;
-try {
-var root = document.getElementById(‘root’);
-if (ReactDOM.createRoot) {
-ReactDOM.createRoot(root).render(React.createElement(App));
-} else {
-ReactDOM.render(React.createElement(App), root);
-}
-// Remove splash after render
-setTimeout(function(){
-var s=document.getElementById(‘splash’);
-if(s && s.parentNode) s.parentNode.removeChild(s);
-},100);
-} catch(e) {
-// Show error ON SCREEN (not just console)
-var s=document.getElementById(‘splash’);
-if(s) {
-s.innerHTML=’<div style="color:#FF6B6B;font-family:monospace;font-size:12px;padding:20px;text-align:left;max-width:90%">ERR: ‘+e.message+’<br><br>’+e.stack.slice(0,200)+’</div>’;
-}
-console.error(’[DAREZ]’, e);
-}
-},200);
-}
-window.addEventListener(‘load’, boot);
+  pct=Math.min(pct+15,95);
+  bar.style.width=pct+'%';
+  sub.textContent=pct<50?'CHARGEMENT...':'DÉMARRAGE...';
+},80);
+
+window.addEventListener('load',function(){
+  clearInterval(prog);
+  bar.style.width='100%';
+  sub.textContent='PRÊT !';
+
+  setTimeout(function(){
+    var splash=document.getElementById('splash');
+    splash.style.transition='opacity .4s';
+    splash.style.opacity='0';
+    setTimeout(function(){splash.parentNode.removeChild(splash);},400);
+
+    if(!state.onboarded){
+      document.getElementById('ob').style.display='flex';
+    } else {
+      document.getElementById('ob').style.display='none';
+      renderScreen('home');
+    }
+  },600);
+});
 </script>
 
 </body>
