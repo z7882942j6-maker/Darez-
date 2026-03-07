@@ -658,15 +658,22 @@ setTimeout(function(){
 clearInterval(prog);
 if(fill)fill.style.width=‘100%’;
 try {
-ReactDOM.createRoot(document.getElementById(‘root’)).render(React.createElement(App));
-setTimeout(function(){
-var s=document.getElementById(‘splash’);
-if(s){s.classList.add(‘out’);setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},500);}
-},300);
+var root = document.getElementById(‘root’);
+// Try React 18 first, fallback to React 17
+if (ReactDOM.createRoot) {
+ReactDOM.createRoot(root).render(React.createElement(App));
+} else {
+ReactDOM.render(React.createElement(App), root);
+}
 } catch(e) {
 if(sub){sub.textContent=‘ERR: ‘+e.message.slice(0,40);sub.style.color=’#FF6B6B’;}
 console.error(’[DAREZ]’, e);
 }
+// Always hide splash no matter what
+setTimeout(function(){
+var s=document.getElementById(‘splash’);
+if(s){s.style.opacity=‘0’;setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},500);}
+},300);
 },800);
 }
 window.addEventListener(‘load’, boot);
