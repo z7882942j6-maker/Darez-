@@ -643,24 +643,33 @@ h(‘span’,{style:{fontSize:9,fontWeight:800,color:active?’#FF6B00’:’#94
 }
 
 // Boot
-window.addEventListener(‘load’, function() {
+function boot() {
+if(typeof React === ‘undefined’ || typeof ReactDOM === ‘undefined’) {
+setTimeout(boot, 50); return;
+}
 var sub=document.getElementById(‘ss’), fill=document.getElementById(‘sb’);
 var pct=0;
 var prog=setInterval(function(){
-pct=Math.min(pct+8,95);
+pct=Math.min(pct+12,95);
 if(fill)fill.style.width=pct+’%’;
-if(sub)sub.textContent=pct<50?‘CHARGEMENT…’:pct<85?‘DÉMARRAGE…’:‘PRÊT !’;
-},80);
+if(sub)sub.textContent=pct<50?‘CHARGEMENT…’:‘DÉMARRAGE…’;
+},60);
 setTimeout(function(){
 clearInterval(prog);
 if(fill)fill.style.width=‘100%’;
+try {
 ReactDOM.createRoot(document.getElementById(‘root’)).render(React.createElement(App));
 setTimeout(function(){
 var s=document.getElementById(‘splash’);
-if(s){s.classList.add(‘out’);setTimeout(function(){s.remove();},500);}
-},400);
-},1200);
-});
+if(s){s.classList.add(‘out’);setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},500);}
+},300);
+} catch(e) {
+if(sub){sub.textContent=‘ERR: ‘+e.message.slice(0,40);sub.style.color=’#FF6B6B’;}
+console.error(’[DAREZ]’, e);
+}
+},800);
+}
+window.addEventListener(‘load’, boot);
 </script>
 
 </body>
