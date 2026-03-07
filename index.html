@@ -659,21 +659,24 @@ clearInterval(prog);
 if(fill)fill.style.width=‘100%’;
 try {
 var root = document.getElementById(‘root’);
-// Try React 18 first, fallback to React 17
 if (ReactDOM.createRoot) {
 ReactDOM.createRoot(root).render(React.createElement(App));
 } else {
 ReactDOM.render(React.createElement(App), root);
 }
-} catch(e) {
-if(sub){sub.textContent=‘ERR: ‘+e.message.slice(0,40);sub.style.color=’#FF6B6B’;}
-console.error(’[DAREZ]’, e);
-}
-// Force remove splash immediately
+// Remove splash after render
 setTimeout(function(){
 var s=document.getElementById(‘splash’);
 if(s && s.parentNode) s.parentNode.removeChild(s);
 },100);
+} catch(e) {
+// Show error ON SCREEN (not just console)
+var s=document.getElementById(‘splash’);
+if(s) {
+s.innerHTML=’<div style="color:#FF6B6B;font-family:monospace;font-size:12px;padding:20px;text-align:left;max-width:90%">ERR: ‘+e.message+’<br><br>’+e.stack.slice(0,200)+’</div>’;
+}
+console.error(’[DAREZ]’, e);
+}
 },200);
 }
 window.addEventListener(‘load’, boot);
