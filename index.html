@@ -669,12 +669,12 @@ ReactDOM.render(React.createElement(App), root);
 if(sub){sub.textContent=‘ERR: ‘+e.message.slice(0,40);sub.style.color=’#FF6B6B’;}
 console.error(’[DAREZ]’, e);
 }
-// Always hide splash no matter what
+// Force remove splash immediately
 setTimeout(function(){
 var s=document.getElementById(‘splash’);
-if(s){s.style.opacity=‘0’;setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},500);}
-},300);
-},800);
+if(s && s.parentNode) s.parentNode.removeChild(s);
+},100);
+},200);
 }
 window.addEventListener(‘load’, boot);
 </script>
